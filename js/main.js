@@ -19,20 +19,10 @@ function displayPortList()
 	
 	for(i=0; i<arrayLength; i++)
 	{
-		linkString += "<ol><strong>";
-		linkString += links[i].label;
-		linkString += "</strong><a href=";
-		linkString += links[i].url;
-		linkString += ">" + links[i].url + "</a>";
-		linkString += "</ol>";
+		linkString += "<ol><strong>" + links[i].label + "</strong><a href=" + links[i].url + ">" + links[i].url + "</a>" + "</ol>";
 	}
 	
-	x.innerHTML = linkString;
-	
-//	let testString = links[0].label;
-//	testString = links[1].label;
-//	testString = links[0].url;
-	
+	x.innerHTML = linkString;	
 }
 
 
