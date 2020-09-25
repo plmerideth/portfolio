@@ -2,33 +2,80 @@
 <html>
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="../css/styles.css">
 <title>Week 2</title>
 </head>
 
 <body>
-	<h1>This is Week 2 (TBD)</h1>
-	<h2>Week 2 Readings</h2>
-	<h2>Week 2 Report</h2>
-	<h1>Notes and Questions for Week 1</h1>
-	<h2>What did I do since the last meeting?</h2>
-	<ul>
-		<li>This was the first week, so no previous meeting</li>
-		<li>Quite a few hours spent reviewing, installing, and testing git and github</li>
-		<li>I decided to use the command line version of git</li>
-		<li>I reviewed git and github using the github learning lab and watching courses on LinkedIn Learning</li>
-	</ul>
-	<h2>What am I going to do next?</h2>
-	<ul>
-		<li>I hope to refresh my memory on some javascript basics and gain more experience and comfort with git and github</li>
-	</ul>
-	<h2>What are my blockers?</h2>
-	<ul>
-		<li>Most of my blockers this week were around git and github, but I managed to get past them</li>
-	</ul>
-	<h2>Questions</h2>
-	<ul>
-		<li>When doing a push to github, should I only use the -u option one time?</li>
-		<li>Could I have built my innerHTML string more efficiently?</li>
-	</ul>
+	<section class="readingSection">
+		<h2 class="readingTitle">WEEK 2 READINGS</h2>
+		<h3 class="readingCategory">Javascript: Novice to Ninja</h3>
+		<ul>
+			<li>Lot's of reading material this week! Had to use my "Adding Machine" program to figure out how many pages! (133 pages)</li>
+			<li>I highlighted many learnings in the chapters.  Here are some of my favorites:</li>
+			<li><strong>Chapter 2</strong></li>
+			<p>- Don't need to use semi-colon to terminate statment, but it's a best-practice</p>
+			<p>- Any value that isn't a primitive, is an object, including arrays, functions, object literals</p>
+			<p>- From ES6 onward, all variables MUST be declared</p>
+			<p>- The difference between 'var' and 'let' variable declarations is 'let' has block scope and 'var' doesn't</p>
+			<p>- Template literals using the backtick allow strings to contain single and double quote marks</p>
+			<p>- Template literals also allow interpolation of JavaScript code, such as ${varName} and line breaks \n</p>
+			<p>- Learned about and used parseInt() and toLocaleString() for the first time</p>
+			<li><strong>Chapter 3</strong></li>
+			<p>- Destructing arrays is an interesting way to swap array contents</p>
+			<p>- Array.length property is mutable and the array contents follow the new length property (deleting contents or adding undefined slots</p>
+			<p>- The spread operator ... is interesting way to concatenate arrays</p>
+			<p>- The .join() method is used to create a string of array's contents with a desired separator</p>
+			<p>- The Map data structure is a useful structure for managing key-value pairs</p>
+			<p>- I have used ternary operators often in the past and find them very useful.  condition ? code if true : code if false (pg 117)</p>
+			<li><strong>Chapter 4</strong></li>
+			<p>- 3 ways to define functions.  I've always used the function declaration method, so this is interesting. (pg 133)</p>
+			<p>- Function expressions assign an anonymous function to a variable. const goodbye = function(){console.log('Goodbye');}; (pg 134)</p>
+			<p>- We can also create a named (named bye, assigned to variable goodbye)function expression. const goodbye = function bye(){console.log('Goodbye');};</p>
+			<p>- If you assign a function to a variable, you must place parentheis after the variable name to invoke it (pg 136)</p>
+			<p>- The rest parameter to work with variable arguments is a useful way to put the function args into an array with methods avaiable.  We can then loop over the array using for-of loop (pgs 141-142)</p>
+			<p>- Use default parameters by assigning values in declaration (pg 142)</p>
+			<p>- Arrow functions are succinct ways to define functions and have some special properties. They must always be assigned to a variable if they are used. (pg 145)</p>
+			<p>- <strong>const add = (x,y) =&gt x+y;</strong>  parameters go in front of arrow, body of function goes after arrow.  Note: if only one parameter, don't need paraenthesis around parameters.  <strong>const square = x =&gt x*x;</strong></p>
+			<p>- But if function doesn't require any parameters, empty parethesis must be before arrow.  const hello = () =&gt alert('hello');</p>
+			<p>- Longer arrow functions must surround body with {} and must have return keyword at end, so many benefits are lost with longer functions</p>
+			<p>- Function callbacks are functions that are passed as a parameter in another function.  Here is a useful callback to sort a numberical arrary: Note that the sort() method with arrays sort by converting to strings first, then sorting (pg 149)</p>
+			<p>- Callback function:  function numerically(a,b){return a-b;}</p>
+			<p>- Calling function: [1,3,12,5, 23,18,7].sort(numberically);  Notice that callback function doesn't include ()</p>
+		</ul>				
+	</section>
+	
+	<section class="reportSection">
+		<h2 class="reportTitle">WEEK 2 REPORT</h2>
+		<h3 class="reportCategory">What did I do since the last meeting?</h3>
+		<ul>
+			<li>Created 3 programs per the assigned Team Activity (click link to demo program)</li>
+			<a href="team-02-1.html">Display Input</a>
+			<a href="team-02-2.html">Display Summation</a>
+			<a href="team-02-3.html">Adding Machine</a>
+			<li style="margin-top: 10px;"><strong>I added a few stretch features to the programs</strong></li>
+			<p>- Added all four basic arithemetic operations (add, sub, mult, div)</p>
+			<p>- Enhanced input field to format numbers with commas</p>
+			<p>- Added "Clear All" button to clear all input fields</p>
+			<li style="margin-top: 10px;">Met with team and established regular meeting time and plan for team activities</li>
+		</ul>
+		<h3 class="reportCategory">What am I going to do next?</h3>
+		<ul>
+			<li>Do assigned readings for week 3</li>
+			<li>Research callback functions a little more</li>
+			<li>Look for more ways to enhance the look of my portfolio site</li>
+		</ul>
+		<h3 class="reportCategory">What are my blockers?</h3>
+		<ul>
+			<li>I understand the concept of callback functions, but the syntax is still a little confusing to me</li>
+			<li>Remembering some of the lesser used HTML and CSS elements and attributes requires additional research</li>
+		</ul>
+		<h3 class="reportCategory">Questions</h3>
+		<ul>
+			<li>I'm not totally clear if our team turns in one set of programs for the entire team, or each team member turns in his/her own set?</li>
+			<li>Should we create a separate branch in git for every new week?</li>
+			<li>Should we turn in code each week, or will the github-pages link be sufficient (using View Page Source)?</li>
+		</ul>
+	</section>		
 </body>
 </html>

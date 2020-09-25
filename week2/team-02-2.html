@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Display Summation</title>
+	</head>
+
+	<body>
+		<h1>Team 1 Assignment, Week 2.2 - Summation</h1>
+		<input id="name_input" style="width: 500px; height: 20px; border: 2px solid blue" placeholder="Enter number between 0 and 1,000,000 here!" onKeyUp="formatNumber()"> <!--When user releases key, call formatNumber()-->
+		<br><br>
+		<section>
+			<button onClick="displaySum()" style="background: red; color: white">Calculate Sum</button>
+			<button onClick="clearValues()" style="background: blue; color: white">Clear Values</button>			
+		</section>
+		<br>
+		<div id="displayID" style="width:500px; height:100px; border: 2px solid blue"></div>
+	</body>
+</html>
+
+<script>
+	function formatNumber() //This function adds commas as user enters number
+	{
+		let inputNumber = document.getElementById("name_input").value; 
+		inputNumber=inputNumber.replace(/,/g, ""); //Remove all commas from <input> value
+		inputNumber = Number(inputNumber); //Convert string to a number
+		if(inputNumber>1000000) //If user enters number>1,000,000, force to 1M
+			inputNumber=1000000;
+		inputNumber=inputNumber.toLocaleString(); //Convert number to string with commas
+		document.getElementById("name_input").value = inputNumber;
+	}
+	
+	function displaySum()
+	{
+		let inputNumber = document.getElementById("name_input").value;
+		inputNumber=inputNumber.replace(/,/g, ""); //Remove all commas from <input> value
+		inputNumber = Number(inputNumber);
+		let result = 0;
+		
+		for(let i=1; i<=inputNumber; i++)
+		{
+			result += i;
+		}
+		
+		result=result.toLocaleString();
+		
+		document.getElementById("displayID").innerHTML = result;
+	}
+	function clearValues()
+	{
+		document.getElementById("displayID").innerHTML = "";
+		document.getElementById("name_input").value = "";
+	}	
+</script>
+
+
+

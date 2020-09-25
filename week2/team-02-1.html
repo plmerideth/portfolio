@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Display Input</title>
+	</head>
+
+	<body>
+		<h1>Team 1 Assignment, Week 2.1 - Display Input</h1>
+		<input id="name_input" style="width: 500px; height: 20px; border: 2px solid blue" placeholder="Type input here!">
+		<br><br>
+		<section>
+			<button onClick="displayInput()" style="background: red; color: white">Display Input</button>
+			<button onClick="clearInput()" style="background: blue; color: white">Clear Input</button>			
+		</section>
+		<br>
+		<div id="displayID" style="width:500px; height:250px; border: 2px solid blue"></div>
+	</body>
+</html>
+
+<script>
+	function displayInput()
+	{
+		let inputContent = document.getElementById("name_input").value;	
+		document.getElementById("displayID").innerHTML = inputContent;
+	}
+	function clearInput()
+	{
+		document.getElementById("displayID").innerHTML = "";
+		document.getElementById("name_input").value = "";
+	}	
+</script>
+
+
+

@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Adding Machine</title>
+	</head>
+
+	<body>
+		<h1>Team 1 Assignment, Week 2.3 - Adding Machine</h1>
+		<input onKeyUp="formatNumber('x')" id="x_input" style="width: 100px; height: 20px; border: 2px solid blue" placeholder="X (0 to 1,000,000)">
+		<input onKeyUp="formatNumber('y')" id="y_input" style="width: 100px; height: 20px; border: 2px solid blue" placeholder="Y (0 to 1,000,000)">
+		<br><br>
+		<section>
+			<button onClick="calcValues('add')" style="width: 75px; background: red; color: white">Add (X+Y)</button>
+			<button onClick="calcValues('sub')" style="width: 75px; background: red; color: white">Sub (X-Y)</button>
+			<button onClick="calcValues('mult')" style="width: 75px; background: blue; color: white">Mult (X*Y)</button>
+			<button onClick="calcValues('div')" style="width: 75px; background: blue; color: white">Div (X/Y)</button>
+			<br>
+			<button onClick="clearAll()" style="width: 75px; background: black; color: white">Clear All</button>
+		</section>
+		<br>
+		<div id="displayID" style="text-align: center; line-height: 50px; width:200px; height:50px; border: 2px solid blue">
+			Results
+		</div>
+	</body>
+</html>
+
+<script>
+	function calcValues(operator)
+	{
+		let xValue = document.getElementById("x_input").value;
+		xValue=xValue.replace(/,/g, ""); //Remove all commas from <input> value
+		xValue = Number(xValue);
+
+		let yValue = document.getElementById("y_input").value;
+		yValue=yValue.replace(/,/g, ""); //Remove all commas from <input> value
+		yValue = Number(yValue);
+		
+		let result = 0;
+		
+		if(operator==='add')
+		{
+			result = xValue + yValue;
+		}			
+		else if(operator==='sub')
+		{
+			result = xValue - yValue;
+		}
+		else if(operator==='mult')
+		{
+			result = xValue * yValue;
+		}
+		else if(operator==='div')
+		{
+			result = xValue/yValue;
+		}
+
+		result=result.toLocaleString();
+		document.getElementById("displayID").innerHTML = result;
+	}
+	
+	function clearAll()
+	{
+		document.getElementById("x_input").value = "";
+		document.getElementById("y_input").value = "";
+		document.getElementById("displayID").innerHTML = "Results";
+	}
+	
+	function formatNumber(zInput) //This function adds commas as user enters number
+	{
+		let mixedNum = false;
+		let input = zInput+ "_input";
+		let inputNumber = document.getElementById(input).value;
+		if(inputNumber === '') //Prevent '' value from displaying a zero when converting with Number()
+			return;
+		if(inputNumber.startsWith('.') && inputNumber.length===1) //If value is a fraction, display . and return. On next iteration, .x will be converted
+		{
+			document.getElementById(input).value = inputNumber;	
+			return;
+		}
+		inputNumber=inputNumber.replace(/,/g, ""); //Remove all commas from <input> value
+		if(inputNumber.endsWith('.')) //If a mixed fraction, ie; 3.x set flag to avoid removing of decimal by Number()
+		{
+		   mixedNum=true;
+		}
+		inputNumber = Number(inputNumber); //Convert string to a number
+		if(inputNumber>1000000) //If user enters number>1,000,000, force to 1M
+			inputNumber=1000000;
+		inputNumber=inputNumber.toLocaleString(); //Convert number to string with commas
+		if(mixedNum)
+		{
+			inputNumber+=".";
+		}
+		document.getElementById(input).value = inputNumber;
+	}	
+</script>
+
+
+

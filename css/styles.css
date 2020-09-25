@@ -1,0 +1,85 @@
+@charset "utf-8";
+/* CSS Document */
+
+.portfolioDiv
+{
+	background: #C43133;
+	border: solid 2px black;
+}
+
+.pageTitle
+{
+	text-align: center;
+}
+
+.portfolioDiv a
+{
+	text-decoration: none;
+}
+
+.portfolioDiv a:link
+{
+	color: white;
+}
+.portfolioDiv a:visited
+{
+	color: black;
+}
+
+.liClass
+{
+	color: black;
+}
+
+/*Readings styles*/
+.readingSection
+{
+	border: 2px solid red;
+	background: radial-gradient(circle, #C43133, white);
+}
+.readingSection p
+{
+	margin: 2px 0 2px 0;
+}
+
+.readingTitle
+{
+	text-align: center;
+	color: white;
+}
+.readingCategory
+{
+	margin-left: 20px;
+}
+
+/*Reports styles*/
+.reportSection
+{
+	border: 2px solid blue;
+	background: radial-gradient(circle, blue, white);	
+}
+.reportTitle
+{
+	text-align: center;
+	color: white;
+}
+.reportCategory
+{
+	margin-left: 20px;	
+}
+.reportSection a
+{
+	margin-left: 10px;
+}
+.reportSection a:link
+{
+	color: red;
+}
+.reportSection a:visited
+{
+	color: orangered;
+}
+.reportSection p
+{
+	margin: 2px 0 2px 0;
+}
