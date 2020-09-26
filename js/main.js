@@ -34,6 +34,10 @@ function displayPortList()
 		li.classList.add("liClass");
 		let a = document.createElement('a');
 		let weekNo = link.label.substring(10, 12);		
+		a.setAttribute('href', link.url);
+		a.innerText = link.label;
+		li.appendChild(a);
+		ol.appendChild(li);
 		if(weekNo <= week)
 		{
 			a.classList.add("aClass");			
@@ -42,10 +46,7 @@ function displayPortList()
 		{
 			a.classList.add("aTBDClass");			
 		}
-		a.setAttribute('href', link.url);
-		a.innerText = link.label;
-		li.appendChild(a);
-		ol.appendChild(li);
+		
 	});
 		
 //	let arrayLength = links.length;
