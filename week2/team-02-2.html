@@ -6,15 +6,17 @@
 	</head>
 
 	<body>
-		<h1>Team 1 Assignment, Week 2.2 - Summation</h1>
-		<input id="name_input" style="width: 500px; height: 20px; border: 2px solid blue" placeholder="Enter number between 0 and 1,000,000 here!" onKeyUp="formatNumber()"> <!--When user releases key, call formatNumber()-->
-		<br><br>
-		<section>
-			<button onClick="displaySum()" style="background: red; color: white">Calculate Sum</button>
-			<button onClick="clearValues()" style="background: blue; color: white">Clear Values</button>			
-		</section>
-		<br>
-		<div id="displayID" style="width:500px; height:100px; border: 2px solid blue"></div>
+		<div style="text-align: center;">
+			<h1>Team 1 Assignment, Week 2.2 - Summation</h1>
+			<input id="name_input" style="width: 200px; height: 20px; border: 2px solid blue" placeholder="Enter whole number (0 to 1,000,000)" onKeyUp="formatNumber()"> <!--When user releases key, call formatNumber()-->
+			<br><br>
+			<section>
+				<button onClick="displaySum()" style="background: red; color: white">Calculate Sum</button>
+				<button onClick="clearValues()" style="background: blue; color: white">Clear Values</button>			
+			</section>
+			<br>
+			<div id="displayID" style="margin: auto; width:150px; height:20px; border: 2px solid blue"></div>
+		</div>
 	</body>
 </html>
 
