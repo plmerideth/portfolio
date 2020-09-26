@@ -60,6 +60,14 @@
 	background-color: white;
 	color: black;	
 }
+.aTBDClass a:link
+{
+	color: black;
+}
+.aTBDClass a:visited
+{
+	color: black;
+}
 
 
 
