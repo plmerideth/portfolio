@@ -3,7 +3,7 @@
 
 .portfolioDiv
 {
-	background: #C43133;
+	background: radial-gradient(circle, blue, white);
 	border: solid 2px black;
 }
 
@@ -17,19 +17,50 @@
 	text-decoration: none;
 }
 
+/*
 .portfolioDiv a:link
 {
 	color: white;
 }
+*/
 .portfolioDiv a:visited
 {
-	color: black;
+	color: white;
 }
 
 .liClass
 {
 	color: black;
 }
+
+.aClass
+{
+	width: 140px;
+	display: inline-block;
+	margin: 20px 0 0 20px;
+	text-decoration: none;
+	text-align: center;
+	padding: 3px;
+	border: solid 1px black;
+	border-radius: 8px;
+	background-color: firebrick;
+	color: white;	
+}
+.aTBDClass
+{
+	width: 140px;
+	display: inline-block;
+	margin: 20px 0 0 20px;
+	text-decoration: none;
+	text-align: center;
+	padding: 3px;
+	border: solid 1px black;
+	border-radius: 8px;
+	background-color: white;
+	color: black;	
+}
+
+
 
 /*Readings styles*/
 .readingSection
@@ -41,11 +72,21 @@
 {
 	margin: 2px 0 2px 0;
 }
-
+.readingSection a
+{
+	display: inline-block;
+	margin: 20px 0 0 20px;
+	text-decoration: none;
+	padding: 3px;
+	border: solid 1px black;
+	border-radius: 8px;
+	background-color: firebrick;
+	color: white;
+}
 .readingTitle
 {
 	text-align: center;
-	color: white;
+	color: black;
 }
 .readingCategory
 {
@@ -56,12 +97,12 @@
 .reportSection
 {
 	border: 2px solid blue;
-	background: radial-gradient(circle, blue, white);	
+	background: radial-gradient(circle, blue, white);
 }
 .reportTitle
 {
 	text-align: center;
-	color: white;
+	color: black;
 }
 .reportCategory
 {
@@ -82,4 +123,22 @@
 .reportSection p
 {
 	margin: 2px 0 2px 0;
+}
+.footerSection
+{
+	border: 2px solid red;
+	background: radial-gradient(circle, #C43133, white);	
+}
+
+/*Footer Styles*/
+.footerSection a
+{
+	display: inline-block;
+	margin: 20px 0 20px 20px;
+	text-decoration: none;
+	padding: 3px;
+	border: solid 1px black;
+	border-radius: 8px;
+	background-color: firebrick;
+	color: white;
 }
