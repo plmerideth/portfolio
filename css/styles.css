@@ -45,7 +45,7 @@
 	border: solid 1px black;
 	border-radius: 8px;
 	background-color: firebrick;
-	color: white;	
+	color: green;	
 }
 .aTBDClass
 {
@@ -58,7 +58,7 @@
 	border: solid 1px black;
 	border-radius: 8px;
 	background-color: white;
-	color: black;	
+	color: yellow;	
 }
 .aTBDClass a:link
 {
