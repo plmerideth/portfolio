@@ -31,22 +31,22 @@ function displayPortList()
 	links.forEach(link =>
 	{
 		let li = document.createElement('li');
-		li.classList.add("liClass");
+		let weekNo = link.label.substring(10, 12); //Read week number from string
 		let a = document.createElement('a');
-		let weekNo = link.label.substring(10, 12);		
 		a.setAttribute('href', link.url);
 		a.innerText = link.label;
 		li.appendChild(a);
 		ol.appendChild(li);
 		if(weekNo <= week)
 		{
-			a.classList.add("aClass");			
+			li.classList.add("liClass"); //Set <li> class for completed pages
+			a.classList.add("aClass");  //Set <a> class	for completed pages
 		}
 		else
 		{
-			a.classList.add("aTBDClass");			
-		}
-		
+			a.classList.add("aTBDClass");   //Set <li> class for completed pages
+			li.classList.add("liInactiveClass");  //Set <a> class	for completed pages
+		}		
 	});
 		
 //	let arrayLength = links.length;
