@@ -88,7 +88,7 @@
 		inputNumber = Number(inputNumber); //Convert string to a number
 		if(inputNumber>1000000) //If user enters number>1,000,000, force to 1M
 			inputNumber=1000000;
-		inputNumber=inputNumber.toLocaleString(); //Convert number to string with commas
+		inputNumber=inputNumber.toLocaleString("en-US", {maximumFractionDigits: 20}); //Convert number to string with commas
 		if(mixedNum)
 		{
 			inputNumber+=".";
