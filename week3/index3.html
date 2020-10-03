@@ -12,7 +12,7 @@
 		   	<h2 class="readingTitle">WEEK 3 READINGS</h2>
 		<h3 class="readingCategory">Javascript: Novice to Ninja</h3>
 		<ul>
-			<li><strong>CHAPTER 5</strong></li>
+			<li><strong>CHAPTER 5 - OBJECTS</strong></li>
 			<p>- Most of chapter 5 was review material for me.</p>
 			<li><strong>Built-In Objects</strong></li>
 			<li>Math Object Methods</li>
@@ -53,7 +53,7 @@
 			<li class="colList">- Math.LOG10E   // returns base 10 logarithm of E </li>
 			<li style="clear: left">Date object properties can only be read and set with getter and setter methods</li>
 			<li>Regular expressions are difficult to use</li>
-			<li><strong>CHAPTER 6</strong></li>
+			<li><strong>CHAPTER 6 - THE DOCUMENT OBJECT MODEL</strong></li>
 			<li>- Node lists are array-like objects, but not actual arrays</li>
 			<li>- Node lists don't have normal array methods, like splice, slice, and join</li>
 			<li>- Node lists can be converted to normal arrays using Array.from(document.images) or with spread operator</li>
@@ -63,7 +63,13 @@
 			<li>- Classes can be set in two ways.  First, using setAttribute() method.  Second, it can be set directly using the className property, but writing to className will overwrite other existing classes (if multiple classes exist).  Use classList.add() to add a class</li>
 			<li>- Once elements are created using document.createElement(), they must be linked using appendChild()</li>
 			<li>- CSS properties that have a dash, like background-color, must use camelCase when being changed because property names cannot have dashes.  background-color becomes backgroundColor</li>
-			<li>getComputedStyle() can be used to read the style properties, but it can't read styles set with external stylesheets</li>
+			<li>- getComputedStyle() can be used to read the style properties, but it can't read styles set with external stylesheets</li>
+			<li><strong>CHAPTER 7 - EVENTS</strong></li>
+			<li>- Javascript uses non-blcoking approach for event handling</li>
+			<li>- addeEventListener() method is called on a node object.  It can also be called without a node and is then applied to the global object</li>
+			<li>- Whenever an event handler is triggered, the callback function is called and automatically passed an event object as a parameter</li>
+			<li>- Encountered a console not defined lint error in DreamWeaver.  Had to research and add a comment in .js file to disable the alert, which is intended to avoid the </li>
+			<li>- Bubbling is an interesting concept that could be a useful tool.</li>
 		</ul>				
 	</section>
 	
@@ -71,16 +77,24 @@
 		<h2 class="reportTitle">WEEK 3 REPORT</h2>
 		<h3 class="reportCategory">What did I do since the last meeting?</h3>
 		<ul>
+			<li>Read all 3 assigned chapters in JavaScript book</li>
+			<li>Fixed 'console not defined' error in my editor by adding ESLint comment in .js file</li>
+			<p>/* eslint-disable no-alert, no-console */</p>
+			<li>Learned how to read a text file and display it on my web page using JavaScript.  <strong>See next bullet as demonstration</strong></li>
+			<li>Completed all 8 team assignments and attached link to display code</li>
 			<a href="team-assign.html">Click to Display Code</a>
 		</ul>
 		<h3 class="reportCategory">What am I going to do next?</h3>
 		<ul>
+			<li>Complete week 4 assignments by Wed because I'm going out of town on Wed night</li>
 		</ul>
 		<h3 class="reportCategory">What are my blockers?</h3>
 		<ul>
+			<li>This week wasn't too difficult.  Just need to practice using new code so it sticks in my memory</li>
 		</ul>
 		<h3 class="reportCategory">Questions</h3>
 		<ul>
+			<li>No questions this week</li>
 		</ul>
 	</section>
 	<footer class="footerSection">
