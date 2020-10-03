@@ -8,26 +8,23 @@
 <body>
 	<h1>Team 1 Assignment - Week 3</h1>
 	<h3>The problems and code solutions are listed below</h3>
-	<input type="file" id="fileChoice"/>			
 	
 	<pre id="contents"></pre>
 </body>
 </html>
 
 <script>
-	document
-		.getElementById('fileChoice')
-		.addEventListener(
-			'change',
-			function()
-			{
-				let fr = new FileReader();
-				fr.onload = function()
-				{
-					document.getElementById('contents').textContent = this.result;
-				};
-				fr.readAsText(this.files[0]);
-			});
+	function populatePre(url)
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function () {
+			document.getElementById('contents').textContent = this.responseText;
+		};
+		xhr.open('GET', url);
+		xhr.send();
+	}
+	
+populatePre('code.txt');
 </script>
 
 
