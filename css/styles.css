@@ -121,6 +121,7 @@
 /*Reports styles*/
 .reportSection
 {
+	clear: left;
 	border: 2px solid blue;
 	background: radial-gradient(circle, blue, white);
 }
@@ -166,4 +167,11 @@
 	border-radius: 8px;
 	background-color: firebrick;
 	color: white;
+}
+
+.colList
+{
+	display: block;
+	width: 25%;
+	float: left;
 }
