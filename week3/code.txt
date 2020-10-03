@@ -1,3 +1,6 @@
+PROBLEM 1 - Array.prototype.filter()
+Filter the list of inventors for those who were born in the 1500's
+
 <script>
 const inventors = [
         { first: 'Albert', last: 'Einstein', year: 1879, passed: 1955 },
@@ -17,4 +20,182 @@ const inventors = [
 	console.log(inventors);
 	let fifteenHundreds = inventors.filter(x => x.year>=1500 && x.year<1600);
 	console.table(fifteenHundreds);
+</script>
+
+=========================================
+
+PROBLEM 2 - Array.prototype.map()
+Give us an array of the inventors' first and last names
+
+<script>
+	const firstLast = inventors.map(x=>x.first+" "+x.last);
+	console.table(firstLast);
+	console.table(inventors);
+</script>
+
+=========================================
+
+PROBLEM 3 - Array.prototype.sort()
+Sort the inventors by birthdate, oldest to youngest
+
+<script>
+	const oldToYoung = inventors.sort((x,y)=>
+	{
+		if(x.year<y.year)
+		{
+			return -1;
+		}
+		else
+		{
+			return 1;
+		};
+	});
+</script>
+
+=========================================
+
+PROBLEM 4 - Array.prototype.reduce()
+How many years did all the inventors live?
+
+<script>
+	const yearsLived = inventors.reduce((total, y)=>
+	{
+		return total + (y.passed-y.year);
+	}, 0);
+	
+	console.log(yearsLived);
+</script>
+
+=========================================
+
+PROBLEM 5 - Sort the inventors by years lived
+
+<script>
+	const yearsLived = inventors.sort((x,y)=>(x.passed-x.year)>(y.passed-y.year) ? -1 : 1);
+	console.table(yearsLived);
+	
+	let age=0;
+	yearsLived.forEach(x=>{
+		x.age=x.passed-x.year;
+	});
+	
+	console.table(yearsLived);	
+</script>
+
+=========================================
+
+PROBLEM 6 - create a list of Boulevards in Paris that contain 'de' anywhere in the name
+      https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+      goto the link above and open the console. Paste the following two lines in.  That will create a list of links in memory that you can reference through the console. Use that list to finish the problem.
+      const category = document.querySelector('.mw-category');
+      const links = Array.from(category.querySelectorAll('a'));
+
+<script>	
+	const category = document.querySelector('.mw-category');
+	const links = Array.from(category.querySelectorAll('a'));
+	
+	const de = links
+		.map(x=>x.textContent)
+		.filter(street=>street.includes("de"));
+</script>
+
+=========================================
+
+PROBLEM 7 - sort Exercise
+Sort the people alphabetically by last name
+
+<script>
+	const people = [
+        'Beck, Glenn',
+        'Becker, Carl',
+        'Beckett, Samuel',
+        'Beddoes, Mick',
+        'Beecher, Henry',
+        'Beethoven, Ludwig',
+        'Begin, Menachem',
+        'Belloc, Hilaire',
+        'Bellow, Saul',
+        'Benchley, Robert',
+        'Benenson, Peter',
+        'Ben-Gurion, David',
+        'Benjamin, Walter',
+        'Benn, Tony',
+        'Bennington, Chester',
+        'Benson, Leana',
+        'Bent, Silas',
+        'Bentsen, Lloyd',
+        'Berger, Ric',
+        'Bergman, Ingmar',
+        'Berio, Luciano',
+        'Berle, Milton',
+        'Berlin, Irving',
+        'Berne, Eric',
+        'Bernhard, Sandra',
+		'Alpha, Romeo',
+        'Berra, Yogi',
+        'Berry, Halle',
+        'Berry, Wendell',
+        'Bethea, Erin',
+        'Bevan, Aneurin',
+        'Bevel, Ken',
+        'Biden, Joseph',
+        'Bierce, Ambrose',
+        'Biko, Steve',
+        'Billings, Josh',
+        'Biondo, Frank',
+        'Birrell, Augustine',
+        'Black, Elk',
+        'Blair, Robert',
+        'Blair, Tony',
+        'Blake, William'
+      ];
+	
+	const myAlpha = people.sort((comp1, comp2)=>
+	{
+		let i = comp1.indexOf(",");
+		const lastName1 = comp1.substring(0,i);
+		i = comp2.indexOf(",");
+		const lastName2 = comp2.substring(0,i);
+		return lastName1 < lastName2 ? 1 : -1;
+	});
+	
+	console.log(people);
+	console.log(myAlpha);
+</script>
+
+=========================================
+
+PROBLEM 8 - Reduce Exercise
+Sum up the instances of each of these
+
+<script>
+	const data = [
+        'car',
+        'car',
+        'truck',
+        'truck',
+        'bike',
+        'walk',
+        'car',
+        'van',
+        'bike',
+        'walk',
+        'car',
+        'van',
+        'car',
+        'truck'
+      ];
+	
+	const singleInstance = data.reduce((obj,item)=>
+	{
+		if(!obj[item])
+		{
+			obj[item] = 0; //Add item key into obj and initialize to zero count;
+		}
+		obj[item]++;
+		return obj;
+	}, {});  //Pass empty object as second parameter
+	
+	console.table(singleInstance);
+	console.table(data);			
 </script>
