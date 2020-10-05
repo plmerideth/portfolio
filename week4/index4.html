@@ -14,12 +14,13 @@
 
 <script>
 	const topLeft = document.getElementById('TL');
-	topLeft.addEventListener('touchend', (event)=> highlight);
-	topLeft.addEventListener('click', (event)=>console.log(`Click. Event = ${event}`) );
+	topLeft.addEventListener('touchend', highlight);
+	topLeft.addEventListener('click', (event)=>console.log(`Click. Event = ${event.target.classList}`) );
 	
 	function highlight(event)
 	{
 		event.target.classList.toggle('highlight');
+		console.log(`Click. Post-toggle Event = ${event.target.classList}`);
 	}
 	
 	
