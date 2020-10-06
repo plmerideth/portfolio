@@ -56,6 +56,7 @@ playerDone.addEventListener('touchend', nextPlayer);
 let lastPlayer='';
 let currentPlayer='x';
 let squareSelected=false;
+let staleMate = false;
 let messageID = document.getElementById('messageArea');
 let gameTitle = document.getElementById('gameTitle');
 let sector = "";
@@ -104,17 +105,29 @@ function nextPlayer()
 		break;			
 	}
 
-	checkForWin();
-	
-	if(lastPlayer==='x')
+	if(checkForWin())
 	{
-		currentPlayer = 'y';
-		gameTitle.innerHTML = "<h2>Player O's Turn</h2>";
+		if(staleMate)
+		{
+			gameTitle.innerHTML="<h2>Stalemate!</h2>";	
+		}
+		else
+		{
+			gameTitle.innerHTML="<h2>Congratulations!  Game Over</h2>";	
+		}
 	}
 	else
 	{
-		currentPlayer = 'x';
-		gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
+		if(lastPlayer==='x')
+		{
+			currentPlayer = 'y';
+			gameTitle.innerHTML = "<h2>Player O's Turn</h2>";
+		}
+		else
+		{
+			currentPlayer = 'x';
+			gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
+		}		
 	}
 }
 
@@ -141,10 +154,12 @@ function checkForWin()
 		if(xRow>=3)
 		{
 			messageID.innerHTML="<p>Player X Wins!</p>";
+			return true;
 		}
 		if(oRow>=3)
 		{
 			messageID.innerHTML="<p>Player O Wins!</p>";
+			return true;
 		}
 	}
 
@@ -166,10 +181,12 @@ function checkForWin()
 		if(xRow>=3)
 		{
 			messageID.innerHTML="<p>Player X Wins!</p>";
+			return true;
 		}
 		if(oRow>=3)
 		{
 			messageID.innerHTML="<p>Player O Wins!</p>";
+			return true;
 		}
 	}
 
@@ -181,10 +198,12 @@ function checkForWin()
 			if(gameBoard[1][1]==='x')
 			{
 				messageID.innerHTML="<p>Player X Wins!</p>";
+				return true;
 			}
 			else
 			{
 				messageID.innerHTML="<p>Player O Wins!</p>";
+				return true;
 			}
 		}
 		else if((gameBoard[1][1]===gameBoard[2][0]) && (gameBoard[1][1]===gameBoard[0][2]))
@@ -192,10 +211,12 @@ function checkForWin()
 			if(gameBoard[1][1]==='x')
 			{
 				messageID.innerHTML="<p>Player X Wins!</p>";
+				return true;
 			}
 			else
 			{
 				messageID.innerHTML="<p>Player O Wins!</p>";
+				return true;
 			}		
 		}
 	}
@@ -222,7 +243,10 @@ function checkForWin()
 	if(xRow+oRow===9)
 	{
 		messageID.innerHTML = "<p>Sorry, no one wins!</p>";
-	}		
+		staleMate = true;
+		return true;
+	}
+	return false;
 }
 
 //function highlight(event)
@@ -236,6 +260,7 @@ function resetGame()
 	lastPlayer='';
 	currentPlayer='x';
 	squareSelected=false;
+	staleMate = false;
 	sector = "";
 	gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
 	messageID.innerHTML = "<p>Player X Pick a Square</p>";
