@@ -2,26 +2,36 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>Tic-Tac-Toe</title>
-<link rel="stylesheet" href="tic-tac-toe.css">
+<link rel="stylesheet" href="../css/styles.css">
+<title>Week 4</title>
 </head>
 
 <body>
-	<div class="TL" id="TL">
-	</div>
+	<section class="readingSection">
+			<a href="../index.html">Home</a>
+		   	<h2 class="readingTitle">WEEK 4 READINGS</h2>
+		<h3 class="readingCategory">Javascript: Novice to Ninja</h3>
+		<ul>
+		</ul>				
+	</section>
+	
+	<section class="reportSection">
+		<h2 class="reportTitle">WEEK 4 REPORT</h2>
+		<h3 class="reportCategory">What did I do since the last meeting?</h3>
+		<ul>
+		</ul>
+		<h3 class="reportCategory">What am I going to do next?</h3>
+		<ul>
+		</ul>
+		<h3 class="reportCategory">What are my blockers?</h3>
+		<ul>
+		</ul>
+		<h3 class="reportCategory">Questions</h3>
+		<ul>
+		</ul>
+	</section>
+	<footer class="footerSection">
+		<a href="../index.html">Home</a>
+	</footer>
 </body>
 </html>
-
-<script>
-	const topLeft = document.getElementById('TL');
-	topLeft.addEventListener('touchend', highlight);
-	topLeft.addEventListener('click', (event)=>console.log(`Click. Event = ${event.target.classList}`) );
-	
-	function highlight(event)
-	{
-		event.target.classList.toggle('highlight');
-		console.log(`Click. Post-toggle Event = ${event.target.classList}`);
-	}
-	
-	
-</script>
