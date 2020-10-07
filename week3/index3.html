@@ -54,22 +54,22 @@
 			<li style="clear: left">Date object properties can only be read and set with getter and setter methods</li>
 			<li>Regular expressions are difficult to use</li>
 			<li><strong>CHAPTER 6 - THE DOCUMENT OBJECT MODEL</strong></li>
-			<li>- Node lists are array-like objects, but not actual arrays</li>
-			<li>- Node lists don't have normal array methods, like splice, slice, and join</li>
-			<li>- Node lists can be converted to normal arrays using Array.from(document.images) or with spread operator</li>
-			<li>- Document.querySelector() returns only the FIRST element that matches the CSS selector</li>
-			<li>- Document.querySelectorAll() returns a node list of all elements that match</li>
-			<li>- querySelector() method can be used on any element, not just document.  You first have to get a reference to the element of interest, and then you can query that element.  For example, const ul = document.querySelector('ul#roster');  Then call const batman=ul.querySelector('li#bats');</li>
-			<li>- Classes can be set in two ways.  First, using setAttribute() method.  Second, it can be set directly using the className property, but writing to className will overwrite other existing classes (if multiple classes exist).  Use classList.add() to add a class</li>
-			<li>- Once elements are created using document.createElement(), they must be linked using appendChild()</li>
-			<li>- CSS properties that have a dash, like background-color, must use camelCase when being changed because property names cannot have dashes.  background-color becomes backgroundColor</li>
-			<li>- getComputedStyle() can be used to read the style properties, but it can't read styles set with external stylesheets</li>
-			<li><strong>CHAPTER 7 - EVENTS</strong></li>
-			<li>- Javascript uses non-blcoking approach for event handling</li>
-			<li>- addeEventListener() method is called on a node object.  It can also be called without a node and is then applied to the global object</li>
-			<li>- Whenever an event handler is triggered, the callback function is called and automatically passed an event object as a parameter</li>
-			<li>- Encountered a console not defined lint error in DreamWeaver.  Had to research and add a comment in .js file to disable the alert, which is intended to avoid the </li>
-			<li>- Bubbling is an interesting concept that could be a useful tool.</li>
+			<p>- Node lists are array-like objects, but not actual arrays</p>
+			<p>- Node lists don't have normal array methods, like splice, slice, and join</p>
+			<p>- Node lists can be converted to normal arrays using Array.from(document.images) or with spread operator</p>
+			<p>- Document.querySelector() returns only the FIRST element that matches the CSS selector</p>
+			<p>- Document.querySelectorAll() returns a node list of all elements that match</p>
+			<p>- querySelector() method can be used on any element, not just document.  You first have to get a reference to the element of interest, and then you can query that element.  For example, const ul = document.querySelector('ul#roster');  Then call const batman=ul.querySelector('li#bats');</p>
+			<p>- Classes can be set in two ways.  First, using setAttribute() method.  Second, it can be set directly using the className property, but writing to className will overwrite other existing classes (if multiple classes exist).  Use classList.add() to add a class</p>
+			<p>- Once elements are created using document.createElement(), they must be linked using appendChild()</p>
+			<p>- CSS properties that have a dash, like background-color, must use camelCase when being changed because property names cannot have dashes.  background-color becomes backgroundColor</p>
+			<p>- getComputedStyle() can be used to read the style properties, but it can't read styles set with external stylesheets</p>
+			<p><strong>CHAPTER 7 - EVENTS</strong></p>
+			<p>- Javascript uses non-blcoking approach for event handling</p>
+			<p>- addeEventListener() method is called on a node object.  It can also be called without a node and is then applied to the global object</p>
+			<p>- Whenever an event handler is triggered, the callback function is called and automatically passed an event object as a parameter</p>
+			<p>- Encountered a console not defined lint error in DreamWeaver.  Had to research and add a comment in .js file to disable the alert, which is intended to avoid the </p>
+			<p>- Bubbling is an interesting concept that could be a useful tool.</p>
 		</ul>				
 	</section>
 	

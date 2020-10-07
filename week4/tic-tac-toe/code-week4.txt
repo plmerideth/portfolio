@@ -1,0 +1,541 @@
+HTML FILE - TIC-TAC-TOE.HTML
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Tic-Tac-Toe</title>
+<link rel="stylesheet" href="tic-tac-toe.css">
+</head>
+
+<body>
+	<div class="gameTitle" id="gameTitle"></div>
+	<div class="gameWindow" id="gameWindow">
+		<div class="TL" id="TL">
+		</div>
+		<div class="TM" id="TM">
+		</div>
+		<div class="TR" id="TR">
+		</div>
+		<div class="ML" id="ML">
+		</div>
+		<div class="MM" id="MM">
+		</div>
+		<div class="MR" id="MR">
+		</div>
+		<div class="BL" id="BL">
+		</div>
+		<div class="BM" id="BM">
+		</div>
+		<div class="BR" id="BR">
+		</div>
+	</div>
+	<div class="messageArea" id="messageArea"></div>
+	
+	<div class="playerButtons">
+		<button class="playerButton" id="playerDone">Click for Next Player</button>
+		<button class="playerButton" id="resetButton">Click to Reset Game</button>
+	</div>		
+	
+	<div id="section0"></div>
+	<div id="section1"></div>
+	<div id="section2"></div>
+	
+</body>
+</html>
+
+<script src="tic-tac-toe.js"></script>
+
+=======================================
+
+JAVASCRIPT CODE - TIC-TAC-TOE.JS
+
+// JavaScript Document
+/* eslint-disable no-alert, no-console */
+
+//Create 3x3 array to capture player moves
+let gameBoard = new Array(3);
+for(let i=0; i<gameBoard.length; i++)
+{
+	gameBoard[i] = new Array(3);
+}
+
+const topLeft = document.getElementById('TL');
+topLeft.addEventListener('touchend', display);
+topLeft.addEventListener('click', display);
+topLeft.addEventListener('click', (event)=>console.log(`Click. Event = ${event.target.classList}`) );
+
+const topMiddle = document.getElementById('TM');
+topMiddle.addEventListener('touchend', display);
+topMiddle.addEventListener('click', display);
+
+const topRight = document.getElementById('TR');
+topRight.addEventListener('touchend', display);
+topRight.addEventListener('click', display);
+
+const middleLeft = document.getElementById('ML');
+middleLeft.addEventListener('touchend', display);
+middleLeft.addEventListener('click', display);
+
+const middleMiddle = document.getElementById('MM');
+middleMiddle.addEventListener('touchend', display);
+middleMiddle.addEventListener('click', display);
+
+const middleRight = document.getElementById('MR');
+middleRight.addEventListener('touchend', display);
+middleRight.addEventListener('click', display);
+
+const bottomLeft = document.getElementById('BL');
+bottomLeft.addEventListener('touchend', display);
+bottomLeft.addEventListener('click', display);
+
+const bottomMiddle = document.getElementById('BM');
+bottomMiddle.addEventListener('touchend', display);
+bottomMiddle.addEventListener('click', display);
+
+const bottomRight = document.getElementById('BR');
+bottomRight.addEventListener('touchend', display);
+bottomRight.addEventListener('click', display);
+
+const resetButton = document.getElementById('resetButton');
+resetButton.addEventListener('click', resetGame);
+resetButton.addEventListener('touchend', resetGame);
+
+const playerDone = document.getElementById('playerDone');
+playerDone.addEventListener('click', nextPlayer);
+playerDone.addEventListener('touchend', nextPlayer);
+
+let lastPlayer='';
+let currentPlayer='x';
+let squareSelected=false;
+let staleMate = false;
+let messageID = document.getElementById('messageArea');
+let gameTitle = document.getElementById('gameTitle');
+let sector = "";
+gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
+messageID.innerHTML = "<p>Player X Pick a Square</p>";
+
+function nextPlayer()
+{
+	if(lastPlayer===currentPlayer)
+	{
+		return;
+	}
+	
+	squareSelected = false;
+	messageID.innerHTML = "";
+	
+	//Record players move into gameBoard array
+	switch(sector)
+	{
+		case "TL":
+			gameBoard[0][0] = lastPlayer;
+		break;
+		case "TM":
+			gameBoard[0][1] = lastPlayer;
+		break;
+		case "TR":
+			gameBoard[0][2] = lastPlayer;
+		break;
+		case "ML":
+			gameBoard[1][0] = lastPlayer;
+		break;
+		case "MM":
+			gameBoard[1][1] = lastPlayer;
+		break;
+		case "MR":
+			gameBoard[1][2] = lastPlayer;
+		break;
+		case "BL":
+			gameBoard[2][0] = lastPlayer;
+		break;
+		case "BM":
+			gameBoard[2][1] = lastPlayer;
+		break;
+		case "BR":
+			gameBoard[2][2] = lastPlayer;
+		break;			
+	}
+
+	if(checkForWin())
+	{
+		if(staleMate)
+		{
+			gameTitle.innerHTML="<h2>Stalemate!</h2>";	
+		}
+		else
+		{
+			gameTitle.innerHTML="<h2>Congratulations!  Game Over</h2>";	
+		}
+	}
+	else
+	{
+		if(lastPlayer==='x')
+		{
+			currentPlayer = 'y';
+			gameTitle.innerHTML = "<h2>Player O's Turn</h2>";
+		}
+		else
+		{
+			currentPlayer = 'x';
+			gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
+		}		
+	}
+}
+
+function checkForWin()
+{
+	//Check horizontal rows
+	let xRow=0, oRow=0;
+	
+	//Check for row win
+	for(let row=0; row<gameBoard.length; row++)
+	{
+		xRow=0, oRow=0;
+		for(let col=0; col<gameBoard[row].length; col++)
+		{
+			if(gameBoard[row][col]==='x')
+			{
+				xRow++;
+			}
+			else if(gameBoard[row][col]==='y')
+			{
+				oRow++;
+			}
+		}
+		if(xRow>=3)
+		{
+			messageID.innerHTML="<p>Player X Wins!</p>";
+			return true;
+		}
+		if(oRow>=3)
+		{
+			messageID.innerHTML="<p>Player O Wins!</p>";
+			return true;
+		}
+	}
+
+	//Check for col win
+	for(let col=0; col<3; col++)
+	{
+		xRow=0, oRow=0;
+		for(let row=0; row<3; row++)
+		{
+			if(gameBoard[row][col]==='x')
+			{
+				xRow++;
+			}
+			else if(gameBoard[row][col]==='y')
+			{
+				oRow++;
+			}
+		}
+		if(xRow>=3)
+		{
+			messageID.innerHTML="<p>Player X Wins!</p>";
+			return true;
+		}
+		if(oRow>=3)
+		{
+			messageID.innerHTML="<p>Player O Wins!</p>";
+			return true;
+		}
+	}
+
+	//Check for diagonal win
+	if(gameBoard[1][1]!=undefined)
+	{
+		if((gameBoard[1][1]===gameBoard[0][0]) && (gameBoard[1][1]===gameBoard[2][2]))
+		{
+			if(gameBoard[1][1]==='x')
+			{
+				messageID.innerHTML="<p>Player X Wins!</p>";
+				return true;
+			}
+			else
+			{
+				messageID.innerHTML="<p>Player O Wins!</p>";
+				return true;
+			}
+		}
+		else if((gameBoard[1][1]===gameBoard[2][0]) && (gameBoard[1][1]===gameBoard[0][2]))
+		{
+			if(gameBoard[1][1]==='x')
+			{
+				messageID.innerHTML="<p>Player X Wins!</p>";
+				return true;
+			}
+			else
+			{
+				messageID.innerHTML="<p>Player O Wins!</p>";
+				return true;
+			}		
+		}
+	}
+	
+	//Check for stalemate
+	//Check horizontal rows
+	xRow=0, oRow=0;
+	
+	//Count Xs and Ox
+	for(let row=0; row<gameBoard.length; row++)
+	{
+		for(let col=0; col<gameBoard[row].length; col++)
+		{
+			if(gameBoard[row][col]==='x')
+			{
+				xRow++;
+			}
+			else if(gameBoard[row][col]==='y')
+			{
+				oRow++;
+			}
+		}
+	}
+	if(xRow+oRow===9)
+	{
+		messageID.innerHTML = "<p>Sorry, no one wins!</p>";
+		staleMate = true;
+		return true;
+	}
+	return false;
+}
+
+//function highlight(event)
+//{
+//	event.target.classList.toggle('highlight');
+//	console.log(`Click. Post-toggle Event = ${event.target.classList}`);
+//}
+
+function resetGame()
+{
+	lastPlayer='';
+	currentPlayer='x';
+	squareSelected=false;
+	staleMate = false;
+	sector = "";
+	gameTitle.innerHTML = "<h2>Player X's Turn</h2>";
+	messageID.innerHTML = "<p>Player X Pick a Square</p>";
+
+	gameBoard = new Array(3);
+	for(let i=0; i<gameBoard.length; i++)
+	{
+		gameBoard[i] = new Array(3);
+	}	
+	
+	topLeft.innerHTML = "";
+	topMiddle.innerHTML= "";
+	topRight.innerHTML = "";
+	middleLeft.innerHTML = "";
+	middleMiddle.innerHTML = "";
+	middleRight.innerHTML = "";
+	bottomLeft.innerHTML = "";
+	bottomMiddle.innerHTML = "";
+	bottomRight.innerHTML = "";
+}
+
+function display()
+{
+	if(currentPlayer==='x') //Player = x player
+	{
+		if(event.target.innerHTML==="X")
+		{
+			event.target.innerText = ""; //Toggle X on or off until DONE button clicked
+			squareSelected = false;
+		}
+		else if(squareSelected===false)
+		{
+			event.target.innerHTML = "<H1>X</H1>";
+			squareSelected = true;
+			sector = event.target.id; //capture new sector selected
+			lastPlayer='x';
+			currentPlayer='y';
+		}
+		else
+		{
+			messageID.innerHTML = "<p>Only one O per turn</p>";	
+		}
+	}
+	else if(currentPlayer==='y') //Player = y player
+	{
+		if(event.target.innerHTML==="O")
+		{
+			event.target.innerText = ""; //Toggle X on or off until DONE button clicked
+			squareSelected = false;
+		}
+		else if(squareSelected===false)
+		{
+			event.target.innerHTML = "<H1>O</H1>";
+			squareSelected = true;
+			sector = event.target.id;
+			lastPlayer='y';
+			currentPlayer='x';
+		}
+		else //The current player is y, but the next player button was clicked before a box was selected
+		{
+			messageID.innerHTML = "<p>Only one X per turn</p>";	
+		}		
+	}
+}
+
+=======================================
+
+CSS FILE - TIC-TAC-TOE.CSS
+
+@charset "utf-8";
+/* CSS Document */
+
+
+.gameTitle
+{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+}
+.gameWindow
+{
+	margin: auto;
+/*	position: absolute;*/
+	width: 350px;
+	height: 350px;
+	border: 2px solid black;
+	margin-top: 30px;
+}
+.TL
+{
+	position: relative;
+	top:  20px;
+	left: 20px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-left: 0px;
+	border-top: 0px;
+}
+.TM
+{
+	position: relative;
+	top: -82px; /* minus the top margin and border widths */
+	left: 122px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-top: 0px;
+}
+.TR
+{
+	position: relative;
+	top: -184px;
+	left: 226px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-top: 0px;
+	border-right: 0px;
+}
+.ML
+{
+	position: relative;
+	top: -184px;
+	left: 20px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-left: 0px;
+}
+.MM
+{
+	position: relative;
+	top: -288px;
+	left: 122px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+}
+.MR
+{
+	position: relative;
+	top: -392px;
+	left: 226px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-right: 0px;
+}
+.BL
+{
+	position: relative;
+	top: -392px;
+	left: 20px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-left: 0px;
+	border-bottom: 0px;
+}
+.BM
+{
+	position: relative;
+	top: -494px;
+	left: 122px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-bottom: 0px;
+}
+.BR
+{
+	position: relative;
+	top: -596px;
+	left: 226px;
+	width: 100px;
+	height: 100px;
+	border: 2px solid black;
+	border-right: 0px;
+	border-bottom: 0px;
+}
+
+.highlight
+{
+	background-color: red;
+}
+
+h1
+{
+	text-align: center;
+	line-height: 100px;
+	margin: 0px;
+	font-size: 50px;
+}
+h2
+{
+	margin: 0px;
+}
+
+.messageArea
+{
+	margin: auto;
+/*	position: absolute;*/
+	width: 350px;
+	height: 50px;
+	border: 2px solid red;
+	margin-top: 20px;	
+	text-align: center;
+	line-height: 10px;
+	font-size: 20px;
+}
+
+.playerButtons  /* The class for the div containing buttons */
+{
+	margin-top: 20px;
+	text-align: center;
+}
+.playerButton
+{
+	border: solid 1px #000;
+	background-color: #333;
+	color: white;
+	text-align: center;
+	padding: 10px 10px 10px 10px;
+	border-radius: 15px;
+}
