@@ -11,79 +11,53 @@
   		   	<h2 class="readingTitle">WEEK 5 READINGS</h2>
   		<h3 class="readingCategory">Javascript: Novice to Ninja</h3>
   		<ul>
-  			<li><strong>CHAPTER 8 - FORMS</strong></li>
-  			<p>- It's becoming more popular to process form information on the front-end using JavaScriptbefore it's sent to the server</p>
-  			<p>- This chapter is a good review of HTML form elements</p>
-  			<p>- Client-side validation is advised to prevent reduce the number of invalid data being sent to the server</p>
-  			<p>- It's important to note that front-end JavaScript validation is not secure and should be relied on for sensitve data</p>
-  			<p>- It's easy to modify javascript front-end code</p>
-  			<p>- JavaScript can be used to disable the submit button if there are errors on the form</p>
-  			<li><strong>CHAPTER 12 - OBJECT-ORIENTED PROGRAMMING IN JAVASCRIPT</strong></li>
-  			<p>- Three main components of OOP - encapsulation, polymorphism, and inheritance</p>
-  			<p>- Encapsulation:  keeping all programming logic inside an object, only exposing methods, without needing to know how it's done</p>
-  			<p>- Polymorphism:  Various objects can share a method, but also has the ability to override with a more specific implementation</p>
-  			<p>- Inheritance:  Taking an object that already exists and inherit its properties and methods</p>
-  			<p>- Classes:  Defines a blueprint for an object.  We can add new properties and methods to improve it.  In contrast, prototype-based languages use an actual object as the blueprint</p>
-  			<p>- Constructor Functions:  An alternative way to object literals to create objects</p>
-  			<p>- Class Declarations:  Does exactly the same thing as a constructor function, but looks more like class-based programming languages</p>
-  			<p>- The .constructor property holds the name of the constructor function or class that created the object</p>
-  			<p>- Static Methods:  The static keyword is used to declare static methods that are only available to the class directly.  Instances of the class will not have static methods</p>
-  			<p>- Prototype property returns an object.  You can add new properties and methods to the prototype will be included in all new instances of the prototype</p>
-  			<p>- The prototype object is "live" so any properties or methods that are added to it are available to all instances of the prototype, regardless of when they were created (before or after the new properties or methods were added)</p>
-  			<p>- Class declarations are recommended over constructor functions to avoid accidentally redefining the prototype</p>
-  			<p>- JavaScript checks to see if an object has it's own properties or methods and will use those, or keep looking up the prototype chain until it finds the property or method</p>
-  			<p>- Public methods and properties are available to be queried and set directly.  Private methods and properties are only accessible inside the class declaration.  You must use getter() and setter() methods to read and set</p>
-  			<p>- Prototypes form a chain.  Most objects start with {} prototype and its properties and methods.  Each subsequent prototype in the chain inherits all the properties and methods of the prior prototypes</p>
-  			<p>- The extends keyword allows creation of a sub-class or child class of the parent and it inherts all it's parents properties and methods, but can add it's own custom properties and methods</p>
-  			<p>- Polymorphism allows objects with the same method to be implemented differently</p>
-  			<p>- Monkey-patching is the practice of adding methods to JavaScripts built-in objects, such as Number, String, and Array.  This is discouraged however</p>
-  			<li><strong>CHAPTER 15 - MODERN JAVASCRIPT</strong></li>
-  			<p>- JQuery: most popular of all JavaScript libraries</p>
-  			<p>- JQuery Adv = support of older browsers, especially IE</p>
-  			<p>- $ symbol is used as alias for the global JQuery object containing all JQuery methods</p>
-  			<p>- Underscore and Lodash are popular libraries</p>
-  			<p>- ES6 now supports native JavaScript modules to keep parts of code in self-contained files</p>
-  			<p>- MVC is a design pattern used in server-side languages.  It consists of separating applications into 3 parts that interact with each other: Models, Views, Controllers</p>
-  			<p>- Models: objects that implement the functionality of creating, reading, updating, and deleting pieces of information (CRUD)</p>
-  			<p>- Views: Provide a visual representation of the application.  For example, HTML on a web page and forms</p>
-  			<p>- Controllers: Link modesl and views together by communicating between them.  They respond to events, process the info, and update the model and view.</p>
-  			<p>- MV Frameworks: Many JavaScript frameworks don't have separate controller code because it's mixed in with Model and Views.  These frameworks are lumped into a category called MV</p>
-  			<p>- MV Frameworks include: Aurelia, Angular, and Ember</p>
-  			<p>- View Libraries:  some libraries have been developed that focus on just the view layer of MVC.  The libraries work by using a virutal DOM in memory that compares the virtual DOM with the actual DOM and only updates the elements that have changed.</p>
-  			<p>- Popular View libraries are: React and Vue.js</p>
-  			<p>- Package Manager: With so many modules available for JavaScript, a tool was needed to manage them.</p>
-  			<p>- A package is just a directory with one or more files of code and a package.json which contains info about the code</p>
-  			<p>- NPM (Node Package Manager) was developed soon after Node.js to allow JavaScript code to be shared.  It has grown into the largest repository of code libraries available</p>
-  			<p>- NPM repository is huge (500K different packages).  Use search command to find a package</p>
-  			<p>- To deploy JavaScript, minimize code.  This combines all JS files into one compressed file.</p>
-  			<p>- Popular minifiers:  YUI Compressor, Google's Closure, and UglifyJS</p>
+  			<li><strong>CHAPTER 10 - TESTING AND DEBUGGING</strong></li>
+        <p>- Stack traces show the sequence of function or method calls that led to the error</p>
+        <p>- Error Objects:  the constructor function takes an argument that used as the error message</p>
+        <p><strong>- There are seven error objects used for errors:</strong></p>
+        <li class="colList">- EvalError:  Retained for backward compatibility.  Errors using global eval()</li>
+        <li class="colList">- RangeError:  When a number is outside an allowable range</li>
+        <li class="colList">- ReferenceError: When a reference is made to an object that doesn't exist</li>
+        <li class="colList">- SyntaxError: An error in code syntax</li>
+        <li class="colList">- TypeError:  When wrong type is used</li>
+        <li class="colList">- URIError: When a problem with URI</li>
+        <li class="colList">- InternalError: When error occurs in JS engine</li>
+        <p style="clear: left"><strong>- These are only properties consistent across browsers and safe to use in Error objects are:</strong></p>
+        <li class="colList">- name: name of error type</li>
+        <li class="colList">- message:  error description</li>
+        <li class="colList">- stack: contains stack trace</li>
+        <p style="clear: left"><strong>- try, catch, finally exception handling</strong></p>
+        <li>try{}: wrap code to be tested for an exception</li>
+        <li>catch(error): Code inside will only run if an exception occurs in try block</li>
+        <li>finall{}:  This code will always run after try or catch block, regardless of exception</li>
   		</ul>
   	</section>
 
   	<section class="reportSection">
-  		<h2 class="reportTitle">WEEK 4 REPORT</h2>
+  		<h2 class="reportTitle">WEEK 5 REPORT</h2>
   		<h3 class="reportCategory">What did I do since the last meeting?</h3>
   		<ul>
-  			<li>Built tic-tac-toe game as described in Team Activity for Week 4</li>
-  			<p>- I completed all 3 of the stretch goal: 1)modified squares (borders) to actual tic-tac-toe board, 2)Added game logic to determine a tie, 3)added more game logic to determine a winner </p>
+  			<li>Built hikes code for week 5 Team Activity</li>
+  			<p>- I completed both of stretch goals: 1)Toucing a hike opens a full details page, 2)Added back button that goes back to hikes list</p>
   			<p>- Here is a link to run the program:</p>
-  			<a href="tic-tac-toe/tic-tac-toe.html">Tic-Tac-Toe Game</a>
+  			<a href="hikes/index.html">Great Hikes</a>
   			<p>- Here is a link to view the source code:</p>
-  			<a href="tic-tac-toe/team-assign4.html">Click to Display Tic-Tac-Toe Code</a>
+  			<a href="hikes/team-assign5.html">Click to Display Great Hikes Code</a>
   		</ul>
   		<h3 class="reportCategory">What am I going to do next?</h3>
   		<ul>
-  			<li>Practice navigating the DOM with JavaScript</li>
-  			<li>Refresh my memory on HTML forms</li>
+  			<li>Work on design of "To Do" Challenge</li>
+  			<li>Do more upfront design and planning before I start coding</li>
   		</ul>
   		<h3 class="reportCategory">What are my blockers?</h3>
   		<ul>
-  			<li>Some aspects of object-oriented programming is fuzzy.  I need more practice using classes and understanding inheritance</li>
-  			<li>Bringing everything together - HTML, CSS, JavaScript, and OOP is a lot to wrap my head around</li>
+  			<li>Deciding when to build classes and what methods they should include</li>
+        <li>Deciding what to include in modules.  What should be export/import and what should be in first level JS file</li>
+  			<li>Creating efficient and DRY code design</li>
   		</ul>
   		<h3 class="reportCategory">Questions</h3>
   		<ul>
-  			<li>What is the value of touchend event, when the click event does the same thing with touchscreens?</li>
+  			<li>To do an export/import, I had to run my code from my Apache server.  Otherwise I got an error when trying to import.  Is using a local server the best way to do local JavaScript development?  The same method I use to write PHP code.</li>
   		</ul>
   	</section>
   	<footer class="footerSection">

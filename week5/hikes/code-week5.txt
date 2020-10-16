@@ -1,0 +1,400 @@
+HTML FILE - INDEX.HTML
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./styles.css">
+
+<title>Great Hikes</title>
+
+<script type="module" src="main.js"></script>
+
+</head>
+
+<body>
+      <h1>Great hikes</h1>
+      <ul id="hikes" class="hikeStyles">
+        <!-- your hike list should be build here. -->
+      </ul>
+</body>
+</html>
+
+=======================================
+
+JAVASCRIPT FILE - MAIN.JS
+
+import Hikes from './hikes.js';
+
+const teamHikes = new Hikes("hikes");
+
+window.addEventListener('load', () => {
+  teamHikes.showHikeList();
+});
+
+=======================================
+
+JAVASCRIPT FLE - HIKES.JS
+
+// Example of using Classes and modules to organize the code needed to render our list of hikes. Not using MVC here.
+
+//create an array of hikes
+const hikeList = [
+  {
+    name: "Bechler Falls",
+    imgSrc: "falls.jpg",
+    imgAlt: "Image of Bechler Falls",
+    distance: "3 miles",
+    difficulty: "Easy",
+    description:
+      "Beautiful short hike along the Bechler river to Bechler Falls",
+    directions:
+      "Take Highway 20 north to Ashton. Turn right into the town and continue through. Follow that road for a few miles then turn left again onto the Cave Falls road.Drive to the end of the Cave Falls road. There is a parking area at the trailhead."
+  },
+  {
+    name: "Teton Canyon",
+    imgSrc: "falls.jpg",
+    imgAlt: "Image of Bechler Falls",
+    distance: "3 miles",
+    difficulty: "Easy",
+    description: "Beautiful short (or long) hike through Teton Canyon.",
+    directions:
+      "Take Highway 33 East to Driggs. Turn left onto Teton Canyon Road. Follow that road for a few miles then turn right onto Stateline Road for a short distance, then left onto Alta Road. Veer right after Alta back onto Teton Canyon Road. There is a parking area at the trailhead."
+  },
+  {
+    name: "Denanda Falls",
+    imgSrc: "falls.jpg",
+    imgAlt: "Image of Bechler Falls",
+    distance: "7 miles",
+    difficulty: "Moderate",
+    description:
+      "Beautiful hike through Bechler meadows river to Denanda Falls",
+    directions:
+      "Take Highway 20 north to Ashton. Turn right into the town and continue through. Follow that road for a few miles then turn left again onto the Cave Falls road. Drive to until you see the sign for Bechler Meadows on the left. Turn there. There is a parking area at the trailhead."
+  }
+];
+
+const imgBasePath = "./";
+//on load grab the array and insert it into the page on load
+
+export default class Hikes
+{
+	constructor(elementId)
+	{
+		this.parentElement = document.getElementById(elementId);
+		// we need a back button to return back to the list. This will build it and hide it. When we need it we just need to remove the 'hidden' class
+		this.backButton = this.buildBackButton();
+	}
+
+	// why is this function necessary?  hikeList is not exported, and so it cannot be seen outside of this module. I added this in case I ever need the list of hikes outside of the module. This also sets me up nicely if my data were to move. I can just change this method to the new source and everything will still work if I only access the data through this getter.
+	getAllHikes()
+	{
+    	return hikeList;
+  	}
+
+	// For the first stretch we will need to get just one hike.
+  	getHikeByName(hikeName)
+	{
+    	return this.getAllHikes().find(hike => hike.name === hikeName);
+  	}
+
+  	//show a list of hikes in the parentElement
+	showHikeList()
+	{
+		this.parentElement.innerHTML = '';
+		// notice that we use our getter above to grab the list instead of getting it directly...this makes it easier on us if our data source changes...
+		renderHikeList(this.parentElement, this.getAllHikes());
+		this.addHikeListener();
+		// make sure the back button is hidden
+		this.backButton.classList.add('hidden');
+	}
+
+  	// show one hike with full details in the parentElement
+//  	showOneHike(hikeName)
+//	{
+//		this.parentElement.innerHTML = '';
+//		let hikeIndex = hikeList.findIndex(x => x.name === hikeName.currentTarget.dataset.name);
+//		const hike = hikeList[hikeIndex];
+//		this.parentElement.appendChild(renderOneHikeFull(hike));
+//		this.backButton.classList.remove('hidden');
+//	}
+
+  showOneHike(hikeName) {
+    const hike = this.getHikeByName(hikeName);
+    this.parentElement.innerHTML = '';
+    this.parentElement.appendChild(renderOneHikeFull(hike));
+    // show the back button
+    this.backButton.classList.remove('hidden');
+  }
+
+
+  	// in order to show the details of a hike ontouchend we will need to attach a listener AFTER the list of hikes has been built. The function below does that.
+	addHikeListener()
+	{
+    	// We need to loop through the children of our list and attach a listener to each, remember though that children is a nodeList...not an array. So in order to use something like a forEach we need to convert it to an array.
+		const childrenArray = Array.from(this.parentElement.children);
+		childrenArray.forEach(child =>
+		{
+			child.addEventListener('click', e =>
+			{
+				// why currentTarget instead of target?
+				this.showOneHike(e.currentTarget.dataset.name);
+			});
+		});
+	}
+
+//		const hikeListID = document.querySelectorAll("li");
+//		const arrayListID = Array.from(hikeListID);
+//
+//		arrayListID.forEach(linkID =>
+//		{
+//			let myID = linkID;
+//			myID.addEventListener('click', this.showOneHike)
+//		});
+//		console.log(arrayListID);
+//  	}
+
+
+	buildBackButton()
+	{
+		const backButton = document.createElement('button');
+		backButton.innerHTML = '&lt;- All Hikes';
+		backButton.addEventListener('click', () =>
+		{
+		  this.showHikeList();
+		});
+		backButton.classList.add('hidden');
+		this.parentElement.before(backButton);
+		return backButton;
+	}
+}
+
+// methods responsible for building HTML.  Why aren't these in the class?  They don't really need to be, and by moving them outside of the exported class, they cannot be called outside the module...they become private.
+function renderHikeList(parent, hikes)
+{
+	hikes.forEach(hike =>
+	{
+    	parent.appendChild(renderOneHikeLight(hike));
+  	});
+}
+
+
+function renderOneHikeLight(hike)
+{
+	const item = document.createElement("li");
+	item.setAttribute('data-name', hike.name);
+	item.innerHTML = ` <h2 class="hikeTitle"><a id=${hike.name} href="#">${hike.name}-Click Here</a></h2>
+	<div class="image"><img src="${imgBasePath}${hike.imgSrc}" alt="${hike.imgAlt}"></div>
+	<div class="description">
+          <div class="hikeDistance">
+              <h3>Distance</h3>
+              <p>${hike.distance}</p>
+          </div>
+          <div class="hikeDifficulty">
+              <h3>Difficulty</h3>
+              <p>${hike.difficulty}</p>
+          </div>
+  </div>`;
+  return item;
+}
+
+function renderOneHikeFull(hike)
+{
+	const item = document.createElement("li");
+
+  item.innerHTML = `
+
+        <div class="image"><img src="${imgBasePath}${hike.imgSrc}" alt="${hike.imgAlt}"></div>
+		<div class="fullDescription">
+			<h2 class="fullHikeTitle">${hike.name}</h2>
+			<div class="fullHikeDistance">
+				<h3>Distance</h3>
+				<p>${hike.distance}</p>
+			</div>
+			<div class="fullHikeDifficulty">
+				<h3>Difficulty</h3>
+				<p>${hike.difficulty}</p>
+			</div>
+			<div class="fullHikeDescription">
+				<h3>Description</h3>
+				<p>${hike.description}</p>
+			</div>
+			<div class="fullHikeDirections">
+				<h3>How to get there</h3>
+				<p>${hike.directions}</p>
+			</div>
+		</div>
+    `;
+  return item;
+	}
+
+=======================================
+
+CSS FILE - STYLES.css
+
+@charset "utf-8";
+/* CSS Document */
+
+
+body
+{
+	margin: 0;
+	padding: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	min-width: 880px;
+}
+
+.hidden
+{
+	display: none;
+}
+
+button
+{
+	margin-left: 40px;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 1.5vw;
+	padding: 10px;
+	text-align: center;
+	background-color: #243E02;
+	color: white;
+	cursor: pointer;
+}
+h1
+{
+	margin-left: 40px;
+	font-size: 8vw;
+}
+
+a:link
+{
+	color: white;
+	text-decoration: none;
+}
+
+a:visited
+{
+	color: white;
+}
+
+a:hover
+{
+	color: tan;
+}
+h3
+{
+	margin: .5vw auto .5vw auto;
+}
+
+p
+{
+	margin: .5vw auto .5vw auto;
+}
+img
+{
+	max-width: 100%;
+}
+
+.image
+{
+	width: 50%;
+	display: inline-block;
+}
+
+.hikeTitle
+{
+	border: 2px solid black;
+	background-color: #243E02;
+	color: white;
+	text-align: center;
+	font-size: 2vw;
+	margin-right: 40px;
+}
+
+.fullHikeTitle
+{
+	border: 2px solid black;
+	background-color: #243E02;
+	color: white;
+	text-align: center;
+	font-size: 2vw;
+	margin-right: 40px;
+	margin-top: 0px;
+}
+
+ul  /*This style is used to title <li>*/
+{
+	list-style-type: none;
+}
+
+.description
+{
+	float: right;
+	width: 44%;
+	margin-right: 40px;
+	margin-top: 10%;
+}
+
+.fullDescription
+{
+	float: right;
+	width: 44%;
+	margin-right: 40px;
+	margin-top: 0;
+}
+
+.hikeDistance
+{
+/*	border: 2px solid red;*/
+	width: 80%;
+	margin: 10px auto 10px auto;
+	text-align: center;
+	font-size: 1.5vw;
+}
+
+.fullHikeDistance
+{
+/*	border: 2px solid red;*/
+	width: 80%;
+	margin: 10px 0 10px 0;
+	text-align: left;
+	font-size: 1.5vw;
+}
+
+
+.hikeDifficulty
+{
+/*	border: 2px solid blue;*/
+	text-align: center;
+	width: 80%;
+	margin: 10px auto 10px auto;
+	font-size: 1.5vw;
+}
+
+.fullHikeDifficulty
+{
+/*	border: 2px solid blue;*/
+	text-align: left;
+	width: 80%;
+	margin: 10px 0 10px 0;
+	font-size: 1.5vw;
+}
+
+.fullHikeDescription
+{
+/*	border: 2px solid blue;*/
+	text-align: left;
+	width: 80%;
+	margin: 10px 0 10px 0;
+	font-size: 1.5vw;
+}
+
+.fullHikeDirections
+{
+/*	border: 2px solid blue;*/
+	text-align: left;
+	width: 80%;
+	margin: 10px 0 10px 0;
+	font-size: 1.5vw;
+}
