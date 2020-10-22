@@ -1,0 +1,596 @@
+HTML FILE - TO-DO.HTML
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./styles.css">
+
+<title><strong>My To Do List</strong></title>
+
+<script type="module" src="todo.js"></script>
+
+</head>
+
+<body>
+  <div id="divToDoFrame" class="divToDoFrame">
+    <button class="addToDoButton" id="addToDo">Add New To Do</button>
+    <h1 class="toDoTitle">My To Do List</h1>
+    <div id="divToDoList" class="divToDoList">
+      <div id="divNewContent" class="divNewContent">
+      </div>
+      <h3 id="showToDoListTitle" class="showToDoListTitle"></h3>
+      <ul id="toDoList" class="toDoList">
+      </ul>
+    </div>
+    <div id="divToDoStatus" class="divToDoStatus">
+      <!-- <h1 class="statusTitle">STATUS</h1> -->
+      <h2 id="remainingTasks" class="remainingTasks"></h2>
+      <h2 id="completedTasks" class="completedTasks"></h2>
+      <button class="showAllButton" id="showAllButton">Show All</button>
+      <button class="showActiveButton" id="showActiveButton">Show Active</button>
+      <button class="showCompletedButton" id="showCompletedButton">Show Completed</button>
+    </div>
+  </div>
+</body>
+</html>
+
+=======================================
+
+JAVASCRIPT FILE - TODO.JS
+
+import {storeToDo, readToDo} from './ls.js';
+import {getTimeStamp, updateToDoCountLabel, updateStatusWindow} from './utilities.js';
+
+
+class toDoList
+{
+  constructor(elementID)
+  {
+    this.parentElement = document.getElementById(elementID);
+  }
+
+  showToDoList()
+  {
+    this.parentElement.innerHTML="";
+    renderToDoList(this.parentElement, myToDoList);
+    updateStatusWindow(myToDoList);
+    updateToDoCountLabel(myToDo);
+  }
+
+  displayContentWindow()
+  {
+    let divNewContentID = document.getElementById('divNewContent');
+    divNewContentID.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+
+    // this.parentElement.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+
+    const saveToDoID = document.getElementById('saveToDoButton');
+    saveToDoID.addEventListener('click', addToDoItem);
+    const cancelToDoID = document.getElementById('cancelToDoButton');
+    cancelToDoID.addEventListener('click', cancelToDoContent);
+  }
+} //End of toDoList class
+//************************************************************
+
+//Create myToDo from toDoList class
+const myToDo = new toDoList("toDoList");
+myToDo.taskDisplay = "all";
+myToDo.taskCount = 0;
+window.addEventListener('load', ()=>
+{
+  myToDo.showToDoList();
+});
+
+//Read data stored in localstorage and parse into array of objects
+let readData = readToDo();
+let myToDoList = JSON.parse(readData);
+
+updateToDoCountLabel(myToDo);
+updateStatusWindow(myToDoList);
+
+function renderToDoList(parent, list)
+{
+  myToDo.taskCount = 0; //initialize to zero
+  list.forEach(function(v, i)
+  {
+    if(myToDo.taskDisplay === "all")
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+    else if(myToDo.taskDisplay==="active" && v.completed===false)
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+    else if(myToDo.taskDisplay==="completed" && v.completed===true)
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+  });
+}
+
+function renderOneToDo(toDo, i)
+{
+  const item = document.createElement("li");
+  item.setAttribute('data-name', toDo.name);
+  let cbUniqueID = "cb"+i; //Give each checkbox a unique ID
+  let delUniqueID = "del"+i; //Give each delete button a unique ID
+  let toDoComplete="No";
+  if(toDo.completed === true)
+  {
+    item.setAttribute("class", "toDoChecked");
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButtonChecked" id="${delUniqueID}">Delete To Do</button>`;
+    toDoComplete="Yes";
+  }
+  else
+  {
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButton" id="${delUniqueID}">Delete To Do</button>`;
+  }
+  item.innerHTML+=` <div class="toDoItem">
+    <p><strong>Created: </strong>${toDo.created}</p>
+    <p><strong>Description: </strong>${toDo.content}</p>
+
+    <hr style="width:100%; text-align:left; margin-left:0">
+  </div>`
+
+// <p><strong>Completed: </strong>${toDoComplete}</p>
+
+  return item;
+}
+
+
+function addToDoItem()
+{
+  const textID = document.getElementById('toDoDescription');
+
+  let newID = myToDoList.length+1;
+  let arrayID = myToDoList.length;
+
+  let formatNow = getTimeStamp();
+
+  myToDoList[myToDoList.length]=
+  {
+    created: formatNow,
+    id: newID,
+    content: textID.value,
+    completed: false
+  }
+
+  const listID = document.getElementById('toDoList');
+  listID.appendChild(renderOneToDo(myToDoList[myToDoList.length-1], arrayID));
+
+  //Add event listener for checkbox
+  let boxID = "cb"+arrayID;
+  const checkBoxId = document.getElementById(boxID);
+  checkBoxId.addEventListener('click', updateCompletion)
+
+  //Add event listener for delete button
+  let buttonID = "del"+arrayID;
+  const delButtonId = document.getElementById(buttonID);
+  delButtonId.addEventListener('click', deleteItem)
+
+  updateToDoCountLabel(myToDo); //display 'Check Box' or "No To Do"
+  updateStatusWindow(myToDoList); //Update remaining task count display
+
+  //Write new to-do out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+
+  //Restore divNewContent innerHTML = ""
+  let divNewContentID = document.getElementById('divNewContent');
+  divNewContentID.innerHTML ="";
+}
+
+function cancelToDoContent()
+{
+  let divNewContentID = document.getElementById('divNewContent');
+  divNewContentID.innerHTML ="";
+
+  // this.parentElement.innerHTML=`<button class="addToDoButton" id="addToDo">Add New To Do</button>`;
+  // const addToDo = document.getElementById('addToDo');
+  // addToDo.addEventListener('click', myToDo.displayContentWindow);
+  return;
+}
+
+
+function deleteItem(event)
+{
+  let index = event.currentTarget.id;
+  index = index.substring(3);
+  myToDoList.splice(index,1);
+  //iterate thru array and reset id to match index
+  myToDoList.forEach(function(_v, i, a)
+  {
+    a[i].id = i+1;
+  });
+
+  updateToDoCountLabel(myToDo);
+  myToDo.showToDoList();
+
+  //Write new to do out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+}
+
+function updateCompletion(event)
+{
+  let index = event.currentTarget.id;
+  index = index.substring(2);
+  myToDoList[index].completed = event.currentTarget.checked;
+  myToDo.showToDoList();
+
+  //Write updated complete status out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+}
+
+function showAll()
+{
+  myToDo.taskDisplay = "all";
+  myToDo.showToDoList();
+}
+
+function showActive()
+{
+  myToDo.taskDisplay = "active";
+  myToDo.showToDoList();
+}
+
+function showCompleted()
+{
+  myToDo.taskDisplay = "completed";
+  myToDo.showToDoList();
+}
+
+//Set event listeners for addToDo, showAll, ShowActive,and ShowCompleted buttons
+const addToDo = document.getElementById('addToDo');
+addToDo.addEventListener('click', myToDo.displayContentWindow);
+const showAllButtonID = document.getElementById('showAllButton');
+showAllButtonID.addEventListener('click', showAll);
+const showActiveButtonID = document.getElementById('showActiveButton');
+showActiveButtonID.addEventListener('click', showActive);
+const showCompletedButtonID = document.getElementById('showCompletedButton');
+showCompletedButtonID.addEventListener('click', showCompleted);
+
+=======================================
+
+JAVASCRIPT FILE - LS.JS
+
+
+export function storeToDo(data)
+{
+    localStorage.data = JSON.stringify(data);
+}
+
+export function readToDo()
+{
+  const copyData = localStorage.getItem('data');
+  if(copyData === null) //If localStorge of 'data' has never been initialized, create empty array called 'data'
+  {
+    const data = [];
+    storeToDo(data);
+    copyData = localStorage.getItem('data');
+  }
+  return copyData;
+}
+
+=======================================
+
+JAVASCRIPT FILE - UTILITIES.JS
+
+
+export function getTimeStamp()
+{
+  let now = new Date();
+  let dateTimeOpt =
+  {
+    weekday: "long",
+    month: "long",
+    year: "numeric",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZoneName: "short"
+  }
+  let formattedTime = Intl.DateTimeFormat("en-US", dateTimeOpt).format(now)
+  return formattedTime;
+}
+
+export function updateToDoCountLabel(myToDo)
+{
+  const showToDoListTitleID = document.getElementById('showToDoListTitle');
+  switch(myToDo.taskDisplay)
+  {
+    case 'all':
+      showToDoListTitleID.innerHTML = `All To Do's (Count=${myToDo.taskCount})<hr style="width:100%; text-align:left; margin-left:0">`;
+    break;
+    case 'active':
+      showToDoListTitleID.innerHTML = `Active To Do's (Count=${myToDo.taskCount})<hr style="width:100%; text-align:left; margin-left:0">`;
+    break;
+    case 'completed':
+      showToDoListTitleID.innerHTML = `Completed To Do's (Count=${myToDo.taskCount})<hr style="width:100%; text-align:left; margin-left:0">`;
+    break;
+  }
+}
+
+export function updateStatusWindow(myToDoList)
+{
+  let remainingCount=0, completedCount=0;
+  myToDoList.forEach(value=>
+  {
+      if(value.completed === false)
+      {
+        remainingCount++;
+      }
+      else
+      {
+        completedCount++;
+      }
+  });
+
+  const remainingTasksID = document.getElementById('remainingTasks');
+  remainingTasksID.innerHTML = `<strong>Remaining Tasks = ${remainingCount}</strong>`;
+  const completedTasksID = document.getElementById('completedTasks');
+  completedTasksID.innerHTML = `<strong>Completed Tasks = ${completedCount}</strong></br>`;
+}
+
+=======================================
+
+CSS FILE - STYLES.CSS
+
+.divToDoFrame
+{
+  margin: auto;
+  border: solid 2px red;
+  background-color: black;
+  max-width: 700px;
+  padding-top: 10px;
+}
+
+.divToDoList
+{
+  border: solid 2px blue;
+  width: 85.5%;
+  height: 600px;
+  padding: 20px 40px 40px 40px;
+  margin: 10px;
+  background-color: lightgray;
+  overflow-y: auto;
+}
+
+.divToDoStatus
+{
+  border: solid 2px green;
+  width: 94%;
+  height: 100px;
+  background-color: darkgray;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
+
+.remainingTasks
+{
+  display: inline-block;
+  margin: 5px 25px 10px 0px;
+}
+
+.completedTasks
+{
+  display: inline;
+  margin: 5px 0px 10px 25px;
+}
+
+.toDoTitle
+{
+  text-align: center;
+  color: white;
+  display: inline;
+  margin-left: 90px;
+  /* position: fixed;
+  left: 0;
+  right: 0;
+  top: 0; */
+}
+
+.statusTitle
+{
+  margin: 0px 0px 0px 0px;
+}
+
+.showToDoListTitle
+{
+  margin-top: 10px;
+  font-size: 30px;
+}
+
+.toDoChecked
+{
+  background-color: greenyellow;
+  border-radius: 20px;
+  padding: 20px 20px 0 20px;
+  margin-bottom: 20px;
+}
+
+.addToDoButton
+{
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 0 20px 0 40px;
+}
+
+.showAllButton
+{
+  font-size: 13px;
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 15px 25px 0 0px;
+  width: 120px;
+}
+
+.showAllButton:hover
+{
+  background-color: darkgreen;
+  color: white;
+}
+
+.showActiveButton
+{
+  font-size: 13px;
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 15px 25px 0 0px;
+  width: 120px;
+}
+
+.showActiveButton:hover
+{
+  background-color: darkgreen;
+  color: white;
+}
+
+.showCompletedButton
+{
+  font-size: 13px;
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 15px 0px 0 0px;
+  width: 120px;
+}
+
+.showCompletedButton:hover
+{
+  background-color: darkgreen;
+  color: white;
+}
+
+.toDoButton
+{
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 20px 20px 0 0;
+}
+
+.cancelToDoButton
+{
+  background-color: darkred;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 20px 20px 0 0;
+}
+
+.addToDoButton:hover
+{
+  background-color: darkgreen;
+  color: white;
+}
+
+.toDoDescription
+{
+  color: black;
+  border-radius: 10px;
+  border: 3px solid black;
+  padding: 5px;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+  display: block;
+}
+
+.deleteButton
+{
+  background-color: darkred;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  position: relative;
+  right: -300px;
+}
+
+.deleteButtonChecked
+{
+  background-color: darkred;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  position: relative;
+  right: -280px;
+}
+
+.deleteButton:hover
+{
+  background-color: red;
+}
+
+.deleteButtonChecked:hover
+{
+  background-color: red;
+}
+
+
+.itemForm
+{
+  float: left;
+}
+
+ul
+{
+  list-style: none;
+  padding: 0;
+}
+
+.toDoItem
+{
+  display: inline;
+  margin: 0 20px 0 20px;
+}
+
+.hidden
+{
+  display: none;
+}

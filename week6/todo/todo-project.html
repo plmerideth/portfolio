@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>To Do Project-Week 6</title>
+</head>
+
+<body>
+	<h1>To Do Project - Week 6</h1>
+	<h3>My To Do List Code Below</h3>
+
+	<pre id="contents"></pre>
+</body>
+</html>
+
+<script>
+	function populatePre(url)
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function ()
+		{
+			document.getElementById('contents').textContent = this.responseText;
+		};
+		xhr.open('GET', url);
+		xhr.send();
+	}
+
+populatePre('code-week6.txt'); //Note: this only works when sent thru a server with HTTP request.
+</script>
