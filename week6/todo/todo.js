@@ -1,0 +1,245 @@
+import {storeToDo, readToDo} from './ls.js';
+import {getTimeStamp, updateToDoCountLabel, updateStatusWindow} from './utilities.js';
+
+
+class toDoList
+{
+  constructor(elementID)
+  {
+    this.parentElement = document.getElementById(elementID);
+  }
+
+  showToDoList()
+  {
+    this.parentElement.innerHTML="";
+    renderToDoList(this.parentElement, myToDoList);
+    updateStatusWindow(myToDoList);
+    updateToDoCountLabel(myToDo);
+  }
+
+  displayContentWindow()
+  {
+    let divNewContentID = document.getElementById('divNewContent');
+    divNewContentID.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+
+    // this.parentElement.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+
+    const saveToDoID = document.getElementById('saveToDoButton');
+    saveToDoID.addEventListener('click', addToDoItem);
+    const cancelToDoID = document.getElementById('cancelToDoButton');
+    cancelToDoID.addEventListener('click', cancelToDoContent);
+  }
+} //End of toDoList class
+//************************************************************
+
+//Create myToDo from toDoList class
+const myToDo = new toDoList("toDoList");
+myToDo.taskDisplay = "all";
+myToDo.taskCount = 0;
+window.addEventListener('load', ()=>
+{
+  myToDo.showToDoList();
+});
+
+//Read data stored in localstorage and parse into array of objects
+let readData = readToDo();
+let myToDoList = JSON.parse(readData);
+
+updateToDoCountLabel(myToDo);
+updateStatusWindow(myToDoList);
+
+function renderToDoList(parent, list)
+{
+  myToDo.taskCount = 0; //initialize to zero
+  list.forEach(function(v, i)
+  {
+    if(myToDo.taskDisplay === "all")
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+    else if(myToDo.taskDisplay==="active" && v.completed===false)
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+    else if(myToDo.taskDisplay==="completed" && v.completed===true)
+    {
+      myToDo.taskCount++;
+      parent.appendChild(renderOneToDo(v, i));
+
+      //Add event listener for checkbox
+      let boxID = "cb"+i;
+      const checkBoxId = document.getElementById(boxID);
+      checkBoxId.addEventListener('click', updateCompletion)
+
+      //Add event listener for delete button
+      let buttonID = "del"+i;
+      const delButtonId = document.getElementById(buttonID);
+      delButtonId.addEventListener('click', deleteItem)
+    }
+  });
+}
+
+function renderOneToDo(toDo, i)
+{
+  const item = document.createElement("li");
+  item.setAttribute('data-name', toDo.name);
+  let cbUniqueID = "cb"+i; //Give each checkbox a unique ID
+  let delUniqueID = "del"+i; //Give each delete button a unique ID
+  let toDoComplete="No";
+  if(toDo.completed === true)
+  {
+    item.setAttribute("class", "toDoChecked");
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButtonChecked" id="${delUniqueID}">Delete To Do</button>`;
+    toDoComplete="Yes";
+  }
+  else
+  {
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButton" id="${delUniqueID}">Delete To Do</button>`;
+  }
+  item.innerHTML+=` <div class="toDoItem">
+    <p><strong>Created: </strong>${toDo.created}</p>
+    <p><strong>Description: </strong>${toDo.content}</p>
+
+    <hr style="width:100%; text-align:left; margin-left:0">
+  </div>`
+
+// <p><strong>Completed: </strong>${toDoComplete}</p>
+
+  return item;
+}
+
+
+function addToDoItem()
+{
+  const textID = document.getElementById('toDoDescription');
+
+  let newID = myToDoList.length+1;
+  let arrayID = myToDoList.length;
+
+  let formatNow = getTimeStamp();
+
+  myToDoList[myToDoList.length]=
+  {
+    created: formatNow,
+    id: newID,
+    content: textID.value,
+    completed: false
+  }
+
+  const listID = document.getElementById('toDoList');
+  listID.appendChild(renderOneToDo(myToDoList[myToDoList.length-1], arrayID));
+
+  //Add event listener for checkbox
+  let boxID = "cb"+arrayID;
+  const checkBoxId = document.getElementById(boxID);
+  checkBoxId.addEventListener('click', updateCompletion)
+
+  //Add event listener for delete button
+  let buttonID = "del"+arrayID;
+  const delButtonId = document.getElementById(buttonID);
+  delButtonId.addEventListener('click', deleteItem)
+
+  updateToDoCountLabel(myToDo); //display 'Check Box' or "No To Do"
+  updateStatusWindow(myToDoList); //Update remaining task count display
+
+  //Write new to-do out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+
+  //Restore divNewContent innerHTML = ""
+  let divNewContentID = document.getElementById('divNewContent');
+  divNewContentID.innerHTML ="";
+}
+
+function cancelToDoContent()
+{
+  let divNewContentID = document.getElementById('divNewContent');
+  divNewContentID.innerHTML ="";
+
+  // this.parentElement.innerHTML=`<button class="addToDoButton" id="addToDo">Add New To Do</button>`;
+  // const addToDo = document.getElementById('addToDo');
+  // addToDo.addEventListener('click', myToDo.displayContentWindow);
+  return;
+}
+
+
+function deleteItem(event)
+{
+  let index = event.currentTarget.id;
+  index = index.substring(3);
+  myToDoList.splice(index,1);
+  //iterate thru array and reset id to match index
+  myToDoList.forEach(function(_v, i, a)
+  {
+    a[i].id = i+1;
+  });
+
+  updateToDoCountLabel(myToDo);
+  myToDo.showToDoList();
+
+  //Write new to do out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+}
+
+function updateCompletion(event)
+{
+  let index = event.currentTarget.id;
+  index = index.substring(2);
+  myToDoList[index].completed = event.currentTarget.checked;
+  myToDo.showToDoList();
+
+  //Write updated complete status out to local storage
+  localStorage.clear();
+  storeToDo(myToDoList);
+}
+
+function showAll()
+{
+  myToDo.taskDisplay = "all";
+  myToDo.showToDoList();
+}
+
+function showActive()
+{
+  myToDo.taskDisplay = "active";
+  myToDo.showToDoList();
+}
+
+function showCompleted()
+{
+  myToDo.taskDisplay = "completed";
+  myToDo.showToDoList();
+}
+
+//Set event listeners for addToDo, showAll, ShowActive,and ShowCompleted buttons
+const addToDo = document.getElementById('addToDo');
+addToDo.addEventListener('click', myToDo.displayContentWindow);
+const showAllButtonID = document.getElementById('showAllButton');
+showAllButtonID.addEventListener('click', showAll);
+const showActiveButtonID = document.getElementById('showActiveButton');
+showActiveButtonID.addEventListener('click', showActive);
+const showCompletedButtonID = document.getElementById('showCompletedButton');
+showCompletedButtonID.addEventListener('click', showCompleted);

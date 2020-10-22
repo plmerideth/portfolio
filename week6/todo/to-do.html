@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./styles.css">
+
+<title><strong>My To Do List</strong></title>
+
+<script type="module" src="todo.js"></script>
+
+</head>
+
+<body>
+  <div id="divToDoFrame" class="divToDoFrame">
+    <button class="addToDoButton" id="addToDo">Add New To Do</button>
+    <h1 class="toDoTitle">My To Do List</h1>
+    <div id="divToDoList" class="divToDoList">
+      <div id="divNewContent" class="divNewContent">
+      </div>
+      <h3 id="showToDoListTitle" class="showToDoListTitle"></h3>
+      <ul id="toDoList" class="toDoList">
+      </ul>
+    </div>
+    <div id="divToDoStatus" class="divToDoStatus">
+      <!-- <h1 class="statusTitle">STATUS</h1> -->
+      <h2 id="remainingTasks" class="remainingTasks"></h2>
+      <h2 id="completedTasks" class="completedTasks"></h2>
+      <button class="showAllButton" id="showAllButton">Show All</button>
+      <button class="showActiveButton" id="showActiveButton">Show Active</button>
+      <button class="showCompletedButton" id="showCompletedButton">Show Completed</button>
+    </div>
+  </div>
+</body>
+</html>
