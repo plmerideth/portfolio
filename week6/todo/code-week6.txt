@@ -6,7 +6,7 @@ HTML FILE - TO-DO.HTML
 <meta charset="utf-8">
 <link rel="stylesheet" type="text/css" href="./styles.css">
 
-<title><strong>My To Do List</strong></title>
+<title>My To Do List</title>
 
 <script type="module" src="todo.js"></script>
 
@@ -14,8 +14,15 @@ HTML FILE - TO-DO.HTML
 
 <body>
   <div id="divToDoFrame" class="divToDoFrame">
-    <button class="addToDoButton" id="addToDo">Add New To Do</button>
-    <h1 class="toDoTitle">My To Do List</h1>
+    <div class="divToDoTitleFrame1">
+      <button class="addToDoButton" id="addToDo">Add New To Do</button>
+    </div>
+    <div class="divToDoTitleFrame2">
+      <h1 class="toDoTitle">My To Do List</h1>
+    </div>
+    <div class="divToDoTitleFrame3">
+      <p class="toDoTitle"><span>&#10003;</span> Check box to mark complete</p>
+    </div>
     <div id="divToDoList" class="divToDoList">
       <div id="divNewContent" class="divNewContent">
       </div>
@@ -63,7 +70,9 @@ class toDoList
     let divNewContentID = document.getElementById('divNewContent');
     divNewContentID.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
 
-    // this.parentElement.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+    //give focus to text box
+    const textBoxID = document.getElementById('toDoDescription').focus();
+    //textBoxID.getElementById.select();
 
     const saveToDoID = document.getElementById('saveToDoButton');
     saveToDoID.addEventListener('click', addToDoItem);
@@ -376,9 +385,32 @@ CSS FILE - STYLES.CSS
   margin: auto;
   border: solid 2px red;
   background-color: black;
-  max-width: 700px;
+  width: 690px;
   padding-top: 10px;
 }
+
+.divToDoTitleFrame1
+{
+  background-color: black;
+  width: 33.333333%;
+  float: left;
+  text-align: center;
+}
+
+.divToDoTitleFrame2
+{
+  background-color: black;
+  width: 33.33333%;
+  float: left;
+  text-align: center;
+}
+.divToDoTitleFrame3
+{
+  clear: both;
+  background-color: black;
+  width: 100%;
+  text-align: center;
+  ;}
 
 .divToDoList
 {
@@ -389,6 +421,7 @@ CSS FILE - STYLES.CSS
   margin: 10px;
   background-color: lightgray;
   overflow-y: auto;
+  text-align: left;
 }
 
 .divToDoStatus
@@ -414,16 +447,31 @@ CSS FILE - STYLES.CSS
   margin: 5px 0px 10px 25px;
 }
 
+.addToDoButton
+{
+  display: inline;
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 20px 0px 0 0px;
+  font-family: 'Arial';
+  font-size: 13.3 px;
+}
+
 .toDoTitle
 {
-  text-align: center;
   color: white;
   display: inline;
-  margin-left: 90px;
-  /* position: fixed;
-  left: 0;
-  right: 0;
-  top: 0; */
+  margin: 0px 0px 0 0px;
+}
+
+p.toDoTitle
+{
+  font-size: 14px;
+  display: block;
+  margin: 0px;
+  color: white;
 }
 
 .statusTitle
@@ -455,15 +503,6 @@ li
   border-radius: 20px;
   /* padding: 10px 10px 0 10px; */
   margin-bottom: 20px;
-}
-
-.addToDoButton
-{
-  background-color: greenyellow;
-  color: black;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 0 20px 0 40px;
 }
 
 .showAllButton
