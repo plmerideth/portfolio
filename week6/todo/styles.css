@@ -3,9 +3,32 @@
   margin: auto;
   border: solid 2px red;
   background-color: black;
-  max-width: 700px;
+  width: 690px;
   padding-top: 10px;
 }
+
+.divToDoTitleFrame1
+{
+  background-color: black;
+  width: 33.333333%;
+  float: left;
+  text-align: center;
+}
+
+.divToDoTitleFrame2
+{
+  background-color: black;
+  width: 33.33333%;
+  float: left;
+  text-align: center;
+}
+.divToDoTitleFrame3
+{
+  clear: both;
+  background-color: black;
+  width: 100%;
+  text-align: center;
+  ;}
 
 .divToDoList
 {
@@ -16,6 +39,7 @@
   margin: 10px;
   background-color: lightgray;
   overflow-y: auto;
+  text-align: left;
 }
 
 .divToDoStatus
@@ -41,16 +65,31 @@
   margin: 5px 0px 10px 25px;
 }
 
+.addToDoButton
+{
+  display: inline;
+  background-color: greenyellow;
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 20px 0px 0 0px;
+  font-family: 'Arial';
+  font-size: 13.3 px;
+}
+
 .toDoTitle
 {
-  text-align: center;
   color: white;
   display: inline;
-  margin-left: 90px;
-  /* position: fixed;
-  left: 0;
-  right: 0;
-  top: 0; */
+  margin: 0px 0px 0 0px;
+}
+
+p.toDoTitle
+{
+  font-size: 14px;
+  display: block;
+  margin: 0px;
+  color: white;
 }
 
 .statusTitle
@@ -82,15 +121,6 @@ li
   border-radius: 20px;
   /* padding: 10px 10px 0 10px; */
   margin-bottom: 20px;
-}
-
-.addToDoButton
-{
-  background-color: greenyellow;
-  color: black;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 0 20px 0 40px;
 }
 
 .showAllButton
