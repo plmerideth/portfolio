@@ -22,7 +22,9 @@ class toDoList
     let divNewContentID = document.getElementById('divNewContent');
     divNewContentID.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
 
-    // this.parentElement.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
+    //give focus to text box
+    const textBoxID = document.getElementById('toDoDescription').focus();
+    //textBoxID.getElementById.select();
 
     const saveToDoID = document.getElementById('saveToDoButton');
     saveToDoID.addEventListener('click', addToDoItem);
