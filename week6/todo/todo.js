@@ -111,19 +111,17 @@ function renderOneToDo(toDo, i)
   if(toDo.completed === true)
   {
     item.setAttribute("class", "toDoChecked");
-    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButtonChecked" id="${delUniqueID}">Delete To Do</button>`;
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItemChecked">${toDo.content}</h2>`;
     toDoComplete="Yes";
   }
   else
   {
-    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButton" id="${delUniqueID}">Delete To Do</button>`;
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">${toDo.content}</h2>`;
   }
   item.innerHTML+=` <div class="toDoItem">
     <p><strong>Created: </strong>${toDo.created}</p>
-    <p><strong>Description: </strong>${toDo.content}</p>
-
-    <hr style="width:100%; text-align:left; margin-left:0">
-  </div>`
+    <button class="deleteButton" id="${delUniqueID}">Delete To Do</button>
+    <hr style="width:100%; text-align:left; margin:7px 0 0 0"></div>`;
 
 // <p><strong>Completed: </strong>${toDoComplete}</p>
 
@@ -161,6 +159,7 @@ function addToDoItem()
   const delButtonId = document.getElementById(buttonID);
   delButtonId.addEventListener('click', deleteItem)
 
+  myToDo.taskCount++; //increment to do counter
   updateToDoCountLabel(myToDo); //display 'Check Box' or "No To Do"
   updateStatusWindow(myToDoList); //Update remaining task count display
 

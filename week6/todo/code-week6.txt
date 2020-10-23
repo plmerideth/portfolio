@@ -152,19 +152,17 @@ function renderOneToDo(toDo, i)
   if(toDo.completed === true)
   {
     item.setAttribute("class", "toDoChecked");
-    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButtonChecked" id="${delUniqueID}">Delete To Do</button>`;
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItemChecked">${toDo.content}</h2>`;
     toDoComplete="Yes";
   }
   else
   {
-    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">To Do: ${toDo.id}</h2><button class="deleteButton" id="${delUniqueID}">Delete To Do</button>`;
+    item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done"/></form><h2 class="toDoItem">${toDo.content}</h2>`;
   }
   item.innerHTML+=` <div class="toDoItem">
     <p><strong>Created: </strong>${toDo.created}</p>
-    <p><strong>Description: </strong>${toDo.content}</p>
-
-    <hr style="width:100%; text-align:left; margin-left:0">
-  </div>`
+    <button class="deleteButton" id="${delUniqueID}">Delete To Do</button>
+    <hr style="width:100%; text-align:left; margin:7px 0 0 0"></div>`;
 
 // <p><strong>Completed: </strong>${toDoComplete}</p>
 
@@ -202,6 +200,7 @@ function addToDoItem()
   const delButtonId = document.getElementById(buttonID);
   delButtonId.addEventListener('click', deleteItem)
 
+  myToDo.taskCount++; //increment to do counter
   updateToDoCountLabel(myToDo); //display 'Check Box' or "No To Do"
   updateStatusWindow(myToDoList); //Update remaining task count display
 
@@ -438,11 +437,23 @@ CSS FILE - STYLES.CSS
   font-size: 30px;
 }
 
+ul
+{
+  list-style: none;
+  padding: 0;
+}
+
+li
+{
+  padding: 5px 10px 0 10px;
+}
+
 .toDoChecked
 {
   background-color: greenyellow;
+  /* background-image: repeating-linear-gradient(bottom left, #900 20px, #FC0 30px, #900 40px); */
   border-radius: 20px;
-  padding: 20px 20px 0 20px;
+  /* padding: 10px 10px 0 10px; */
   margin-bottom: 20px;
 }
 
@@ -548,8 +559,8 @@ CSS FILE - STYLES.CSS
   color: white;
   border-radius: 10px;
   padding: 5px;
-  position: relative;
-  right: -300px;
+  /* position: relative;
+  right: -300px; */
 }
 
 .deleteButtonChecked
@@ -578,16 +589,18 @@ CSS FILE - STYLES.CSS
   float: left;
 }
 
-ul
-{
-  list-style: none;
-  padding: 0;
-}
-
 .toDoItem
 {
   display: inline;
   margin: 0 20px 0 20px;
+}
+
+.toDoItemChecked
+{
+  display: inline;
+  margin: 0 20px 0 20px;
+  text-decoration: line-through;
+  font-weight: 100;
 }
 
 .hidden

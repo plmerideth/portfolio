@@ -64,11 +64,23 @@
   font-size: 30px;
 }
 
+ul
+{
+  list-style: none;
+  padding: 0;
+}
+
+li
+{
+  padding: 5px 10px 0 10px;
+}
+
 .toDoChecked
 {
   background-color: greenyellow;
+  /* background-image: repeating-linear-gradient(bottom left, #900 20px, #FC0 30px, #900 40px); */
   border-radius: 20px;
-  padding: 20px 20px 0 20px;
+  /* padding: 10px 10px 0 10px; */
   margin-bottom: 20px;
 }
 
@@ -174,8 +186,8 @@
   color: white;
   border-radius: 10px;
   padding: 5px;
-  position: relative;
-  right: -300px;
+  /* position: relative;
+  right: -300px; */
 }
 
 .deleteButtonChecked
@@ -204,16 +216,18 @@
   float: left;
 }
 
-ul
-{
-  list-style: none;
-  padding: 0;
-}
-
 .toDoItem
 {
   display: inline;
   margin: 0 20px 0 20px;
+}
+
+.toDoItemChecked
+{
+  display: inline;
+  margin: 0 20px 0 20px;
+  text-decoration: line-through;
+  font-weight: 100;
 }
 
 .hidden
