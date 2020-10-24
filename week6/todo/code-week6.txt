@@ -67,6 +67,11 @@ class toDoList
 
   displayContentWindow()
   {
+    //change class to show back-ground image
+    const divToDoListID = document.getElementById('divToDoList');
+    divToDoListID.classList.remove('showToDoImage');
+
+
     let divNewContentID = document.getElementById('divNewContent');
     divNewContentID.innerHTML = `<h1>Enter To Do Description</h1><textarea class="toDoDescription" id="toDoDescription"></textarea><button class="toDoButton" id="saveToDoButton">Save To Do Item</button><button class="cancelToDoButton" id="cancelToDoButton">Cancel</button>`
 
@@ -149,6 +154,18 @@ function renderToDoList(parent, list)
       delButtonId.addEventListener('click', deleteItem)
     }
   });
+
+  const divToDoListID = document.getElementById('divToDoList');
+  if(myToDo.taskCount === 0)
+  {
+    //change class to show back-ground image
+    divToDoListID.classList.add('showToDoImage');
+  }
+  else
+  {
+      //change class to hide back-ground image
+      divToDoListID.classList.remove('showToDoImage');
+  }
 }
 
 function renderOneToDo(toDo, i)
@@ -157,12 +174,10 @@ function renderOneToDo(toDo, i)
   item.setAttribute('data-name', toDo.name);
   let cbUniqueID = "cb"+i; //Give each checkbox a unique ID
   let delUniqueID = "del"+i; //Give each delete button a unique ID
-  let toDoComplete="No";
   if(toDo.completed === true)
   {
     item.setAttribute("class", "toDoChecked");
     item.innerHTML =`<form class="itemForm" name="itemCompleted" action="#"><input type="checkbox" id="${cbUniqueID}" name="completed" value="done" checked="checked"/></form><h2 class="toDoItemChecked">${toDo.content}</h2>`;
-    toDoComplete="Yes";
   }
   else
   {
@@ -172,8 +187,6 @@ function renderOneToDo(toDo, i)
     <p><strong>Created: </strong>${toDo.created}</p>
     <button class="deleteButton" id="${delUniqueID}">Delete To Do</button>
     <hr style="width:100%; text-align:left; margin:7px 0 0 0"></div>`;
-
-// <p><strong>Completed: </strong>${toDoComplete}</p>
 
   return item;
 }
@@ -422,6 +435,14 @@ CSS FILE - STYLES.CSS
   background-color: lightgray;
   overflow-y: auto;
   text-align: left;
+}
+
+.showToDoImage
+{
+  background-image: url('todo-4.png');
+  background-repeat: no-repeat;
+  background-position: center 160px;
+  background-size: 500px auto;
 }
 
 .divToDoStatus
