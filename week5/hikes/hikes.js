@@ -73,16 +73,6 @@ export default class Hikes
 		this.backButton.classList.add('hidden');
 	}
 
-  	// show one hike with full details in the parentElement
-//  	showOneHike(hikeName)
-//	{
-//		this.parentElement.innerHTML = '';
-//		let hikeIndex = hikeList.findIndex(x => x.name === hikeName.currentTarget.dataset.name);
-//		const hike = hikeList[hikeIndex];
-//		this.parentElement.appendChild(renderOneHikeFull(hike));
-//		this.backButton.classList.remove('hidden');
-//	}
-
   showOneHike(hikeName) {
     const hike = this.getHikeByName(hikeName);
     this.parentElement.innerHTML = '';
@@ -107,18 +97,6 @@ export default class Hikes
 		});
 	}
 
-//		const hikeListID = document.querySelectorAll("li");
-//		const arrayListID = Array.from(hikeListID);
-//
-//		arrayListID.forEach(linkID =>
-//		{
-//			let myID = linkID;
-//			myID.addEventListener('click', this.showOneHike)
-//		});
-//		console.log(arrayListID);
-//  	}
-
-
 	buildBackButton()
 	{
 		const backButton = document.createElement('button');
@@ -131,7 +109,8 @@ export default class Hikes
 		this.parentElement.before(backButton);
 		return backButton;
 	}
-}
+} // End of hike Class
+//*****************************************************************
 
 // methods responsible for building HTML.  Why aren't these in the class?  They don't really need to be, and by moving them outside of the exported class, they cannot be called outside the module...they become private.
 function renderHikeList(parent, hikes)

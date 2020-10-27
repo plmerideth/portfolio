@@ -7,6 +7,8 @@ class toDoList
   constructor(elementID)
   {
     this.parentElement = document.getElementById(elementID);
+    this.taskDisplay = "all"; //Tracks which to do events to display
+    this.taskCount = 0;  //Counts how many to do tasks are being displayed
   }
 
   showToDoList()
@@ -41,8 +43,6 @@ class toDoList
 
 //Create myToDo from toDoList class
 const myToDo = new toDoList("toDoList");
-myToDo.taskDisplay = "all";
-myToDo.taskCount = 0;
 window.addEventListener('load', ()=>
 {
   myToDo.showToDoList();
@@ -179,7 +179,7 @@ function addToDoItem()
   updateStatusWindow(myToDoList); //Update remaining task count display
 
   //Write new to-do out to local storage
-  localStorage.clear();
+  localStorage.removeItem('myToDoList');
   storeToDo(myToDoList);
 
   //Restore divNewContent innerHTML = ""
@@ -214,7 +214,7 @@ function deleteItem(event)
   myToDo.showToDoList();
 
   //Write new to do out to local storage
-  localStorage.clear();
+  localStorage.removeItem('myToDoList');
   storeToDo(myToDoList);
 }
 
@@ -226,7 +226,7 @@ function updateCompletion(event)
   myToDo.showToDoList();
 
   //Write updated complete status out to local storage
-  localStorage.clear();
+  localStorage.removeItem('myToDoList');
   storeToDo(myToDoList);
 }
 
