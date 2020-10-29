@@ -6,7 +6,7 @@ function displayPortList()
 {
 	//t x = document.getElementById("portfolioIndex");
 	//Set week = to current week to be displayed.  This selects class to be applied to links
-	let week = 6;
+	let week = 7;
 
 	const links =
 	[
