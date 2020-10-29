@@ -16,7 +16,7 @@ function displayPortList()
 		{label: "URL: Week 4 Notes",	url: "week4/index4.html"},
 		{label: "URL: Week 5 Notes",	url: "week5/index5.html"},
 		{label: "URL: Week 6 To-Do project and Notes",	url: "week6/index6.html"},
-		{label: "URL: Week 7 TBD",	url: "week7/index7.html"},
+		{label: "URL: Week 7 Notes",	url: "week7/index7.html"},
 		{label: "URL: Week 8 TBD",	url: "week8/index8.html"},
 		{label: "URL: Week 9 TBD",	url: "week9/index9.html"},
 		{label: "URL: Week 10 TBD",	url: "week10/index10.html"},
