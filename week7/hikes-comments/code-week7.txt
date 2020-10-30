@@ -1,0 +1,597 @@
+HTML FILE - INDEX.HTML
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="./styles.css">
+
+<title>Great Hikes and Comments</title>
+
+<script type="module" src="main.js"></script>
+
+</head>
+
+<body>
+      <h1>Great hikes</h1>
+      <ul id="hikes" class="hikeStyles">
+        <!-- your hike list should be build here. -->
+      </ul>
+      <div id="comments" class="commentsSection"></div>
+</body>
+</html>
+
+ =======================================
+
+ JAVASCRIPT FILE - MAIN.JS
+
+ // JavaScript Document
+
+
+
+ import Hikes from './hikes.js';
+
+ const teamHikes = new Hikes("hikes");
+ export default teamHikes;
+
+ window.addEventListener('load', () => {
+   teamHikes.showHikeList();
+ });
+
+ =======================================
+
+ JAVASCRIPT FILE - HIKES.JS
+
+ // JavaScript Document
+ import {readLocalStorage, writeLocalStorage} from './ls.js';
+ import Comments from './comments.js';
+
+ // Example of using Classes and modules to organize the code needed to render our list of hikes. Not using MVC here.
+
+ //create an array of hikes
+ const hikeList = [
+   {
+     name: "Bechler Falls",
+     imgSrc: "falls.jpg",
+     imgAlt: "Image of Bechler Falls",
+     distance: "3 miles",
+     difficulty: "Easy",
+     description:
+       "Beautiful short hike along the Bechler river to Bechler Falls",
+     directions:
+       "Take Highway 20 north to Ashton. Turn right into the town and continue through. Follow that road for a few miles then turn left again onto the Cave Falls road.Drive to the end of the Cave Falls road. There is a parking area at the trailhead."
+   },
+   {
+     name: "Teton Canyon",
+     imgSrc: "falls.jpg",
+     imgAlt: "Image of Bechler Falls",
+     distance: "3 miles",
+     difficulty: "Easy",
+     description: "Beautiful short (or long) hike through Teton Canyon.",
+     directions:
+       "Take Highway 33 East to Driggs. Turn left onto Teton Canyon Road. Follow that road for a few miles then turn right onto Stateline Road for a short distance, then left onto Alta Road. Veer right after Alta back onto Teton Canyon Road. There is a parking area at the trailhead."
+   },
+   {
+     name: "Denanda Falls",
+     imgSrc: "falls.jpg",
+     imgAlt: "Image of Bechler Falls",
+     distance: "7 miles",
+     difficulty: "Moderate",
+     description:
+       "Beautiful hike through Bechler meadows river to Denanda Falls",
+     directions:
+       "Take Highway 20 north to Ashton. Turn right into the town and continue through. Follow that road for a few miles then turn left again onto the Cave Falls road. Drive to until you see the sign for Bechler Meadows on the left. Turn there. There is a parking area at the trailhead."
+   }
+ ];
+
+ const imgBasePath = "./";
+ //on load grab the array and insert it into the page on load
+
+ export default class Hikes
+ {
+ 	constructor(elementId)
+ 	{
+ 		this.hikesElementID = document.getElementById(elementId);
+ 		// we need a back button to return back to the list. This will build it and hide it. When we need it we just need to remove the 'hidden' class
+ 		this.backButton = this.buildBackButton();
+     this.comments = new Comments("hikeComments", "comments")
+ 	}
+
+ 	// why is this function necessary?  hikeList is not exported, and so it cannot be seen outside of this module. I added this in case I ever need the list of hikes outside of the module. This also sets me up nicely if my data were to move. I can just change this method to the new source and everything will still work if I only access the data through this getter.
+ 	getAllHikes()
+ 	{
+     let myHikeList = JSON.parse(readLocalStorage("hikeList"));
+     return myHikeList;
+   }
+
+ 	// For the first stretch we will need to get just one hike.
+   	getHikeByName(hikeName)
+ 	{
+     	return this.getAllHikes().find(hike => hike.name === hikeName);
+   	}
+
+   	//show a list of hikes in the hikesElementID
+ 	showHikeList()
+ 	{
+     //writeLocalStorage("hikeList", hikeList);
+     //let myHikeList = JSON.parse(readLocalStorage("hikeList"));
+
+ 		this.hikesElementID.innerHTML = '';
+ 		// Have not added functionality to add hikes.  Have to force localStorage to have initial hikes.  It may get deleted, so this checks for empty localStorage and restores it, if empty
+     const checkHikeList = this.getAllHikes();
+     if(checkHikeList===null)
+     {
+       writeLocalStorage("hikeList", hikeList);
+     }
+
+ 		renderHikeList(this.hikesElementID, this.getAllHikes());
+ 		this.addHikeListener();
+ 		// make sure the back button is hidden
+ 		this.backButton.classList.add('hidden');
+     this.comments.showCommentList();
+ 	}
+
+   showOneHike(hikeName) {
+     const hike = this.getHikeByName(hikeName);
+     this.hikesElementID.innerHTML = '';
+     this.hikesElementID.appendChild(renderOneHikeFull(hike));
+     // show the back button
+     this.backButton.classList.remove('hidden');
+     this.comments.showCommentList(hikeName);
+   }
+
+
+   	// in order to show the details of a hike ontouchend we will need to attach a listener AFTER the list of hikes has been built. The function below does that.
+ 	addHikeListener()
+ 	{
+     	// We need to loop through the children of our list and attach a listener to each, remember though that children is a nodeList...not an array. So in order to use something like a forEach we need to convert it to an array.
+ 		const childrenArray = Array.from(this.hikesElementID.children);
+ 		childrenArray.forEach(child =>
+ 		{
+ 			child.addEventListener('click', e =>
+ 			{
+ 				// why currentTarget instead of target?
+ 				this.showOneHike(e.currentTarget.dataset.name);
+ 			});
+ 		});
+ 	}
+
+ 	buildBackButton()
+ 	{
+ 		const backButton = document.createElement('button');
+ 		backButton.innerHTML = '&lt;- All Hikes';
+ 		backButton.addEventListener('click', () =>
+ 		{
+ 		  this.showHikeList();
+ 		});
+ 		backButton.classList.add('hidden');
+ 		this.hikesElementID.before(backButton);
+ 		return backButton;
+ 	}
+ } // End of hike Class
+ //*****************************************************************
+
+ // methods responsible for building HTML.  Why aren't these in the class?  They don't really need to be, and by moving them outside of the exported class, they cannot be called outside the module...they become private.
+ function renderHikeList(parent, hikes)
+ {
+ 	hikes.forEach(hike =>
+ 	{
+     	parent.appendChild(renderOneHikeLight(hike));
+   	});
+ }
+
+
+ function renderOneHikeLight(hike)
+ {
+ 	const item = document.createElement("li");
+ 	item.setAttribute('data-name', hike.name);
+   item.classList.add('hikeItem');
+ 	item.innerHTML = ` <h2 class="hikeTitle"><a id=${hike.name} href="#">${hike.name} - (Click for details and comments)</a></h2>
+ 	<div class="image"><img src="${imgBasePath}${hike.imgSrc}" alt="${hike.imgAlt}"></div>
+ 	<div class="description">
+           <div class="hikeDistance">
+               <h3>Distance</h3>
+               <p>${hike.distance}</p>
+           </div>
+           <div class="hikeDifficulty">
+               <h3>Difficulty</h3>
+               <p>${hike.difficulty}</p>
+           </div>
+   </div>`;
+   return item;
+ }
+
+ function renderOneHikeFull(hike)
+ {
+ 	const item = document.createElement("li");
+
+   item.innerHTML = `
+
+         <div class="image"><img src="${imgBasePath}${hike.imgSrc}" alt="${hike.imgAlt}"></div>
+ 		<div class="fullDescription">
+ 			<h2 class="fullHikeTitle">${hike.name}</h2>
+ 			<div class="fullHikeDistance">
+ 				<h3>Distance</h3>
+ 				<p>${hike.distance}</p>
+ 			</div>
+ 			<div class="fullHikeDifficulty">
+ 				<h3>Difficulty</h3>
+ 				<p>${hike.difficulty}</p>
+ 			</div>
+ 			<div class="fullHikeDescription">
+ 				<h3>Description</h3>
+ 				<p>${hike.description}</p>
+ 			</div>
+ 			<div class="fullHikeDirections">
+ 				<h3>How to get there</h3>
+ 				<p>${hike.directions}</p>
+ 			</div>
+ 		</div>
+     `;
+   return item;
+ 	}
+
+  =======================================
+
+  JAVASCRIPT FILE - COMMENTS.JS
+
+  import {readLocalStorage, writeLocalStorage} from './ls.js';
+  import teamHikes from './main.js';
+
+  export default class Comments
+  {
+    constructor(type, commentElementId)
+    {
+      this.type = type;
+      this.commentElementId = commentElementId;
+      this.model = new CommentModel(this.type);
+    }
+
+    addSubmitListener(postName)
+    {
+      // use element.onclick to avoid more than one listener getting attached at a time to the button.
+      //If element.addEventListener() allows unlimited events to be attached to one element.  onclick allows only one.
+      document.getElementById('commentSubmit').onclick = () =>
+      {
+        // debugger;
+        this.model.addComment( postName, document.getElementById('commentEntry').value);
+        //Clear out input field after comment has been added.
+        document.getElementById('commentEntry').value = '';
+        this.showCommentList(postName);
+      };
+
+      //Add cancel button
+      document.getElementById('commentCancel').onclick = () =>
+      {
+        document.getElementById('commentEntry').value = '';
+        //this.showCommentList(postName);
+        teamHikes.showHikeList();
+      };
+    }
+
+    showCommentList(q = null)
+    {
+      const parent = document.getElementById(this.commentElementId);
+      // check to see if the commentUI code has been added yet
+      if (parent.innerHTML === '')
+      {
+        parent.innerHTML = commentUI;
+      }
+      if (q !== null) {
+        // looking at one post, show comments and new comment button by making display mode = block
+        document.querySelector('.addComment').style.display = 'block';
+        this.addSubmitListener(q);
+      } else {
+        // no hike selected, hide comment entry
+        document.querySelector('.addComment').style.display = 'none';
+      }
+
+      //Read comments from LS
+      // get the comments from the model
+      let comments = this.model.getComments(q);
+      if (comments === null) {
+        // avoid an error if there are no comments yet.
+        comments = [];
+      }
+      renderCommentList(parent.lastChild, comments);
+      //Give comment box focus
+      document.getElementById('commentEntry').focus();
+    }
+  } //End Comments Class
+
+  class CommentModel
+  {
+    constructor(type)
+    {
+      this.type = type;
+      // get the initial list of comments out of local storage if it exists
+      //If comments don't exist, assign empty array
+      this.comments = JSON.parse(readLocalStorage(this.type)) || [];
+    }
+
+    getComments(q = null)
+    {
+      if (q === null)
+      {
+        // no query, get all comments of the type
+        return this.comments;
+      }
+      else
+      {
+        // comments for a specific post...filter by name
+        return this.comments.filter(el => el.name === q);
+      }
+    }
+
+    addComment(postName, comment)
+    {
+      const newComment =
+      {
+        name: postName,
+        comment: comment,
+        date: getTimeStamp()
+      };
+      this.comments.push(newComment);
+      writeLocalStorage(this.type, this.comments);
+    }
+  } //End of CommentModel Class
+
+
+  function renderCommentList(element, comments)
+  {
+    // clear out any comments that might be listed
+    element.innerHTML = '';
+    // add the new list of comments
+    comments.forEach(el =>
+    {
+      let item = document.createElement('li');
+      item.innerHTML = `
+              <strong>${el.name}:</strong> ${el.comment}<br>
+              <strong>Submitted: </strong>${el.date}<br><br>
+
+        `;
+        element.appendChild(item);
+    });
+  }
+
+  function getTimeStamp()
+  {
+    let now = new Date();
+    let dateTimeOpt =
+    {
+      weekday: "short",
+      month: "short",
+      year: "numeric",
+      day: "numeric"
+    }
+    let formattedTime = Intl.DateTimeFormat("en-US", dateTimeOpt).format(now)
+    return formattedTime;
+  }
+
+  const commentUI = `<div class="addComment">
+  <h2>Add a comment</h2>
+  <input type="text" id="commentEntry" class="inputBox" />
+  <button id="commentSubmit" class="commentButton">Submit</button>
+  <button id="commentCancel" class="commentButton">Cancel</button>
+  </div>
+  <h2>Comments</h2>
+  <ul class="comments"></ul>`;
+
+  =======================================
+
+  JAVASCRIPT FILE - LS.JS
+
+  export function readLocalStorage(key)
+  {
+    return localStorage.getItem(key);
+  }
+
+  export function writeLocalStorage(key, value)
+  {
+      localStorage.setItem(key, JSON.stringify(value));
+  }
+
+  =======================================
+
+  CSS FILE - STYLES.CSS
+
+  @charset "utf-8";
+  /* CSS Document */
+
+  body
+  {
+  	margin: 0;
+  	padding: 0;
+  	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  	min-width: 880px;
+  }
+
+  .commentsSection
+  {
+  	padding-left: 40px;
+  }
+
+  .comments
+  {
+  	padding-left: 0;
+  }
+
+  .inputBox
+  {
+  	width: 600px;
+  	height: 30px;
+  	font-size: 25px;
+  }
+
+  .hidden
+  {
+  	display: none;
+  }
+
+  button
+  {
+  	margin-left: 40px;
+  	border: 2px solid black;
+  	border-radius: 10px;
+  	font-size: 1.5vw;
+  	padding: 10px;
+  	text-align: center;
+  	background-color: #243E02;
+  	color: white;
+  	cursor: pointer;
+  }
+
+  .commentButton
+  {
+
+  }
+
+  h1
+  {
+  	margin-left: 40px;
+  	font-size: 8vw;
+  }
+
+  a:link
+  {
+  	color: white;
+  	text-decoration: none;
+  }
+
+  a:visited
+  {
+  	color: white;
+  }
+
+  a:hover
+  {
+  	color: tan;
+  }
+  h3
+  {
+  	margin: .5vw auto .5vw auto;
+  }
+
+  p
+  {
+  	margin: .5vw auto .5vw auto;
+  }
+  img
+  {
+  	max-width: 100%;
+  }
+
+  .image
+  {
+  	width: 50%;
+  	display: inline-block;
+  	margin-bottom: 30px;
+  }
+
+  .hikeStyles
+  {
+  	padding: 0 40px 0 40px;
+  }
+
+  .hikeItem
+  {
+  	border: solid 3px black;
+  	padding: 0 40px 0 40px;
+  }
+  .hikeTitle
+  {
+  	border: 2px solid black;
+  	background-color: #243E02;
+  	color: white;
+  	text-align: center;
+  	font-size: 2vw;
+  	/* margin-right: 40px; */
+  }
+
+  .fullHikeTitle
+  {
+  	border: 2px solid black;
+  	background-color: #243E02;
+  	color: white;
+  	text-align: center;
+  	font-size: 2vw;
+  	margin-right: 40px;
+  	margin-top: 0px;
+  }
+
+  ul  /*This style is used to title <li>*/
+  {
+  	list-style-type: none;
+  }
+
+  .description
+  {
+  	float: right;
+  	width: 44%;
+  	margin-right: 40px;
+  	margin-top: 10%;
+  }
+
+  .fullDescription
+  {
+  	float: right;
+  	width: 44%;
+  	margin-right: 40px;
+  	margin-top: 0;
+  }
+
+  .hikeDistance
+  {
+  /*	border: 2px solid red;*/
+  	width: 80%;
+  	margin: 10px auto 10px auto;
+  	text-align: center;
+  	font-size: 1.5vw;
+  }
+
+  .fullHikeDistance
+  {
+  /*	border: 2px solid red;*/
+  	width: 80%;
+  	margin: 10px 0 10px 0;
+  	text-align: left;
+  	font-size: 1.5vw;
+  }
+
+
+  .hikeDifficulty
+  {
+  /*	border: 2px solid blue;*/
+  	text-align: center;
+  	width: 80%;
+  	margin: 10px auto 10px auto;
+  	font-size: 1.5vw;
+  }
+
+  .fullHikeDifficulty
+  {
+  /*	border: 2px solid blue;*/
+  	text-align: left;
+  	width: 80%;
+  	margin: 10px 0 10px 0;
+  	font-size: 1.5vw;
+  }
+
+  .fullHikeDescription
+  {
+  /*	border: 2px solid blue;*/
+  	text-align: left;
+  	width: 80%;
+  	margin: 10px 0 10px 0;
+  	font-size: 1.5vw;
+  }
+
+  .fullHikeDirections
+  {
+  /*	border: 2px solid blue;*/
+  	text-align: left;
+  	width: 80%;
+  	margin: 10px 0 10px 0;
+  	font-size: 1.5vw;
+  }

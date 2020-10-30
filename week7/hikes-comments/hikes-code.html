@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Hikes-comments Code-Week 7</title>
+</head>
+
+<body>
+	<h1>Hikes-comments code - Week 7</h1>
+	<h3>My Hikes-comments Code Below</h3>
+
+	<pre id="contents"></pre>
+</body>
+</html>
+
+<script>
+	function populatePre(url)
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function ()
+		{
+			document.getElementById('contents').textContent = this.responseText;
+		};
+		xhr.open('GET', url);
+		xhr.send();
+	}
+
+populatePre('code-week7.txt'); //Note: this only works when sent thru a server with HTTP request.
+</script>

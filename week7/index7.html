@@ -8,47 +8,69 @@
   <body>
     <section class="readingSection">
   			<a href="../index.html">Home</a>
-  		   	<h2 class="readingTitle">JAVASCRIPT: NOVICE TO NINJA</h2>
+  		   	<h2 class="readingTitle">WEEK 7 READINGS</h2>
+          <h3 class="readingCategory">Javascript: Novice to Ninja</h3>
+          <ul>
+            <li><strong>CHAPTER 11 - FURTHER FUNCTIONS</strong></li>
+            <p>- Functions are first-class objects, which means they can be passed around like other objects</p>
+            <p>- All functions have a .length property that returns the number of parameters the function has</p>
+            <p>- If using the Call() function, and the called function requires arguments, they must be provided as arguments after the first parameter, which is always the value of this.</p>
+            <p>- IIFE (pronounced iffy) = Immediately Invoked Function Expression.  Just place parenthesis at the end of the function definition and it will be invoked automatically.</p>
+            <p>- There is now way to remove temporary variables from scope, once defined.</p>
+            <p>- Recommended use of strict code to allow other programs that don't comply with strict to run -</p>
+            <li> (funtion(){'use strict'; //All code goes inside this function})();
+            <p>- Using callbacks to create asynchronous functions: Create a function called wait()</p>
+            <li> function wait(message, callback, seconds)
+              { setTimeout(callback, seconds*1000); console.log(message);};</li>
+            <li> function selfDestruct(){ console.log('BOOOM');}</li>
+            <li> Calling the function:  wait('This tape will self destruct in 5 seconds', selfDestruct, 5);  console.log('Should I accept the mission or not?');</li>
+            <p>- Promises represent the future result of an async operation. They help simplify the process</p>
+            <p>- Promises can be chained so that one has to complete before the next function begins</p>
+            <p>- The async keyword can be added in front of async functions so they act like synch functions.</p>
+            <p>- Closures allow you to keep local variables in scope outside of the block they were created in by returning a function which references the variables to an external function</p>
+            <p>- Functional programming is a programming paradigm, like object-oriented, or procedural.  It uses 'pure functions' which make it easier to create more complex tasks and can be easily updated if needed</p>
+            <p>- Currying is a process that involves the partial application of functions (Not all arguments supplied to the function call).  It allows you to turn a single function into a series of functions</p>
+            <li><strong>CHAPTER 13 - AJAX</strong></li>
+            <p>- Same-Origin Policy:  in browsers, it blocks all requests from a domain that is different from the page making the request.</p>
+            <p>- CORS (Cross-origin Resource Sharing).  It allows resources to be requested from another website outside the original domain.  Works by using HTTP headers to indicate which domains can receive data.</p>
+            <p>- Fetch API:  A standard to request and send asynchronous data across a network.</p>
+            <p>- Fetch API provides a global fetch() method that has one mandatory argument, which is the URL of the desired resource.  fetch('https://example.com/data').then(//Code to handle the response).catch(//code to run if server returns an error);</p>
+            <p>- The fetch() method returns a promise that resolves to the response returned from the URL</p>
+            <p>- A response object is returned when the promise if fulfilled.  These objects have a number of properties and methods.</p>
+            <p>- the response.ok property will return true if HTTP status code property is between 200 and 299.  The promise will only be rejected if a network error occurs, this does not include 404 not found errors.
+          </ul>
+
   	</section>
 
   	<section class="reportSection">
   		<h2 class="reportTitle">WEEK 7 TEAM ACTIVITY</h2>
-  		<h3 class="reportCategory">Project Requirements</h3>
+  		<h3 class="reportCategory">What did I do since the last meeting?</h3>
   		<ul>
-  			<li>Description: Build a simple web app to manage a ToDo list. It should allow the creation of new tasks, the viewing of tasks, a process to mark tasks as complete, ability to remove tasks, and the ability to filter by complete/not complete. </li>
-  			<li>Wireframes for each view.</li>
-  			<li>UI Actions:</li>
-        <p>- Show a list of tasks</p>
-        <p>- Add a new task</p>
-        <p>- Complete a task</p>
-        <p>- Remove a task</p>
-        <p>- Filter tasks (complete/incomplete)</p>
-        <li>Data Sources:</li>
-        <p>- todo: {id: timestamp, content:string, completed: bool}</p>
-        <p>- toDoList = [toDo];
-        <li>Initial Module List:</li>
-        <p>- ToDos.js, localStorage helpers (ls.js), utilitis.js</p>
-        <li>Colors/Typography/specific Element styling:  Student to determine</li>
-        <li>Schedule to provide mile markers along the way</li>
+  			<li>Modified hikes program to allow comments to be entered and displayed.  Here are the details:</li>
+        <li>When the app loads we see a list of all hikes...below we should also see a list of all comments with type:hike.</li>When a hike is touched it will show us the details for that hike. We should also see any comments for that hike, and an input and button to add a new comment.</li>
+        <li>When submit comment button is clicked, add comment and save to Local Storage</li>
+        <li>Create a new module for comments.js</li>
+        <li>Write code to store and retrieve the comments to/from local storage.</li>
+        <li><strong>STRETCH GOALS</strong></li>
+        <p>- When you are looking at a hike details screen you should only see the comments for that hike. When you are looking at all hikes you should see all comments of type hike. Change your code to support this.</p>
+        <p>- When you are looking at a hike details screen...we should be able to enter a comment, when you are looking at all hikes you should not be able to enter a new comment. Change your code to support this.</p>
         <p><br></p>
+        <li>I completed the code modifications and all the stretch goals</li>
         <li>Link to my To Hikes with Comments Program: </li>
   			<a href="hikes-comments/index.html">My Hikes with Comments Program</a>
         <p><br></p>
-        <li>Link to view wireframes:</li>
-        <a href="todo/wireframes.html">Click to view Wireframes</a>
         <p><br></p>
   			<li>- Link to view the source code:</li>
-  			<a href="todo/todo-project.html">Click to Display To Do Code</a>
+  			<a href="hikes-comments/hikes-code.html">Click to Display Hikes-comments Code</a>
   		</ul>
   		<h3 class="reportCategory">What am I going to do next?</h3>
   		<ul>
-  			<li>Complete readings for week 7</li>
-  			<li>Start thinking about how to complete the team project</li>
+  			<li>Begin work on final project</li>
+  			<li>Study asyncronous functions more</li>
   		</ul>
   		<h3 class="reportCategory">What are my blockers?</h3>
   		<ul>
-  			<li>I would like to have a better understanding of what methods to include in a class vs an external function</li>
-        <li>I have always struggled a litte with AJAX calls.  I hope to gain a more solid understanding</li>
+  			<li>I need more practice with fetch() and promises to fully grasp how to use them</li>
   		</ul>
   		<h3 class="reportCategory">Questions</h3>
   		<ul>
