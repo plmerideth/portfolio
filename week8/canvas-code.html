@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Canvas reading exercises Code-Week 8</title>
+</head>
+
+<body>
+	<h1>Canvas reading exercises code - Week 8</h1>
+	<h3>My Canvas exercises Code Below</h3>
+
+	<pre id="contents" class="preContents"></pre>
+</body>
+</html>
+
+<script>
+	function populatePre(url)
+	{
+		var xhr = new XMLHttpRequest();
+		xhr.onload = function ()
+		{
+			document.getElementById('contents').textContent = this.responseText;
+		};
+		xhr.open('GET', url);
+		xhr.send();
+	}
+
+populatePre('code-canvas.txt'); //Note: this only works when sent thru a server with HTTP request.
+</script>

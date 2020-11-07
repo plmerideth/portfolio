@@ -69,7 +69,7 @@
 	border: solid 1px black;
 	border-radius: 8px;
 	background-color: firebrick;
-	color: white;	
+	color: white;
 }
 
 .aTBDClass
@@ -84,7 +84,7 @@
 	border-radius: 8px;
 	background-color: gray;
 	opacity: 50%;
-	color: black;	
+	color: black;
 }
 
 /*Readings styles*/
@@ -125,6 +125,11 @@
 	border: 2px solid blue;
 	background: radial-gradient(circle, blue, white);
 }
+
+.reportSection a
+{
+}
+
 .reportTitle
 {
 	text-align: center;
@@ -132,11 +137,18 @@
 }
 .reportCategory
 {
-	margin-left: 20px;	
+	margin-left: 20px;
 }
 .reportSection a
 {
-	margin-left: 10px;
+	display: inline-block;
+	margin: 20px 0 0 20px;
+	text-decoration: none;
+	padding: 3px;
+	border: solid 1px black;
+	border-radius: 8px;
+	background-color: firebrick;
+	color: white;
 }
 .reportSection a:link
 {
@@ -144,7 +156,7 @@
 }
 .reportSection a:visited
 {
-	color: orangered;
+	color: white;
 }
 .reportSection p
 {
@@ -153,7 +165,7 @@
 .footerSection
 {
 	border: 2px solid red;
-	background: radial-gradient(circle, #C43133, white);	
+	background: radial-gradient(circle, #C43133, white);
 }
 
 /*Footer Styles*/
@@ -174,4 +186,9 @@
 	display: block;
 	width: 25%;
 	float: left;
+}
+
+.preContents
+{
+	margin-left: 40px;
 }

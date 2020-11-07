@@ -1,0 +1,124 @@
+HTML FILE - CANVAS.HTML
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Canvas</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <canvas id="myCanvas" class="myCanvas" width="200" height="200"></canvas>
+    <canvas id="demo2" class="myCanvas" width="200" height="200"></canvas>
+    <canvas id="demo3" class="myCanvas" width="200" height="200"></canvas>
+    <button name="saveButton" id="saveButton">Save Drawing</button>
+    <canvas id="demo4" class="myCanvas" width="200" height="200"></canvas>
+    <canvas id="demo5" class="myCanvas" width="200" height="200"></canvas>
+    <img src="colorful-1.jpg" id="myImage">
+  </body>
+</html>
+
+<script type="module" src="canvas.js"></script>
+================================================
+JAVASCRIPT FILE - CANVAS.JS
+
+
+const canvas = document.getElementById('myCanvas');
+const context = canvas.getContext("2d");
+const canvas2 = document.getElementById('demo2');
+const context2 = canvas2.getContext("2d");
+const canvas3 = document.getElementById('demo3');
+const context3 = canvas3.getContext("2d");
+const canvas4 = document.getElementById('demo4');
+const context4 = canvas4.getContext("2d");
+const canvas5 = document.getElementById('demo5');
+const context5 = canvas5.getContext("2d");
+
+context.strokeStyle = "red";
+context.fillStyle = "rgba(0, 0, 255, 0.5)";
+context.fillRect(10, 10, 100, 100);
+context.strokeRect(10,10,100,100);
+
+const button = document.getElementById('saveButton');
+button.addEventListener('click', saveDrawing, false);
+window.addEventListener("load", drawImageToCanvas, false);
+
+drawPattern();
+drawCircle();
+// manipulateImage();
+
+
+function drawPattern()
+{
+  context2.strokeStyle = "red";
+  let img = new Image();
+  img.src = "bike1.png";
+  img.onload = function()
+  {
+      let pattern = context2.createPattern(img, "repeat");
+      context2.fillStyle = pattern;
+      context2.fillRect(10,10,100,100);
+      context2.strokeRect(10,10,100,100);
+  }
+}
+
+function drawCircle(canvas)
+{
+    context3.beginPath();
+    context3.arc(50,50,30,0,Math.PI*2, true);
+    context3.closePath();
+    context3.strokeStyle = "red";
+    context3.fillStyle = "blue";
+    context3.lineWidth = 3;
+    context3.fill();
+    context3.stroke();
+}
+
+function saveDrawing()
+{
+  window.open(canvas3.toDataURL("circle.png)"));
+}
+
+function drawImageToCanvas()
+{
+  let image = document.getElementById('myImage');
+  context4.drawImage(image, 0, 0 ); //Draw image at x=0, y=0 of the canvas element
+  let imageData = context4.getImageData(0,0,1,1);
+  let pixelData=imageData.data;
+  console.log(pixelData.length);
+
+  manipulateImage();
+}
+
+function manipulateImage()
+{
+  let image = document.getElementById('myImage');
+  context5.drawImage(image, 0, 0 ); //Draw image at x=0, y=0 of the canvas element
+  let imageData = context5.getImageData(0,0,200,200);
+  let pixelData=imageData.data;
+
+  let red, green, blue, greyscale;
+  for(let i=0; i<imageData.data.length; i+=4)
+  {
+    //Read RGB values for image
+    red = imageData.data[i];
+    green = imageData.data[i+1];
+    blue = imageData.data[i+2];
+    //Convert RGB valued to greyscale by multiplying by specific numbers
+    greyscale = red*0.3 + green*0.59 + blue*0.11;
+    //Write greyscale data back out to image array
+    imageData.data[i] = greyscale;
+    imageData.data[i+1] = greyscale;
+    imageData.data[i+2] = greyscale;
+  }
+  //Write greyscale data back out to canvas
+  context5.putImageData(imageData, 0, 0);
+}
+====================================================
+CSS FILE - STYLES.CSS
+
+.myCanvas
+{
+  border: dotted 2px black;
+  margin: 0 20px;
+}
