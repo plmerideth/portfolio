@@ -6,144 +6,35 @@ body
   background-image: url('background-2.jpg');
   background-position: center center;
   background-repeat: no-repeat;
+  background-size: auto;
 }
-
+.outsideFrame
+{
+ height: 100%;
+}
 .topDisplay
 {
+  /* grid-column-start: 3; */
   color: white;
   padding: 20px;
+  font-size: 15px;
   text-align: center;
   margin: 20px 20px 0 20px;
 }
 
-.swpButton
-{
-  width: 200px;
-  margin: 40px 20px 40px 0;
-	border: 2px solid black;
-	border-radius: 10px;
-	font-size: 20px;
-	padding: 10px;
-	text-align: center;
-	background-color: #243E02;
-	color: white;
-	cursor: pointer;
-}
-
-.swsButton
-{
-  width: 200px;
-  margin: 40px 0px 40px 20px;
-	border: 2px solid black;
-	border-radius: 10px;
-	font-size: 20px;
-	padding: 10px;
-	text-align: center;
-	background-color: #243E02;
-	color: white;
-	cursor: pointer;
-}
-
-.nextButton
-{
-  width: 130px;
-  margin: 40px 0px 0px 0;
-	border: 2px solid black;
-	border-radius: 10px;
-	font-size: 20px;
-	padding: 10px;
-	text-align: center;
-	background-color: #243E02;
-	color: white;
-	cursor: pointer;
-}
-
-.prevButton
-{
-  width: 130px;
-  margin: 40px 40px 0px 0;
-
-	border: 2px solid black;
-	border-radius: 10px;
-	font-size: 20px;
-	padding: 10px;
-	text-align: center;
-	background-color: #243E02;
-	color: white;
-	cursor: pointer;
-  grid-column-start: 2;
-}
-
-.peopleCount
-{
-  font-size: 30px;
-  margin-bottom: 0px;
-  color: white;
-}
-
-.shipCount
-{
-  font-size: 30px;
-  margin-bottom: 0px;
-  color: white;
-  text-align: center;
-}
-
-.shipRange
-{
-  font-size: 20px;
-  color: white;
-  text-align: center;
-}
-
-.peopleRange
-{
-  font-size: 20px;
-  color: white;
-}
-
-li
-{
-  font-size: 20px;
-  text-align: left;
-  list-style-position: inside;
-  list-style-type: none;
-}
-
-.listTitle
-{
-  list-style-type: none;
-  font-size: 30px;
-  padding-left: 0;
-}
-
 .outputDisplay
 {
-
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 20px;
 }
 
-h1.detailsTitle
-{
-  color: red;
-  font-size: 30px;
-  justify-self: center;
-}
-
-.detailsTitle
-{
-  justify-self: center;
-}
-
-
 .outputDiv1
 {
-  /* grid-column-start: 1; */
   grid-column-start: 2;
   text-align: center;
-  justify-self: center;
+  justify-self: right;
   /* border: solid 2px black; */
 }
 
@@ -161,19 +52,141 @@ h1.detailsTitle
   /* grid-column-start: 3; */
   grid-column-start: 4;
   text-align: center;
-  justify-self: center;
+  justify-self: left;
   /* border: solid 2px red; */
 }
 
 .outputDiv4
 {
-  grid-column: 2 / 5;
-  padding: 0px 250px;
-  margin: 0px 20px 0 0px;
+  grid-column-start: 2;
+  /* padding: 0px 100px; */
+  margin: 0px 0px 0 0px;
   color: white;
 }
 
+.swpButton
+{
+  width: 135px;
+  margin: 40px 20px 15px 0;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 13px;
+	padding: 10px;
+	text-align: center;
+	background-color: #243E02;
+	color: white;
+	cursor: pointer;
+}
 
+.swsButton
+{
+  width: 135px;
+  margin: 40px 0px 15px 20px;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 13px;
+	padding: 10px;
+	text-align: center;
+	background-color: #243E02;
+	color: white;
+	cursor: pointer;
+}
+
+.nextButton
+{
+  width: 75px;
+  margin: 40px 0px 0px 0;
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 10px;
+	padding: 10px;
+	text-align: center;
+	background-color: #243E02;
+	color: white;
+	cursor: pointer;
+}
+
+.prevButton
+{
+  width: 75px;
+  margin: 40px 40px 0px 0;
+
+	border: 2px solid black;
+	border-radius: 10px;
+	font-size: 10px;
+	padding: 10px;
+	text-align: center;
+	background-color: #243E02;
+	color: white;
+	cursor: pointer;
+  grid-column-start: 2;
+}
+
+.peopleCount
+{
+  font-size: 20px;
+  margin-bottom: 0px;
+  color: white;
+}
+
+.shipCount
+{
+  font-size:20px;
+  margin-bottom: 0px;
+  color: white;
+  text-align: center;
+}
+
+.shipRange
+{
+  font-size: 15px;
+  color: white;
+  text-align: center;
+}
+
+.peopleRange
+{
+  font-size: 15px;
+  color: white;
+}
+
+li
+{
+  font-size: 15px;
+  text-align: left;
+  list-style-position: inside;
+  list-style-type: none;
+}
+
+.listTitle
+{
+  list-style-type: none;
+  font-size: 20px;
+  padding-left: 0;
+}
+
+
+h1.detailsTitle
+{
+  color: red;
+  font-size: 30px;
+  justify-self: center;
+}
+
+.detailsTitle
+{
+  justify-self: center;
+}
+
+.definitions
+{
+    font-size: 10px;
+}
+
+.definitionsTitle
+{
+  font-size: 15px;
+}
 ul
 {
   color: white;
@@ -187,7 +200,7 @@ ul
 .rangeLink
 {
   color: white;
-  font-size: 20px;
+  font-size: 12px;
   text-align: center;
 }
 
@@ -196,10 +209,4 @@ ul
   display: inline-block;
   color: white;
   padding: 0 0 5px 0;
-}
-
-.outputDiv2
-{
-  color: white;
-  /* display:block; */
 }

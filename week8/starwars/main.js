@@ -82,7 +82,7 @@ function renderShips(URL)
     //Add next and previous buttons
     //Calculate start and finish range of ships
     calcRangeEnd('ships');
-    outputString2 += `<button id="prevShipsButton" class="prevButton"><-Previous</button><button id="nextShipsButton" class="nextButton">Next-></button><p class="shipCount">Total Starships = ${totalShips}</p><p class="shipRange">(Starship ${shipsStart} - Starship ${shipsEnd})</p><br><br>`;
+    outputString2 += `<button id="prevShipsButton" class="prevButton"><-Previous</button><button id="nextShipsButton" class="nextButton">Next-></button><p class="shipCount">Total Starships = ${totalShips}</p><p class="shipRange">(Starship ${shipsStart} - Starship ${shipsEnd})</p><br>`;
 
     //Build list of <a> links for pages
     let i=0;
@@ -197,7 +197,7 @@ function renderPeople(URL)
 
     //Add next and previous buttons
     calcRangeEnd('people');
-    outputString2 += `<button id="prevPeopleButton" class="prevButton"><-Previous</button><button id="nextPeopleButton" class="nextButton">Next-></button><p class="peopleCount">Total People = ${totalPeople}</p><p class="peopleRange">(Person ${peopleStart} - Person ${peopleEnd})</p><br><br>`;
+    outputString2 += `<button id="prevPeopleButton" class="prevButton"><-Previous</button><button id="nextPeopleButton" class="nextButton">Next-></button><p class="peopleCount">Total People = ${totalPeople}</p><p class="peopleRange">(Person ${peopleStart} - Person ${peopleEnd})</p><br>`;
 
     //Build list of <a> links for pages
     let i=0;
@@ -319,7 +319,14 @@ function displayPersonDetails(e)
 function renderPerson(ID)
 {
   //Make additional fetch() call to retrieve home planet, then display person details
-  const URL = peopleList.results[ID].homeworld;
+  let URL = peopleList.results[ID].homeworld;
+  //URL must be https.  Check for https vs just https
+  let testURL = URL.substring(0, 5);
+  if(testURL === "http:")
+  {
+    testURL=URL.substring(5);
+    URL="https:" + testURL;
+  }
 
   let homeWorld = [];
   let homePlanet = "";
@@ -350,7 +357,7 @@ function renderPerson(ID)
 
     const outputString3 = `<h1 class="detailsTitle">${peopleList.results[ID].name}</h1><ul><li><strong>Home World: </strong>${homePlanet}</li><li><strong>Height: </strong>${peopleList.results[ID].height} cm</li><li><strong>Mass: </strong>${peopleList.results[ID].mass} kg</li><li><strong>Skin Color: </strong>${peopleList.results[ID].skin_color}</li></ul>`;
 
-    const outputString4 = `<h1><strong>Definitions</strong></h1><p class="definitions"><strong>BIRTH YEAR: </strong>The birth year of the person, using the in-universe standard of BBY or ABY - Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin is a battle that occurs at the end of Star Wars episode IV: A New Hope.</p><p class="definitions"><strong>EYE COLOR: </strong>The eye color of this person. Will be "unknown" if not known or "n/a" if the person does not have an eye.</p><p class="definitions"><strong>GENDER: </strong>The gender of this person. Either "Male", "Female" or "unknown", "n/a" if the person does not have a gender.</p><p class="definitions"><strong>HAIR COLOR: </strong>The hair color of this person. Will be "unknown" if not known or "n/a" if the person does not have hair.</P><p class="definitions"><strong>HOME WORLD: </strong>A planet that this person was born on or inhabits.</p><p class="definitions"><strong>HEIGHT: </strong>The height of the person in centimeters.</p><p class="definitions"><strong>MASS: </strong>The mass of the person in kilograms.</p><p class="definitions"><strong>SKIN COLOR: </strong>The skin color of this person.</p>`;
+    const outputString4 = `<h1 class="definitionsTitle"><strong>Definitions</strong></h1><p class="definitions"><strong>BIRTH YEAR: </strong>The birth year of the person, using the in-universe standard of BBY or ABY - Before the Battle of Yavin or After the Battle of Yavin. The Battle of Yavin is a battle that occurs at the end of Star Wars episode IV: A New Hope.</p><p class="definitions"><strong>EYE COLOR: </strong>The eye color of this person. Will be "unknown" if not known or "n/a" if the person does not have an eye.</p><p class="definitions"><strong>GENDER: </strong>The gender of this person. Either "Male", "Female" or "unknown", "n/a" if the person does not have a gender.</p><p class="definitions"><strong>HAIR COLOR: </strong>The hair color of this person. Will be "unknown" if not known or "n/a" if the person does not have hair.</P><p class="definitions"><strong>HOME WORLD: </strong>A planet that this person was born on or inhabits.</p><p class="definitions"><strong>HEIGHT: </strong>The height of the person in centimeters.</p><p class="definitions"><strong>MASS: </strong>The mass of the person in kilograms.</p><p class="definitions"><strong>SKIN COLOR: </strong>The skin color of this person.</p>`;
 
 
     //Create return to People button
@@ -379,7 +386,7 @@ function renderOneShip(ID)
 
   const outputString3 = `<h1 class="detailsTitle">${shipsList.results[ID].name}</h1><ul><li><strong>Cost In Credits: </strong>${shipsList.results[ID].cost_in_credits}</li><li><strong>Hyperdrive Rating: </strong>${shipsList.results[ID].hyperdrive_rating}</li><li><strong>Length: </strong>${shipsList.results[ID].lenth} meters</li><li><strong>Manufacturer: </strong>${shipsList.results[ID].manufacturer}</li><li><strong>Maximum Atmosphering Speed: </strong>${shipsList.results[ID].max_atmosphering_speed}</li></ul>`;
 
-  const outputString4 = `<h1><strong>Definitions</strong></h1><p class="definitions"><strong>STARSHIP CLASS: </strong>The class of this starship, such as "Starfighter" or "Deep Space Mobile Battlestation"</p><p class="definitions"><strong>CREATED: </strong>The ISO 8601 date format of the time that this resource was created.</p><p class="definitions"><strong>CREW: </strong>The number of personnel needed to run or pilot this starship.</p><p class="definitions"><strong>PASSENGERS: </strong>The number of non-essential people this starship can transport.</P><p class="definitions"><strong>CARGO CAPACITY: </strong>The maximum number of kilograms that this starship can transport.</p><p class="definitions"><strong>COST IN CREDITS: </strong>The cost of this starship new, in galactic credits.</p><p class="definitions"><strong>HYPERDRIVE RATING: </strong>The class of this starships hyperdrive.</p><p class="definitions"><strong>LENGTH: </strong>The length of this starship in meters.</p><p class="definitions"><strong>MANUFACTURER: </strong>The manufacturer of this starship. Comma separated if more than one.</p><p class="definitions"><strong>MAXIMUM ATMOSPHERING SPEED: </strong>The maximum speed of this starship in the atmosphere. "N/A" if this starship is incapable of atmospheric flight.</p>`;
+  const outputString4 = `<h1 class="definitionsTitle"><strong>Definitions</strong></h1><p class="definitions"><strong>STARSHIP CLASS: </strong>The class of this starship, such as "Starfighter" or "Deep Space Mobile Battlestation"</p><p class="definitions"><strong>CREATED: </strong>The ISO 8601 date format of the time that this resource was created.</p><p class="definitions"><strong>CREW: </strong>The number of personnel needed to run or pilot this starship.</p><p class="definitions"><strong>PASSENGERS: </strong>The number of non-essential people this starship can transport.</P><p class="definitions"><strong>CARGO CAPACITY: </strong>The maximum number of kilograms that this starship can transport.</p><p class="definitions"><strong>COST IN CREDITS: </strong>The cost of this starship new, in galactic credits.</p><p class="definitions"><strong>HYPERDRIVE RATING: </strong>The class of this starships hyperdrive.</p><p class="definitions"><strong>LENGTH: </strong>The length of this starship in meters.</p><p class="definitions"><strong>MANUFACTURER: </strong>The manufacturer of this starship. Comma separated if more than one.</p><p class="definitions"><strong>MAXIMUM ATMOSPHERING SPEED: </strong>The maximum speed of this starship in the atmosphere. "N/A" if this starship is incapable of atmospheric flight.</p>`;
 
 
   //Create return to People button
