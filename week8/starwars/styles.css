@@ -59,8 +59,8 @@ body
 .outputDiv4
 {
   grid-column-start: 2;
-  /* padding: 0px 100px; */
-  margin: 0px 0px 0 0px;
+  padding: 0px 0px 0 300px;
+  /* margin: 0px 0px 0 0px; */
   color: white;
 }
 
