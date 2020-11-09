@@ -1,13 +1,14 @@
 @charset "utf-8";
 /* CSS Document */
 
-body
+html
 {
   background-image: url('background-2.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: auto;
 }
+
 .outsideFrame
 {
  height: 100%;
@@ -20,6 +21,7 @@ body
   font-size: 15px;
   text-align: center;
   margin: 20px 20px 0 20px;
+  /* height: 600px; */
 }
 
 .outputDisplay
