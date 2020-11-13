@@ -34,7 +34,7 @@
 
 .liClass a:visited
 {
-	color: goldenrod;
+	color: white;
 }
 .liClass a:hover
 {
@@ -51,7 +51,7 @@
 }
 .liInactiveClass a:visited
 {
-	color: pink;
+	color: white;
 }
 .liInactiveClass a:hover
 {
@@ -152,7 +152,7 @@
 }
 .reportSection a:link
 {
-	color: red;
+	color: white;
 }
 .reportSection a:visited
 {
