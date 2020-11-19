@@ -12,8 +12,10 @@ function resetApp()
   document.getElementById('radiusInput').value = '';
   document.getElementById('startDate').value = '';
   document.getElementById('endDate').value = '';
+  document.getElementById('quakeUrl').innerHTML = '';
+  document.getElementById('quakeList').innerHTML = '';
 
-  location = './quakes.html';
+  const location = './quakes.html';
   location.reload();
   return false;
 }
