@@ -1,0 +1,83 @@
+.userInput
+{
+  margin: auto;
+  border: 1px solid red;
+  border-top: 18px solid black;
+  padding-bottom: 20px;
+  height: 200px;
+  width: 700px;
+}
+
+.quakeListDiv
+{
+  margin: auto;
+  width: 700px;
+  border: 1px solid black;
+  background: black;
+  color: white;
+}
+.quakeImg
+{
+  float: left;
+  margin-right: 20px;
+  margin-top: 10px;
+  border-radius: 50%;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+.quakeUrl
+{
+    width: 700px;
+    background: darkblue;
+    color: white;
+    margin: auto;
+    border: 1px solid red;
+}
+.quakeUrl .quakeUrlP
+{
+  margin: 0px 0px 0px 20px;
+  padding: 10px 0 10px 0;
+}
+.quakeUrl .quakeCount
+{
+  text-align: center;
+  font-size: 20px;
+}
+.dateInput
+{
+  margin-right: 20px;
+}
+.dataSubmit
+{
+  /* width: 135px;
+  margin: 40px 20px 15px 0; */
+  width: 65px;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  background-color: #243E02;
+  color: white;
+  cursor: pointer;
+}
+.quakeReturn
+{
+  margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  background-color: #243E02;
+  color: white;
+  cursor: pointer;
+}
+
+.quakeList
+{
+  cursor: pointer;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Local Quakes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <heading>
+          <nav><ul id="mainNav"></ul></nav>
+        </heading>
+      </nav>
+    </header>
+    <main id="content">
+      <div class="userInput">
+        <img src="earthquake.jpg" class="quakeImg" alt="Earthquake">
+        <h1>Quake List</h1>
+        <form action=#>
+          <label>Desired radius from current location (km): </label>
+          <input type="text" id="radiusInput">
+          <br><br>
+          <label>Enter Start Date (yyyy-mm-dd): </label>
+          <input type="text" id="startDate" class="dateInput">
+          <button id="dataSubmit" class="dataSubmit">Submit</button>
+          <br><br>
+          <label>Enter End Date &nbsp(yyyy-mm-dd): </label>
+          <input type="text" id="endDate" class="dateInput">
+          <button id="resetBtn" class="dataSubmit">Reset</button>
+        </form>
+      </div>
+      <div id="quakeUrl" class="quakeUrl">
+      </div>
+      <div class="quakeListDiv">
+        <ul id="quakeList"></ul>
+      </div>
+    </main>
+
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
