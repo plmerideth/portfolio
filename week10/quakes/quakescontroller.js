@@ -44,7 +44,7 @@ export default class QuakesController {
         this.position.lon = posFull.coords.longitude;
         //console.log(posFull);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   }
