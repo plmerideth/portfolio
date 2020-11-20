@@ -12,10 +12,59 @@
           <h3 class="readingCategory">Mozilla Developer Network</h3>
           <ul>
             <li><strong>MDN - VALIDATING FORMS</strong></li>
+            <li>HTML built-in validation support multiple validation types:</li>
+            <p> - required, minlength, maxlength, min, max, type (number, email, etc), pattern (regular expression)</p>
+            <li>JavaScript validation can be done with a variety of options:</li>
+            <p>validationMessage: Returns a localized message describing the validation constraints that the control doesn't satisfy (if any). If the control is not a candidate for constraint validation (willValidate is false) or the element's value satisfies its constraints (is valid), this will return an empty string.</p>
+            <p>validity: Returns a ValidityState object that contains several properties describing the validity state of the element. You can find full details of all the available properties in the ValidityState reference page; below is listed a few of the more common ones:</p>
+            <p>patternMismatch: Returns true if the value does not match the specified pattern, and false if it does match. If true, the element matches the :invalid CSS pseudo-class.</p>
+            <p>tooLong: Returns true if the value is longer than the maximum length specified by the maxlength attribute, or false if it is shorter than or equal to the maximum. If true, the element matches the :invalid CSS pseudo-class.</p>
+            <p>tooShort: Returns true if the value is shorter than the minimum length specified by the minlength attribute, or false if it is greater than or equal to the minimum. If true, the element matches the :invalid CSS pseudo-class.</p>
+            <p>rangeOverflow: Returns true if the value is greater than the maximum specified by the max attribute, or false if it is less than or equal to the maximum. If true, the element matches the :invalid and :out-of-range CSS pseudo-classes.</p>
+            <p>rangeUnderflow: Returns true if the value is less than the minimum specified by the min attribute, or false if it is greater than or equal to the minimum. If true, the element matches the :invalid and :out-of-range CSS pseudo-classes.</p>
+            <p>typeMismatch: Returns true if the value is not in the required syntax (when type is email or url), or false if the syntax is correct. If true, the element matches the :invalid CSS pseudo-class.</p>
+            <p>valid: Returns true if the element meets all its validation constraints, and is therefore considered to be valid, or false if it fails any constraint. If true, the element matches the :valid CSS pseudo-class; the :invalid CSS pseudo-class otherwise.</p>
+            <p>valueMissing: Returns true if the element has a required attribute, but no value, or false otherwise. If true, the element matches the :invalid CSS pseudo-class.</p>
+            <p>willValidate: Returns true if the element will be validated when the form is submitted; false otherwise.</p>
+            <li>JavaScript also allow for custom validation</li>
             <li><strong>MDN - USING FETCH</strong></li>
+            <li>From MDN Web Docs site - https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch</li>
+            <li> The fetch specification differs from jQuery.ajax() in three main ways:</li>
+            <p>The Promise returned from fetch() won’t reject on HTTP error status even if the response is an HTTP 404 or 500. Instead, it will resolve normally (with ok status set to false), and it will only reject on network failure or if anything prevented the request from completing.</p>
+            <p>fetch() won't can receive cross-site cookies; you can’t can establish a cross site session using fetch. Set-Cookie headers from other sites are silently ignored.</p>
+            <p>fetch won’t send cookies, unless you set the credentials init option. (Since Aug 25, 2017. The spec changed the default credentials policy to same-origin. Firefox changed since 61.0b13.)</p>
+            <li>The basic fetch() setup:</li>
+            <p>fetch('http://example.com/movies.json')</p>
+            <p>.then(response => response.json())</p>
+            <p>.then(data => console.log(data));</p>
+            <li>Here we are fetching a JSON file across the network and printing it to the console. The simplest use of fetch() takes one argument — the path to the resource you want to fetch — and returns a promise containing the response (a Response object).</li>
+            <li>This is just an HTTP response, not the actual JSON. To extract the JSON body content from the response, we use the json() method (defined on the Body mixin, which is implemented by both the Request and Response objects.)</li>
+            <li>The fetch() method can optionally accept a second parameter, an init object that allows you to control a number of different settings</li>
+            <li>Example</li>
+            <p>// Example POST method implementation:</p>
+            <p>async function postData(url = '', data = {}) {</p>
+            <p>// Default options are marked with *</p>
+            <p>const response = await fetch(url, {</p>
+            <p>method: 'POST', // *GET, POST, PUT, DELETE, etc.</p>
+            <p>mode: 'cors', // no-cors, *cors, same-origin</p>
+            <p>cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached</p>
+            <p>credentials: 'same-origin', // include, *same-origin, omit</p>
+            <p>headers: {</p>
+            <p>'Content-Type': 'application/json'</p>
+            <p>// 'Content-Type': 'application/x-www-form-urlencoded',</p>
+            <p>},</p>
+            <p>redirect: 'follow', // manual, *follow, error</p>
+            <p>referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url</p>
+            <p>body: JSON.stringify(data) // body data type must match "Content-Type" header</p>
+            <p>});</p>
+            <p>return response.json(); // parses JSON response into native JavaScript objects</p>
+            <p>}</p>
+            <p>postData('https://example.com/answer', { answer: 42 })</p>
+            <p>.then(data => {</p>
+            <p>console.log(data); // JSON data parsed by `data.json()` call</p>
+            <p>});</p>
           </ul>
   	</section>
-
   	<section class="reportSection">
   		<h2 class="reportTitle">WEEK 10 TEAM ACTIVITY</h2>
   		<h3 class="reportCategory">What did I do since the last meeting?</h3>
@@ -24,8 +73,11 @@
         <li>Completed steps 1-10</li>
         <li>Added styling with CSS</li>
         <li><strong>STRETCH GOALS</strong></li>
-        <p>Added ability for user to enter desired radius</p>
-        <p>Added 'Back' button on details view to return to list of quakes</p>
+        <p>-Added ability for user to enter desired radius</p>
+        <p>-Added ability for user to enter date range</p>
+        <p>-Formatted date and time stamps to be more user-friendly and readable</p>
+        <p>-Added API URL and quake count displays</p>
+        <p>-Added 'Back' button on details view to return to list of quakes</p>
         <p><br></p>
         <li>Link to my Quakes Near Me program: </li>
   			<a href="quakes/quakes.html">My Quakes Near Me Program</a>
@@ -39,11 +91,19 @@
   		</ul>
   		<h3 class="reportCategory">What are my blockers?</h3>
   		<ul>
-        <li>No blockers this week.  This was an easy week</li>
+        <li>The Quakes Near Me activity was great, but it took many hours of study and reviewing the code to understand how the pieces all fit together.</li>
+        <li>I had some difficulty figuring out how to make the BACK button work.  I knew that that I wanted to just re-render from _quakes[] array once the button was clicked, but it was difficult to figure out how to access quakes._quakes[].</li>
+        <p>I kept finding that it wasn't in scope and had to use an eventlistener with an arrow function defined in the addEventListener() call, rather than using a callback function.  In other works, I had to use this form:</p>
+        <p style="color:red">returnButtonID.addEventListener('click', e =>{this.refreshQuakes();</p>
+        <p><strong>Rather than this form:</strong></p>
+        <p style="color:red"> returnButtonID.addEventListener('click', refreshQuakes</p>
+        <p>I defined refreshQuakes() as:</p>
+        <p style="color:red">refreshQuakes(){this.quakesView.renderQuakeList(this.quakes._quakes, this.parentElement);}</p>
+        <p>I still don't fully understand why it wouldn't work with the second form of addEventListener()</p>
   		</ul>
   		<h3 class="reportCategory">Questions</h3>
   		<ul>
-  			<li>No additional questions this week</li>
+  			<li>My only question would be why the second form of addEventListener() I described in my blocker section didn't work?</li>
   		</ul>
   	</section>
   	<footer class="footerSection">

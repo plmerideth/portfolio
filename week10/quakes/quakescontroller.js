@@ -52,7 +52,7 @@ export default class QuakesController {
   async getQuakesByRadius(radius = 100)
   {
     //set a loading message in case it takes long to get the quakes
-    this.parentElement.innerHTML = '<li>Loading...</li>';
+    this.parentElement.innerHTML = '<p>Loading...</p>';
     // get the list of quakes in the specified radius of the location
     const quakeList = await this.quakes.getEarthQuakesByRadius(
       this.position, this.dateRange, radius
@@ -76,7 +76,6 @@ export default class QuakesController {
       this.refreshQuakes();
     });
   }
-
   refreshQuakes()
   {
     this.quakesView.renderQuakeList(this.quakes._quakes, this.parentElement);

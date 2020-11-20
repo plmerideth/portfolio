@@ -10,20 +10,33 @@ class QuakesView {
       document.getElementById("quakeList").innerHTML="<p>No Results Found</p>";
       return;
     }
-    quakeList.features.forEach(element => {
-      const item = document.createElement('li');
-      console.log(element);
-      item.setAttribute('data-id', element.id);
-      item.innerHTML = `${element.properties.title}
-      <p>${new Date(element.properties.time)}</p>`;
-      listElement.appendChild(item);
-    });
+    // quakeList.features.forEach(element => {
+    //   const item = document.createElement('li');
+    //   console.log(element);
+    //   item.setAttribute('data-id', element.id);
+    //   item.innerHTML = `${element.properties.title}
+    //   <p>${new Date(element.properties.time)}</p>`;
+    //   listElement.appendChild(item);
+    // });
 
+    let opt =
+    {
+        weekday: "short",
+        month: "short",
+        year: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: "true",
+        timeZoneName: "short"
+    };
     listElement.innerHTML = quakeList.features
       .map(quake => {
-        return `<li class="quakeList" data-id=${quake.id}>${
-          quake.properties.title
-        } <div>${new Date(quake.properties.time)}</div></li>`;
+        let quakeDate = new Date(quake.properties.time);
+        let formatTime = Intl.DateTimeFormat("en-US", opt).format(quakeDate);
+        return `<li class="quakeList" data-id=${quake.id}>${quake.properties.title.replace('M', "Mag:")}
+        <div style="color:red">${formatTime}</div></li><br>`;
+        // <div>${new Date(quake.properties.time)}</div></li><br>`;
       })
       .join('');
   }
