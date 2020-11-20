@@ -35,7 +35,7 @@ class QuakesView {
         let quakeDate = new Date(quake.properties.time);
         let formatTime = Intl.DateTimeFormat("en-US", opt).format(quakeDate);
         return `<li class="quakeList" data-id=${quake.id}>${quake.properties.title.replace('M', "Mag:")}
-        <div style="color:red">${formatTime}</div></li><br>`;
+        <br>${formatTime}</li><br>`;
         // <div>${new Date(quake.properties.time)}</div></li><br>`;
       })
       .join('');

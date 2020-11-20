@@ -76,8 +76,12 @@
   color: white;
   cursor: pointer;
 }
-
 .quakeList
 {
   cursor: pointer;
+}
+.quakeTime
+{
+  color: red;
+  list-style-type: none;
 }
