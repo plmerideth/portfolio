@@ -1,0 +1,518 @@
+HTML FILE - QUAKES.HTML5
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Local Quakes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <header>
+      <nav>
+        <heading>
+          <nav><ul id="mainNav"></ul></nav>
+        </heading>
+      </nav>
+    </header>
+    <main id="content">
+      <div class="userInput">
+        <img src="earthquake.jpg" class="quakeImg" alt="Earthquake">
+        <h1>Quake List</h1>
+        <form action=#>
+          <label>Desired radius from current location (km): </label>
+          <input type="text" id="radiusInput">
+          <br><br>
+          <label>Enter Start Date (yyyy-mm-dd): </label>
+          <input type="text" id="startDate" class="dateInput">
+          <button id="dataSubmit" class="dataSubmit">Submit</button>
+          <br><br>
+          <label>Enter End Date &nbsp(yyyy-mm-dd): </label>
+          <input type="text" id="endDate" class="dateInput">
+          <button id="resetBtn" class="dataSubmit">Reset</button>
+        </form>
+      </div>
+      <div id="quakeUrl" class="quakeUrl">
+      </div>
+      <div class="quakeListDiv">
+        <ol id="quakeList"></ol>
+      </div>
+    </main>
+
+    <script src="index.js" type="module"></script>
+  </body>
+</html>
+
+===============================================================
+
+JAVASCRIPT FILE - INDEX.JS
+
+import QuakesController from './quakescontroller.js';
+
+const myQuakesController = new QuakesController('#quakeList');
+
+const submitButton = document.getElementById('dataSubmit');
+submitButton.addEventListener('click', getParameters);
+const resetButton = document.getElementById('resetBtn');
+resetButton.addEventListener('click', resetApp);
+
+function resetApp()
+{
+  document.getElementById('radiusInput').value = '';
+  document.getElementById('startDate').value = '';
+  document.getElementById('endDate').value = '';
+  document.getElementById('quakeUrl').innerHTML = '';
+  document.getElementById('quakeList').innerHTML = '';
+
+  const location = './quakes.html';
+  location.reload();
+  return false;
+}
+
+function getParameters(e)
+{
+  const radius = document.getElementById('radiusInput').value;
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
+
+  if(validData(radius, startDate, endDate))
+  {
+    console.log(e);
+    let radiusInt = parseInt(radius);
+    myQuakesController.init(radiusInt, startDate, endDate);
+  }
+}
+
+function validData(radius, startDate, endDate)
+{
+  if(radius===""||startDate===""||endDate==="")
+  {
+    alert('Please complete all fields before submitting!');
+    return false;
+  }
+
+  if(radius <=0 || radius > 3000)
+  {
+    alert('Please enter a radius between 1 and 3000 km');
+    return false;
+  }
+  //Just in case a date object is needed for validation
+  let validStartDate = [];
+  validStartDate[0] = parseInt(startDate.substring(0,4));
+  validStartDate[1] = parseInt(startDate.substring(5,7));
+  validStartDate[2] = parseInt(startDate.substring(8,10));
+  let dateTest = new Date(validStartDate[0], validStartDate[1], validStartDate[2]);
+
+  //Make sure data strings contain only numbers and -
+  if(!checkDate(startDate))
+  {
+      alert('Please enter a valid Start Date');
+  }
+  if(!checkDate(endDate))
+  {
+    alert('Please enter a valid End Date');
+  }
+
+  if( startDate.length<10 ||
+      startDate.length>10 ||
+      startDate.includes("/") ||
+      startDate.includes("\\") ||
+      startDate.substring(4,5)!="-" ||
+      startDate.substring(7,8)!="-")
+  {
+    alert('Please enter a valid start date');
+    return false;
+  }
+  if( endDate.length<10 ||
+      endDate.length>10 ||
+      endDate.includes("/") ||
+      endDate.includes("\\") ||
+      endDate.substring(4,5)!="-" ||
+      endDate.substring(7,8)!="-")
+  {
+    alert('Please enter a valid end date');
+    return false;
+  }
+
+  return true;
+}
+
+function checkDate(dateString)
+{
+  for(let i=0; i<dateString.length; i++)
+  {
+    let valid=false;
+    switch(dateString[i])
+    {
+      case '0':
+        valid = true;
+      break;
+      case '1':
+        valid = true;
+      break;
+      case '2':
+        valid = true;
+      break;
+      case '3':
+        valid = true;
+      break;
+      case '4':
+        valid = true;
+      break;
+      case '5':
+        valid = true;
+      break;
+      case '6':
+        valid = true;
+      break;
+      case '7':
+        valid = true;
+      break;
+      case '8':
+        valid = true;
+      break;
+      case '9':
+        valid = true;
+      break;
+      case '-':
+        valid = true;
+      break;
+    }
+    if(!valid)
+    {
+      return false;
+    }
+  }
+  return true;
+}
+
+================================================================
+
+JAVASCRIPT FILE - QUAKE.JS
+
+import { getJSON } from './utilities.js';
+// Quake Model
+
+export default class Quake
+{
+  constructor()
+  {
+    this.baseUrl =
+      'https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson';
+    // store the last batch of retrieved quakes in the model.  I don't always do this...in this case the api doesn't have an endpoint to request one quake.
+    this._quakes = [];
+  }
+
+  async getEarthQuakesByRadius(position, dateRange, radius=100)
+  {
+    let QuakesUrl = this.baseUrl + `&starttime=${dateRange.start}&endtime=${dateRange.end}&latitude=${
+      position.lat}&longitude=${position.lon}&maxradiuskm=${radius}`;
+
+    // let quakesUrl = this.baseUrl + `&starttime=2019-01-01&endtime=2019-03-02&latitude=${
+    //   position.lat}&longitude=${position.lon}&maxradiuskm=${radius}`;
+
+    this._quakes = await getJSON(QuakesUrl);
+
+    // this._quakes = await getJSON(
+    //   this.baseUrl +
+    //     `&starttime=2019-01-01&endtime=2019-03-02&latitude=${
+    //       position.lat
+    //     }&longitude=${position.lon}&maxradiuskm=${radius}`
+    // );
+    document.getElementById('quakeUrl').innerHTML = `<p class="quakeUrlP">Quake API URL = ${QuakesUrl}</p><p class="quakeCount">Quake Count = ${this._quakes.metadata.count}</p>`;
+
+    return this._quakes;
+  }
+
+  getQuakeById(id)
+  {
+    return this._quakes.features.filter(item => item.id === id)[0];
+  }
+}
+
+====================================================================
+
+JAVASCRIPT FILE - QUAKESCONTROLLER.JS
+
+import { getLocation } from './utilities.js';
+import Quake from './quake.js';
+import QuakesView from './quakesview.js';
+
+// Quake controller
+export default class QuakesController {
+  constructor(parent, position = null) {
+    this.parent = parent;
+    // sometimes the DOM won't exist/be ready when the Class gets instantiated, so we will set this later in the init()
+    this.parentElement = null;
+    // let's give ourselves the option of using a location other than the current location by passing it in.
+    this.radius = null;
+    this.position = position || {
+      lat: 0,
+      lon: 0
+    };
+    this.dateRange = {
+      start: null,
+      end: null
+    };
+
+    // this is how our controller will know about the model and view...we add them right into the class as members.
+    this.quakes = new Quake();
+    this.quakesView = new QuakesView();
+  }
+  async init(radius, startDate, endDate) {
+    // use this as a place to grab the element identified by this.parent, do the initial call of this.intiPos(), and display some quakes by calling this.getQuakesByRadius()
+    this.parentElement = document.querySelector(this.parent);
+    this.dateRange.start = startDate;
+    this.dateRange.end = endDate;
+    this.radius = radius;
+    await this.initPos();
+    this.getQuakesByRadius(radius);
+  }
+  async initPos() {
+    // if a position has not been set
+    if (this.position.lat === 0) {
+      try {
+        // try to get the position using getLocation()
+        const posFull = await getLocation();
+
+        // if we get the location back then set the latitude and longitude into this.position
+        this.position.lat = posFull.coords.latitude;
+        this.position.lon = posFull.coords.longitude;
+        //console.log(posFull);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
+
+  async getQuakesByRadius(radius = 100)
+  {
+    //set a loading message in case it takes long to get the quakes
+    this.parentElement.innerHTML = '<p>Loading...</p>';
+    // get the list of quakes in the specified radius of the location
+    const quakeList = await this.quakes.getEarthQuakesByRadius(
+      this.position, this.dateRange, radius
+    );
+
+    // // render the list to html
+    this.quakesView.renderQuakeList(quakeList, this.parentElement);
+      // add a listener to the new list of quakes to allow drill down in to the details. The listener should call this.getQuakeDetails on the targeted element
+      this.parentElement.addEventListener('click', e => {
+        this.getQuakeDetails(e.target.dataset.id);
+    });
+  }
+  async getQuakeDetails(quakeId) {
+    // get the details for the quakeId provided, then send them to the view to be displayed
+    const quake = this.quakes.getQuakeById(quakeId);
+    this.quakesView.renderQuake(quake, this.parentElement);
+
+    //New code
+    const returnButtonID = document.getElementById('quakeReturn');
+    returnButtonID.addEventListener('click', e =>{
+      this.refreshQuakes();
+    });
+  }
+  refreshQuakes()
+  {
+    this.quakesView.renderQuakeList(this.quakes._quakes, this.parentElement);
+  }
+}
+
+==================================================================
+
+JAVASCRIPT FILE - QUAKESVIEW.JS
+
+
+export default // Quake View handler
+class QuakesView {
+  renderQuakeList(quakeList, listElement) {
+    //build a list of the quakes...include the title and time of each quake then append the list to listElement. You should also add the id of the quake record as a data- property to the li. ie. &lt;li data-id=""&gt;
+
+    //If no results returned
+    if(quakeList.features.length === 0)
+    {
+      document.getElementById("quakeList").innerHTML="<p>No Results Found</p>";
+      return;
+    }
+    // quakeList.features.forEach(element => {
+    //   const item = document.createElement('li');
+    //   console.log(element);
+    //   item.setAttribute('data-id', element.id);
+    //   item.innerHTML = `${element.properties.title}
+    //   <p>${new Date(element.properties.time)}</p>`;
+    //   listElement.appendChild(item);
+    // });
+
+    let opt =
+    {
+        weekday: "short",
+        month: "short",
+        year: "numeric",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        hour12: "true",
+        timeZoneName: "short"
+    };
+    listElement.innerHTML = quakeList.features
+      .map(quake => {
+        let quakeDate = new Date(quake.properties.time);
+        let formatTime = Intl.DateTimeFormat("en-US", opt).format(quakeDate);
+        return `<li class="quakeList" data-id=${quake.id}>${quake.properties.title.replace('M', "Mag:")}
+        <br>${formatTime}</li><br>`;
+        // <div>${new Date(quake.properties.time)}</div></li><br>`;
+      })
+      .join('');
+  }
+  renderQuake(quake, element) {
+    const quakeProperties = Object.entries(quake.properties);
+    // for the provided quake make a list of each of the properties associated with it. Then append the list to the provided element. Notice the first line of this method. Object.entries() is a slick way to turn an object into an array so that we can iterate over it easier!
+    element.innerHTML = `<button id="quakeReturn" class="quakeReturn">Return to Quakes</button>`;
+    element.innerHTML += quakeProperties
+      .map(item => {
+        if (item[0] === 'time' || item[0] === 'updated') {
+          return `<li>${item[0]}: ${new Date(item[1])}</li>`;
+        } else return `<li>${item[0]}: ${item[1]}</li>`;
+      })
+      .join('');
+  }
+}
+
+=================================================================
+
+JAVASCRIPT FILE - UTILITIES.JS
+
+export async function getJSON(url)
+{
+  try
+  {
+    let response = await fetch(url);
+    let quakes = await response.json();
+    return quakes;
+  }
+  catch(err)
+  {
+    return "Error: " + err;
+  }
+}
+
+export const getLocation = function(options) {
+  return new Promise(function(resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject, options);
+  });
+};
+
+
+// export function getJSON(url) {
+//   return fetch(url)
+//     .then(function(response) {
+//       if (!response.ok) {
+//         throw Error(response.statusText);
+//       } else {
+//         //console.log(response.json());
+//         return response.json();
+//       }
+//     })
+//     .catch(function(error) {
+//       console.log(error);
+//     });
+// }
+// export const getLocation = function(options) {
+//   return new Promise(function(resolve, reject) {
+//     navigator.geolocation.getCurrentPosition(resolve, reject, options);
+//   });
+// };
+
+=========================================================================
+
+CSS FILE - STYLE.css
+
+.userInput
+{
+  margin: auto;
+  border: 1px solid red;
+  border-top: 18px solid black;
+  padding-bottom: 20px;
+  height: 200px;
+  width: 700px;
+}
+
+.quakeListDiv
+{
+  margin: auto;
+  width: 700px;
+  border: 1px solid black;
+  background: black;
+  color: white;
+}
+.quakeImg
+{
+  float: left;
+  margin-right: 20px;
+  margin-top: 10px;
+  border-radius: 50%;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+.quakeUrl
+{
+    width: 700px;
+    background: darkblue;
+    color: white;
+    margin: auto;
+    border: 1px solid red;
+}
+.quakeUrl .quakeUrlP
+{
+  margin: 0px 0px 0px 20px;
+  padding: 10px 0 10px 0;
+}
+.quakeUrl .quakeCount
+{
+  text-align: center;
+  font-size: 20px;
+}
+.dateInput
+{
+  margin-right: 20px;
+}
+.dataSubmit
+{
+  /* width: 135px;
+  margin: 40px 20px 15px 0; */
+  width: 65px;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  background-color: #243E02;
+  color: white;
+  cursor: pointer;
+}
+.quakeReturn
+{
+  margin-bottom: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 5px;
+  text-align: center;
+  background-color: #243E02;
+  color: white;
+  cursor: pointer;
+}
+.quakeList
+{
+  cursor: pointer;
+}
+.quakeTime
+{
+  color: red;
+  list-style-type: none;
+}
