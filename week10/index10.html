@@ -93,7 +93,7 @@
   		<ul>
         <li>The Quakes Near Me activity was great, but it took many hours of study and reviewing the code to understand how the pieces all fit together.</li>
         <li>I had some difficulty figuring out how to make the BACK button work.  I knew that that I wanted to just re-render from _quakes[] array once the button was clicked, but it was difficult to figure out how to access quakes._quakes[].</li>
-        <p>I kept finding that it wasn't in scope and had to use an eventlistener with an arrow function defined in the addEventListener() call, rather than using a callback function.  In other works, I had to use this form:</p>
+        <p>I kept finding that it wasn't in scope and had to use an eventlistener with an arrow function defined in the addEventListener() call, rather than using a callback function.  In other words, I had to use this form:</p>
         <p style="color:red">returnButtonID.addEventListener('click', e =>{this.refreshQuakes();</p>
         <p><strong>Rather than this form:</strong></p>
         <p style="color:red"> returnButtonID.addEventListener('click', refreshQuakes</p>
