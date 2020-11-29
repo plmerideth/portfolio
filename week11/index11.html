@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../css/styles.css">
+    <title>Week 11</title>
+  </head>
+  <body>
+    <section class="readingSection">
+		    <a href="../index.html">Home</a>
+  		  <h2 class="readingTitle">WEEK 11 REPORT</h2>
+        <h3 class="readingCategory">No readings this week</h3>
+    </section>
+  	<section class="reportSection">
+  		<h2 class="reportTitle">WEEK 11 TEAM ACTIVITY</h2>
+  		<h3 class="reportCategory">What did I do since the last meeting?</h3>
+  		<ul>
+        <li>
+          I installed the node server (JSON-Server) on my local computer.  I was able to get it running and got confirmation by entering 127.0.0.1:3000/login.  I received the expected screen.  However, I could not get the week11.html code to load via the server.  I got 404 or 401 error messages.  I next attempted to load the file using Apache, with JSON-server running in the background.  That worked!  I was able to successfully get a web token, save it, and use it for subsequent requests.  I was able to login as user1, user2, and user3.  I also was able to display all the posts.
+        </li>
+        <li>
+          Next, I attempted to add a new post.  I was able to get the post title and content from the form inputs, and when I submitted the POST request with the correct web token using makeRequest('posts', 'POST', data, myAuth.token), my browser would call the fetch() function and never return.  The very same fetch() function worked successfully to login and pull users and posts.  I checked and double checked the baseURL+url was correct, as well as the options and web token.
+        </li>
+        <li>
+          The next thing I tried was to modify the database.json file manually and see if my changes were reflected in the response I got.  To my surprise, they were not reflected until I stopped and restarted the JSON-server.  Once I did that, the new user changes and additional post was displayed.  This confused me.  I see that the server was set to --watch database.json in package.json.  So, I expected the changes to be reflected immediately, without have to restart the server.
+        </li>
+  		</ul>
+  		<h3 class="reportCategory">What am I going to do next?</h3>
+  		<ul>
+        <li>
+          I have a lot of work to complete on my final project.  My focus will now turn to completing my project.  I have made good progress, but still have a lot of coding to complete.
+        </li>
+  		</ul>
+  		<h3 class="reportCategory">What are my blockers?</h3>
+  		<ul>
+        <li>
+          Nothing is blocking me at the moment.  I'm using CSS Grid for my layout, which is pretty complex because I incorporate a 10x10 grid plus multiple display areas.  I had to review Grid quite a bit to get the layout right.  I think making my Grid work correctly is my biggest challenge for the next week.
+        </li>
+  		</ul>
+  		<h3 class="reportCategory">Questions</h3>
+  		<ul>
+        <li>
+          No questions at this time.          
+        </li>
+  		</ul>
+  	</section>
+  	<footer class="footerSection">
+  		<a href="../index.html">Home</a>
+  	</footer>
+  </body>
+</html>
