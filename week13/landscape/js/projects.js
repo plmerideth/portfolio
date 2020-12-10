@@ -303,7 +303,7 @@ function renderOpenCloseProjectArea(empty=null)
 
 export function saveProject()
 {
-  if(myProject.projectName===null)
+  if(myProject.projectName===undefined)
   {
     alert('No active project to save');
     return;
