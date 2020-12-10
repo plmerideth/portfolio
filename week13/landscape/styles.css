@@ -1,0 +1,734 @@
+html{
+  background-color: lightcyan;
+  padding: 20px;
+}
+
+body{
+  min-width: 1200px;
+  /* overflow-y: auto; */
+}
+.container1{
+  display: grid;
+  /* grid-template-columns: 325px 1fr 1fr 450px; */
+  grid-template-columns: 1fr 200px 1fr;
+  border-bottom: 0px;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-radius: 5px;
+  /* grid-template-rows: 200px 300px; */
+  }
+  .sectionControl{
+    /* background: red; */
+    padding: 10px 0 10px 0;
+    margin: 0 20px 0 20px;
+    text-align: center; /*text-align:center is centering text in container1 */
+    font-size: calc(15px + .5vw);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sectionControl p
+  {
+      margin: 0;
+  }
+
+  .prodTitle{
+    /* background: red; */
+    padding: 10px 0 10px 0;
+    margin: 0;
+    /*Text centering in the grid is controlled by flex settings in .grid2*/
+    text-align: center; /*text-align:center is centering text in container1 */
+    font-size: calc(15px + .5vw);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: darkgreen;
+    color: white;
+  }
+  .prodTitle p
+  {
+      margin: 0;
+  }
+  .projectName{
+   /* background: red; */
+   padding: 10px 0 10px 0;
+   margin: 0;
+   /*Text centering in the grid is controlled by flex settings in .grid2*/
+   text-align: center; /*text-align:center is centering text in container1 */
+   font-size: calc(15px + .5vw);
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+  }
+  .projectName p
+  {
+      margin: 0;
+  }
+  .checkboxID{
+    /* margin-bottom: 15px; */
+    font-size: calc(12px + .5vw);
+  }
+  .projectControl{
+    /* background: red; */
+    /* padding: 10px 20px 10px 0px; */
+    margin: 0 0px 0 0px;
+    /*Text centering in the grid is controlled by flex settings in .grid2*/
+    text-align: center; /*text-align:center is centering text in container1 */
+    font-size: calc(15px + .5vw);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: darkgreen;
+  }
+  .projectBtn{
+    font-size: calc(10px + .2vw);
+    width: calc(75px + .5vw);
+    height: calc(18px + .5vw);
+    cursor:pointer;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+    /* background-color: #243E02; */
+    color: black;
+  }
+  .projectBtnOpen{
+    font-size: calc(10px + .2vw);
+    width: calc(75px + .5vw);
+    height: calc(18px + .5vw);
+    cursor:pointer;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+    /* background-color: #243E02; */
+    color: black;
+    margin-left: 100px;
+  }
+  .projectBtnDel{
+    font-size: calc(10px + .2vw);
+    width: calc(75px + .5vw);
+    height: calc(18px + .5vw);
+    cursor:pointer;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 2px;
+    background-color: white;
+    /* background-color: #243E02; */
+    color: black;
+    margin-right: 100px;
+  }
+
+.container2{
+  display: grid;
+  /* grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: auto repeat(10, 1fr); */
+  /* justify-content: center; */
+  padding: 40px 80px 40px 80px;
+  border: 2px solid black;
+  border-radius: 15px;
+  align-items: stretch;
+  background-color: lightgreen;
+}
+.grid{
+  background-color: lightgrey;
+  font-size: calc(5px + .5vw); /*Sets a minimum font-size */
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  min-height: 20px;
+  /* padding: 10px 0 10px 0 ; */
+  /* display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center; */
+  cursor:pointer;
+  /* border: 1px solid black; */
+}
+.divDiv1{
+  min-height: 100%;
+}
+.divDiv2{
+  min-height: 50%;
+}
+.divDiv3{
+  min-height: 33.3%;
+}
+.divDiv4{
+  min-height: 25%;
+}
+.divDiv5{
+  min-height: 20%;
+}
+.divDiv6{
+  min-height: 16.6%;
+}
+/* .gridCoord is the class applied when a grid box is clicked */
+.gridCoord{
+  margin: 0;
+  /* font-size: 20px; */
+  font-size: calc(5px + .5vw);
+  color: white;
+}
+.gridHeader{
+  /* grid-column: 1/11;
+  grid-row: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; */
+  /* text-align: center; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr auto;
+  border-bottom: 0px;
+  border-top: 2px solid black;
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  border-radius: 5px;
+}
+.grid2Title{
+  grid-row: 1/1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: calc(25px + .5vw);
+  /* text-align: center;
+  grid-column: 2;
+  grid-row: 1/-1;
+  font-size: calc(35px + .5vw);
+  margin: 0px 30px 0px 30px; */
+}
+.grid2TitleDiv{
+  /* text-align: center; */
+  grid-column: 2;
+  grid-row: 1/-1;
+  font-size: calc(35px + .5vw);
+  margin: 0px;
+}
+.lotLength{
+  grid-column: 1;
+  grid-row: 1;
+  margin:auto;
+  padding: 0px;
+  font-size: calc(10px + .5vw);
+}
+.lotWidth{
+  grid-column: 1;
+  grid-row: 2;
+  margin: auto;
+  padding: 0px;
+  font-size: calc(10px + .5vw);
+}
+.gridL{
+  grid-column: 3;
+  grid-row: 1;
+  text-align: center;
+  margin:auto;
+  padding: 0px;
+  font-size: calc(10px + .5vw);
+}
+.gridW{
+  grid-column: 3;
+  grid-row: 2;
+  text-align: center;
+  margin:auto;
+  padding: 0px;
+  font-size: calc(10px + .5vw);
+}
+.gridBottom{
+    border-bottom: 1px solid black;
+}
+.gridRight{
+  border-right: 1px solid black;
+}
+.gridTopLeft{
+  border-top-left-radius: 15px;
+}
+.gridTopRight{
+  border-top-right-radius: 15px;
+}
+.gridTopRight{
+  border-top-right-radius: 15px;
+}
+.gridBottomLeft{
+  border-bottom-left-radius: 15px;
+}
+.gridBottomRight{
+  border-bottom-right-radius: 15px;
+}
+.horizontalTickMark{
+  border-bottom: 1px solid blue;
+}
+.verticalTickMark{
+  border-right: 1px solid red;
+}
+.gridHide /* This must be after all other grid classes so it isn't overwritten */
+{
+  /* display: grid; */
+  display: none;
+}
+.container3{
+  /* max-height: 200px; */
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: 50px 4fr;
+  border-top: 0px;
+  /* border-bottom: 2px solid black; */
+  /* border-left: 2px solid black; */
+  /* border-right: 2px solid black; */
+  border-radius: 5px;
+  /* overflow-y:scroll; */
+}
+.materialsTitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* font-size: 30px; */
+  font-size: calc(20px + .5vw);
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+
+  grid-row: 1;
+  grid-column: 1/6;
+}
+.materialSelMaterialHeader{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 1/2;
+  border-bottom: 1px solid black;
+}
+.materialSelect{
+  margin-right: 40px;
+}
+.materialMaterial{
+
+}
+.materialUnitCostHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 2/3;
+  border-bottom: 1px solid black;
+}
+.materialUnitCost{
+
+}
+.materialDeliveryHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 3/4;
+  border-bottom: 1px solid black;
+}
+.materialQuantityHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 4/5;
+  border-bottom: 1px solid black;
+}
+.materialButtonsHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 5/6;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.projectCostsTitle{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* font-size: 30px; */
+  font-size: calc(20px + .5vw);
+  grid-column: 6/10;
+  grid-row: 1;
+  border-top: 1px solid black;
+  /* border-bottom: 1px solid black; */
+}
+.projectMaterialHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 6/7;
+  border-bottom: 1px solid black;
+}
+.projectQuantityHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 7/8;
+  border-bottom: 1px solid black;
+}
+.projectQuantity{
+
+}
+.projectCostHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 8/9;
+  border-bottom: 1px solid black;
+}
+.projectCost{
+
+}
+.projectTotalCostHeader{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  grid-row: 2;
+  grid-column: 9/10;
+  border-bottom: 1px solid black;
+}
+.projectTotalCost{
+
+}
+
+.projectHeader{
+  grid-row: 2;
+  grid-column: 6/10;
+}
+.scrollContentLeft{
+  max-height: 200px;
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column: 1/6;
+  grid-row: 3;
+  overflow: auto;
+}
+.material{
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  /* border: 1px solid black; */
+  grid-row:1/-1;
+  grid-column: 1/3;
+}
+.materialCB{
+  margin-top: 10px;
+}
+.topsoilCB{
+  grid-row: 1;
+  margin: auto;
+}
+.lawnCB{
+  grid-row: 2;
+  margin: auto;
+}
+.weedBlockCB{
+  grid-row: 3;
+  margin: auto;
+}
+.rockCB{
+  grid-row: 4;
+  margin: auto;
+}
+.custom1CB{
+  grid-row: 5;
+  margin: auto;
+}
+.custom2CB{
+  grid-row: 6;
+  margin: auto;
+}
+
+.material p{
+  /* font-size: 20px; */
+  font-size: calc(8px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 6px 0 6px 0;
+}
+.unitCost{
+  grid-row: 1 / -1;
+  grid-column: 3/5;
+  border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+.unitCost p{
+  /* font-size: 20px; */
+  font-size: calc(8px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 6px 0 6px 0;
+}
+.unitCostInput{
+  width: calc(100px + .5vw);
+  font-size: calc(8px + .5vw);
+}
+.delivery{
+  grid-row: 1 / -1;
+  grid-column: 5/7;
+  border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+}
+.delivery p{
+  /* font-size: 20px; */
+  font-size: calc(8px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 6px 0 6px 0;
+}
+.quantity{
+  grid-row: 1/-1;
+  grid-column: 7/9;
+  border-left: 1px solid black;
+}
+.quantity p{
+  /* font-size: 20px; */
+  font-size: calc(15px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 10px 0 10px 0;
+}
+.materialButtons{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 60px 60px 60px 1fr ;
+
+  grid-row: 1/-1;
+  grid-column: 9/-1;
+}
+.updateCostsBtn{
+  font-size: calc(8px + .2vw);
+  width: calc(80px + .5vw);
+  height: calc(20px + .5vw);
+  /* width: 100px;
+  height: 40px; */
+  grid-row: 1;
+  grid-column: 1/-1;
+  margin: auto;
+  cursor:pointer;
+
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #243E02;
+  color: white;
+}
+.confirmUpdateBtn{
+  font-size: calc(10px + .2vw);
+  width: calc(80px + .5vw);
+  height: calc(20px + .5vw);
+
+  /* width: 100px;
+  height: 40px; */
+  grid-row: 2;
+  margin: auto;
+  cursor:pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #243E02;
+  color: white;
+}
+.cancelUpdateBtn{
+  font-size: calc(10px + .2vw);
+  width: calc(80px + .5vw);
+  height: calc(20px + .5vw);
+
+  grid-row: 3;
+  margin: auto;
+  cursor:pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #243E02;
+  color: white;
+}
+
+/* Bottom Right scroll screen */
+.scrollContentRight{
+  max-height: 200px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: 4fr;
+  grid-column: 6/-1;
+  grid-row: 3;
+  overflow: auto;
+}
+.section{
+  grid-row: 1;
+  grid-column: 1/3;
+  /* border-left: 1px solid black; */
+}
+.section p{
+  /* font-size: 20px; */
+  font-size: calc(15px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 10px 0 10px 0;
+}
+.newProject{
+  padding: 20px;
+}
+.newProjectInput{
+  padding: 20px 10px 0 10px;
+  font-size: calc(10px + .5vw);
+}
+.lotDim{
+  width: 50px;
+  font-size: calc(10px + .5vw);
+  margin-right: 20px;
+}
+.projectNameInput{
+  width: calc(100px + .5vw);
+  font-size: calc(10px + .5vw);
+}
+.newProjectText{
+  font-size: calc(10px + .5vw);
+}
+.dropDownDiv{
+  text-align: center;
+}
+.projectList{
+  font-size: calc(8px + .5vw);
+  margin-left: 50px;
+}
+.projectSelect{
+  font-size: calc(15px + .5vw);
+  margin-left: 50px;
+}
+.openProjectBtn{
+  font-size: calc(8px + .2vw);
+  width: calc(60px + .5vw);
+  height: calc(18px + .5vw);
+  cursor:pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #243E02;
+  color: white;
+  margin-left: 20px;
+}
+
+.submitProjectBtn{
+  font-size: calc(10px + .2vw);
+  width: calc(60px + .5vw);
+  height: calc(18px + .5vw);
+  cursor:pointer;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #243E02;
+  color: white;
+  margin: 0 10px 0 10px;
+}
+.coverage{
+  grid-row: 1;
+  grid-column: 3/5;
+  border-left: 1px solid black;
+}
+.coverage p{
+  /* font-size: 20px; */
+  font-size: calc(15px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 10px 0 10px 0;
+}
+
+.costs{
+  grid-row: 1;
+  grid-column: 5/7;
+  border-left: 1px solid black;
+}
+.costs p{
+  /* font-size: 20px; */
+  font-size: calc(15px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 10px 0 10px 0;
+}
+.totalCosts{
+  grid-row: 1;
+  grid-column: 7/-1;
+  border-left: 1px solid black;
+}
+.totalCosts p{
+  /* font-size: 20px; */
+  font-size: calc(15px + .5vw);
+  /* font-size: 1.5vw; */
+  margin: 0px;
+  margin-left: 10px;
+  padding: 10px 0 10px 0;
+}
+/* .openCloseProject{
+  grid-row: 1;
+  grid-column: 6/-1;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  text-align: center;
+} */
+.openCloseProjectLeft{
+  max-height: 200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 4fr;
+  grid-column: 6/8;
+  grid-row: 3;
+  overflow: auto;
+}
+.openCloseProjectRight{
+  max-height: 200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 4fr;
+  grid-column: 8/-1;
+  grid-row: 3;
+}
+
+.centerText
+{
+    padding: 10px 0 10px 0;
+    margin: 0;
+    /*Text centering in the grid is controlled by flex settings in .grid2*/
+    text-align: center; /*text-align:center is centering text in container1 */
+    /* font-size: 20px; */
+    font-size: calc(15px + .5vw);
+    /* font-size: 1.5vw; */
+}
