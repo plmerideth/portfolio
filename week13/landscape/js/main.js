@@ -25,7 +25,10 @@ export let myMaterialCosts =
     weedBlockDelivery: '',
     rockDelivery: '',
     custom1Delivery: '',
-    custom2Delivery: ''
+    custom2Delivery: '',
+    topsoilDepth: '1',  /*Default depths for all cu yd materials */
+    rockDepth: '1',
+    custom2Depth: '1'
   };
 export let selectedMaterials =
 {

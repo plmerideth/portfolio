@@ -41,6 +41,22 @@ const container3Div = document.getElementById('container3');
 const scrollContentRight = document.getElementById('scrollContentRight');
 const title = document.getElementById('projectCostsTitle');
 
+export function clearMyProject()
+{
+  myProject.projectName = undefined;
+  myProject.length = undefined;
+  myProject.width = undefined;
+  myProject.gridL = undefined;
+  myProject.gridW = undefined;
+  myProject.rows = null,
+  myProject.cols = null,
+  myProject.container2 = undefined;
+  myProject.gridCoord = [];
+  myProject.materialCosts = {};
+
+}
+
+
 export function renderProjectsArea(empty=null)
 {
   if(empty==="empty")
@@ -141,6 +157,11 @@ function openProjectConfirm(e)
     currentGrid[i] = null;
   }
 
+  //Setup grid-template-columns and rows for newly opened project
+  const gridID = document.getElementById('container2');
+  gridID.style.gridTemplateColumns = `repeat(${myProject.cols}, 1fr)`;
+  gridID.style.gridTemplateRows = `auto repeat(${myProject.rows}, 1fr)`;
+
   //Build the grid
   buildGrid(myProject.rows, myProject.cols);
 
@@ -165,6 +186,10 @@ function openProjectConfirm(e)
   myMaterialCosts.custom1Delivery = myProject.materialCosts.custom1Delivery === undefined ? '' : myProject.materialCosts.custom1Delivery;
   myMaterialCosts.custom2Delivery = myProject.materialCosts.custom2Delivery === undefined ? '' : myProject.materialCosts.custom2Delivery;
 
+  myMaterialCosts.topsoilDepth = myProject.materialCosts.topsoilDepth === undefined ? '1' : myProject.materialCosts.topsoilDepth;
+  myMaterialCosts.rockDepth = myProject.materialCosts.rockDepth === undefined ? '1' : myProject.materialCosts.rockDepth;
+  myMaterialCosts.custom2Depth = myProject.materialCosts.custom2Depth === undefined ? '1' : myProject.materialCosts.custom2Depth;
+  
   renderOpenCloseProjectArea('empty');
   renderProjectsArea();
   renderMaterialCosts('values');
@@ -201,6 +226,11 @@ export function newProject()
 
       //Give input name focus
       document.getElementById('myProjectName').focus();
+      clearCheckBoxes();
+      renderMaterialCosts('clear');
+      renderMaterialCosts('values');
+      clearMyProject();
+      buildGrid(0, 0);
 }
 
 function cancelProject()
@@ -218,6 +248,15 @@ function submitProject()
   const width = document.getElementById('lotWidth').value;
   const gridL = document.getElementById('gridL').value;
   const gridW = document.getElementById('gridW').value;
+
+  for(let i=0; i<myProjects.length; i++)
+  {
+      if(myProjectName === myProjects[i].projectName)
+      {
+        alert('Project name ' + myProjectName + ' already exists.  Please select another name.');
+        return;
+      }
+  }
 
   if(myProjectName==='' || myProjectName===null)
   {
@@ -335,7 +374,80 @@ export function saveProject()
 export function delProject()
 {
   renderProjectsArea('empty');
+
   title.innerHTML = 'Delete Project';
-  alert('Delete Project');
+  const openCloseProjectLeftID = document.getElementById('openCloseProjectLeft');
+  let dropDownList = null;
+  let selectProject = null;
+
+  if(myProjects.length === 0)
+  {
+    alert("No projects to delete");
+    renderProjectsArea();
+    return;
+  }
+  else
+  {
+    dropDownList = `<div style="white-space:nowrap" class="openCloseProject">
+      <p class="projectSelect">Select a project</p>
+        <form><select id='selectDropDown' class="projectList" name="projectList">`;
+
+    for(let i=0; i<myProjects.length; i++)
+    {
+      selectProject = myProjects[i].projectName;
+      dropDownList+= `<option value=${i}>${myProjects[i].projectName}</option>`;
+    }
+    dropDownList+=`</select><button id='selectProjectBtn' class='openProjectBtn'>Delete</button>
+    <button id='cancelProjectBtn' class='openProjectBtn'>Cancel</button></form></div>`;
+  }
+
+  openCloseProjectLeftID.innerHTML = dropDownList;
+  //create event listener for 'Open' and 'Cancel' button
+  let openBtnID = document.getElementById('selectProjectBtn');
+  const sb = document.getElementById('selectDropDown');
+  openBtnID.addEventListener('click', delProjectConfirm);
+  openBtnID = document.getElementById('cancelProjectBtn');
+  openBtnID.addEventListener('click', cancelProjectConfirm);
+}
+
+function delProjectConfirm(e)
+{
+  e.preventDefault();
+  const sb = document.getElementById('selectDropDown');
+  const projectIndex = sb.selectedIndex;
+  const deletedProjectName = myProjects[projectIndex].projectName;
+
+  delete(myProjects[projectIndex]);
+
+  //Convert sparse to dense
+  for(let i=projectIndex; i<myProjects.length; i++)
+  {
+    myProjects[i] = myProjects[i+1];
+  }
+  myProjects.length--;
+
+  //Write out saved project to localStorage
+  writeLocalStorage("projects", myProjects);
+  renderOpenCloseProjectArea('empty');
   renderProjectsArea();
+  if(projectIndex === myCurrentProjectData.projectIndex)
+  {
+    clearMyCurrentProjectData();
+    clearCheckBoxes();
+    renderMaterialCosts('clear');
+    renderMaterialCosts('values');
+    clearMyProject();
+    buildGrid(0, 0);
+  }
+
+  //Decrement projectIndex by 1 because of sparse to dense conversion (removing 1 project)
+  myCurrentProjectData.projectIndex--;
+  alert(deletedProjectName + ' has been deleted');
+}
+
+function clearMyCurrentProjectData()
+{
+  myCurrentProjectData.currentProjectName = '';
+  myCurrentProjectData.newProject=null;
+  myCurrentProjectData.projectIndex=null;
 }

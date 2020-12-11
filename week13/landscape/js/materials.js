@@ -4,13 +4,19 @@ import {myProjects, myProject, myMaterialCosts} from './main.js';
 const container3Div = document.getElementById('container3');
 const scrollContentLeft = document.getElementById('scrollContentLeft');
 const unitCost = document.getElementById('unitCost');
-const quantity = document.getElementById('quantity');
+const depth = document.getElementById('depth');
 const delivery = document.getElementById('delivery');
 const materialButtons = document.getElementById('materialButtons');
 const title = document.getElementById('materialsTitle');
 
 function updateCosts()
 {
+  if(myProject.projectName===undefined)
+  {
+    alert('Open or create a project before updating materials.');
+    return;
+  }
+
   // renderMaterialsArea('empty');
   title.innerHTML = 'Update Costs';
   //Hide update costs button
@@ -114,6 +120,27 @@ function confirmUpdate()
   }
   else{myMaterialCosts.custom2Delivery = removeMoney(document.getElementById('custom2Delivery').value);}
 
+  if(document.getElementById('topsoilDepth').value<=0 && validData)
+  {
+    validData=false;
+    errorMessage = 'Invalid topsoil depth entered. Must be greater than zero';
+  }
+  else{myMaterialCosts.topsoilDepth=document.getElementById('topsoilDepth').value};
+
+  if(document.getElementById('rockDepth').value<=0 && validData)
+  {
+    validData=false;
+    errorMessage = 'Invalid rock depth entered.  Must be greater than zero';
+  }
+  else{myMaterialCosts.rockDepth=document.getElementById('rockDepth').value};
+
+  if(document.getElementById('custom2Depth').value<=0 && validData)
+  {
+    validData=false;
+    errorMessage = 'Invalid custom 2 depth entered. Must be greater than zero';
+  }
+  else{myMaterialCosts.custom2Depth=document.getElementById('custom2Depth').value};
+
   if(validData)
   {
     //Update myProject with new values
@@ -131,12 +158,16 @@ function confirmUpdate()
     myProject.materialCosts.custom1Delivery = removeMoney(document.getElementById('custom1Delivery').value);
     myProject.materialCosts.custom2Delivery = removeMoney(document.getElementById('custom2Delivery').value);
 
+    myProject.materialCosts.topsoilDepth = document.getElementById('topsoilDepth').value;
+    myProject.materialCosts.rockDepth = document.getElementById('rockDepth').value;
+    myProject.materialCosts.custom2Depth = document.getElementById('custom2Depth').value;
+
     renderMaterialCosts('values');
     title.innerHTML = 'Materials';
     return;
   }
 
-  alert(errorMessage + 'Please try again.');
+  alert(errorMessage + '  Please try again.');
   document.getElementById('topsoilCost').focus();
 }
 
@@ -144,11 +175,14 @@ export function renderMaterialCosts(category)
 {
   const unitCostID = document.getElementById('unitCost');
   const deliveryID = document.getElementById('delivery');
+  const depthID = document.getElementById('depth');
   //Clear contents
   unitCostID.innerHTML = '';
   deliveryID.innerHTML = '';
+  depthID.innerHTML = '';
   let unitCostString = '';
   let deliveryCostString = '';
+  let depthString = '';
 
   if(category === 'values')
   {
@@ -175,6 +209,34 @@ export function renderMaterialCosts(category)
         <p>$${myMaterialCosts.custom1Delivery}</p>
         <p>$${myMaterialCosts.custom2Delivery}</p>`;
       deliveryID.innerHTML = deliveryCostString;
+
+      depthString =
+    `<p class='topsoilDepth'>${myMaterialCosts.topsoilDepth} in.</p>
+    <p class='rockDepth'>${myMaterialCosts.rockDepth} in.</p>
+    <p class='custom2Depth'>${myMaterialCosts.custom2Depth} in.</p>`;
+    depthID.innerHTML = depthString;
+
+  }
+  else if(category === 'clear')
+  {
+    myMaterialCosts.topsoilCost='';
+    myMaterialCosts.lawnCost='';
+    myMaterialCosts.weedBlockCost='';
+    myMaterialCosts.rockCost='';
+    myMaterialCosts.custom1Cost='';
+    myMaterialCosts.custom2Cost='';
+
+    myMaterialCosts.topsoilDelivery='';
+    myMaterialCosts.lawnDelivery='';
+    myMaterialCosts.weedBlockDelivery='';
+    myMaterialCosts.rockDelivery='';
+    myMaterialCosts.custom1Delivery='';
+    myMaterialCosts.custom2Delivery='';
+
+    //Set all depths to default value of 1 inch for new project
+    myMaterialCosts.topsoilDepth = '1';
+    myMaterialCosts.rockDepth = '1';
+    myMaterialCosts.custom2Depth = '1';
   }
   else if(category === 'input')
   {
@@ -204,6 +266,16 @@ export function renderMaterialCosts(category)
     <input style="margin-bottom: 10px" type='number' step=".01" min="0" class="unitCostInput" id='custom2Delivery' tabindex=12 value=${myMaterialCosts.custom2Delivery}>`;
     deliveryID.innerHTML = deliveryCostString;
 
+    depthString =
+    `<label for='topsoilDepth' class='topsoilDepth'>Depth (in): </label>
+    <input type='number' step=".01" min=".01" class="topsoilDepthInput" id='topsoilDepth' tabindex=13 value=${myMaterialCosts.topsoilDepth}><br>
+    <label for='rockDepth' class="rockDepth">Depth (in): </label>
+    <input type='number' step=".01" min=".01" class="rockDepthInput" id='rockDepth' tabindex=14 value=${myMaterialCosts.rockDepth}><br>
+    <label for='custom2Depth' class="custom2Depth">Depth (in): </label>
+    <input type='number' step=".01" min=".01" class="custom2DepthInput" id='custom2Depth' tabindex=15 value=${myMaterialCosts.custom2Depth}>`;
+
+    depthID.innerHTML = depthString;
+
     document.getElementById('topsoilCost').focus();
   }
 }
@@ -222,8 +294,8 @@ export function renderMaterialsArea(empty = null)
     material.innerHTML = '';
     unitCost.innerHTML = '';
     unitCost.style.borderLeft = 'none';
-    quantity.innerHTML = '';
-    quantity.style.borderLeft = 'none';
+    depth.innerHTML = '';
+    depth.style.borderLeft = 'none';
     delivery.innerHTML = '';
     delivery.style.borderLeft = 'none';
     materialButtons.innerHTML = '';
@@ -237,7 +309,7 @@ export function renderMaterialsArea(empty = null)
     container3Div.style.borderLeft = '2px solid black';
     let area = document.getElementById('unitCost');
     area.style.borderLeft = '1px solid black';
-    area = document.getElementById('quantity');
+    area = document.getElementById('depth');
     area.style.borderLeft = '1px solid black';
     area = document.getElementById('delivery');
     area.style.borderLeft = '1px solid black';
@@ -246,7 +318,7 @@ export function renderMaterialsArea(empty = null)
 
     //Add Materials buttons
     const materialButtonsDiv = document.getElementById('materialButtons');
-    btn = createButton('Update Costs', 'updateCostsBtn', 'updateCostsBtn');
+    btn = createButton('Update Materials', 'updateCostsBtn', 'updateCostsBtn');
     materialButtonsDiv.appendChild(btn);
     btn = createButton('Update', 'confirmUpdateBtn', 'confirmUpdateBtn');
     materialButtonsDiv.appendChild(btn);
