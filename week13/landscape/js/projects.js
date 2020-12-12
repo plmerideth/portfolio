@@ -2,6 +2,7 @@ import {buildGrid, hideGrid, colorGridDiv, clearCheckBoxes} from './grid.js';
 import {myProject, myProjects, myCurrentProjectData, currentGrid, myMaterialCosts} from './main.js';
 import {createButton, readLocalStorage, writeLocalStorage} from './utilities.js';
 import {renderMaterialCosts} from './materials.js';
+import {initCalcArray, updateProjectCosts, renderProjectCosts} from './calc.js';
 
 // export class Projects
 // {
@@ -18,8 +19,8 @@ export class Project
         this.projectName = name;
         this.length = length;
         this.width = width;
-        this.gridL = gridL;
-        this.gridW = gridW;
+        this.gridL = 0;
+        this.gridW = 0;
         this.rows = null,
         this.cols = null,
         this.container2 = container2;
@@ -44,12 +45,12 @@ const title = document.getElementById('projectCostsTitle');
 export function clearMyProject()
 {
   myProject.projectName = undefined;
-  myProject.length = undefined;
-  myProject.width = undefined;
-  myProject.gridL = undefined;
-  myProject.gridW = undefined;
-  myProject.rows = null,
-  myProject.cols = null,
+  myProject.length = 0;
+  myProject.width = 0;
+  myProject.gridL = 0;
+  myProject.gridW = 0;
+  myProject.rows = 0,
+  myProject.cols = 0,
   myProject.container2 = undefined;
   myProject.gridCoord = [];
   myProject.materialCosts = {};
@@ -61,9 +62,9 @@ export function renderProjectsArea(empty=null)
 {
   if(empty==="empty")
   {
-    let area = document.getElementById('section');
+    let area = document.getElementById('materialWindow');
     area.innerHTML = '';
-    area = document.getElementById('coverage');
+    area = document.getElementById('quantity');
     area.innerHTML = '';
     area.style.borderLeft = 'none';
     area = document.getElementById('costs');
@@ -78,10 +79,10 @@ export function renderProjectsArea(empty=null)
     title.innerHTML = 'Project Costs';
     scrollContentRight.style.borderBottom = '2px solid black';
     container3Div.style.borderRight = '2px solid black';
-    let area = document.getElementById('section');
+    let area = document.getElementById('materialWindow');
     area.innerHTML='';
     area.style.borderLeft = '1px solid black';
-    area = document.getElementById('coverage');
+    area = document.getElementById('quantity');
     area.innerHTML='';
     area.style.borderLeft = '1px solid black';
     area = document.getElementById('costs');
@@ -128,13 +129,6 @@ export function openProject()
   openBtnID.addEventListener('click', openProjectConfirm);
   openBtnID = document.getElementById('cancelProjectBtn');
   openBtnID.addEventListener('click', cancelProjectConfirm);
-}
-
-function cancelProjectConfirm(e)
-{
-  e.preventDefault();
-  renderOpenCloseProjectArea('empty');
-  renderProjectsArea();
 }
 
 function openProjectConfirm(e)
@@ -186,14 +180,26 @@ function openProjectConfirm(e)
   myMaterialCosts.custom1Delivery = myProject.materialCosts.custom1Delivery === undefined ? '' : myProject.materialCosts.custom1Delivery;
   myMaterialCosts.custom2Delivery = myProject.materialCosts.custom2Delivery === undefined ? '' : myProject.materialCosts.custom2Delivery;
 
-  myMaterialCosts.topsoilDepth = myProject.materialCosts.topsoilDepth === undefined ? '1' : myProject.materialCosts.topsoilDepth;
-  myMaterialCosts.rockDepth = myProject.materialCosts.rockDepth === undefined ? '1' : myProject.materialCosts.rockDepth;
-  myMaterialCosts.custom2Depth = myProject.materialCosts.custom2Depth === undefined ? '1' : myProject.materialCosts.custom2Depth;
-  
+  myMaterialCosts.topsoilDepth = myProject.materialCosts.topsoilDepth === undefined ? 1 : myProject.materialCosts.topsoilDepth;
+  myMaterialCosts.rockDepth = myProject.materialCosts.rockDepth === undefined ? 1 : myProject.materialCosts.rockDepth;
+  myMaterialCosts.custom2Depth = myProject.materialCosts.custom2Depth === undefined ? 1 : myProject.materialCosts.custom2Depth;
+
+  initCalcArray(); //Initialize calcArray with project values
+  updateProjectCosts();
   renderOpenCloseProjectArea('empty');
   renderProjectsArea();
   renderMaterialCosts('values');
+  renderProjectCosts();
   clearCheckBoxes();
+}
+
+function cancelProjectConfirm(e)
+{
+  e.preventDefault();
+  renderOpenCloseProjectArea('empty');
+  renderProjectsArea();
+  updateProjectCosts();
+  renderProjectCosts();
 }
 
 export function newProject()
@@ -231,12 +237,6 @@ export function newProject()
       renderMaterialCosts('values');
       clearMyProject();
       buildGrid(0, 0);
-}
-
-function cancelProject()
-{
-  renderOpenCloseProjectArea('empty');
-  renderProjectsArea();
 }
 
 function submitProject()
@@ -315,6 +315,25 @@ function submitProject()
   myProject.gridCoord = [];
   myProject.materialCosts = {};
 
+  //Initialize myProject.materialCosts with zeroes
+  myProject.materialCosts.topsoilCost = 0;
+  myProject.materialCosts.lawnCost = 0;
+  myProject.materialCosts.weedBlockCost = 0;
+  myProject.materialCosts.rockCost = 0;
+  myProject.materialCosts.custom1Cost = 0;
+  myProject.materialCosts.custom2Cost = 0;
+
+  myProject.materialCosts.topsoilDelivery = 0;
+  myProject.materialCosts.lawnDelivery = 0;
+  myProject.materialCosts.weedBlockDelivery = 0;
+  myProject.materialCosts.rockDelivery = 0;
+  myProject.materialCosts.custom1Delivery = 0;
+  myProject.materialCosts.custom2Delivery = 0;
+
+  myProject.materialCosts.topsoilDepth = 1;
+  myProject.materialCosts.rockDepth = 1;
+  myProject.materialCosts.custom2Depth = 1;
+
   myCurrentProjectData.currentProjectName = myProject.projectName;
   myCurrentProjectData.newProject = true;
 
@@ -325,10 +344,20 @@ function submitProject()
     currentGrid[i] = null;
   }
 
+  initCalcArray(); //Initialize calcArray with project values
   buildGrid(myRows, myCols);
-  // const myProjects = new Projects(myProjectName, length, width, gridL, gridW, 'container2');
   renderOpenCloseProjectArea('empty');
   renderProjectsArea();
+  updateProjectCosts();
+  renderProjectCosts();
+}
+
+function cancelProject()
+{
+  renderOpenCloseProjectArea('empty');
+  renderProjectsArea();
+  updateProjectCosts();
+  renderProjectCosts();
 }
 
 function renderOpenCloseProjectArea(empty=null)
@@ -348,7 +377,7 @@ export function saveProject()
     return;
   }
 
-  renderProjectsArea('empty');
+  // renderProjectsArea('empty');
   title.innerHTML = 'Save Project';
 
   let myProjectsIndex = myProjects.length;
@@ -368,7 +397,7 @@ export function saveProject()
   writeLocalStorage("projects", myProjects);
 
   alert(`${myProject.projectName} has been saved`);
-  renderProjectsArea();
+  // renderProjectsArea();
 }
 
 export function delProject()

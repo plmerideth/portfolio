@@ -1,5 +1,6 @@
 import {createButton, removeMoney} from './utilities.js';
-import {myProjects, myProject, myMaterialCosts} from './main.js';
+import {myProjects, myProject, myMaterialCosts, currentGrid} from './main.js';
+import {initCalcArray, updateProjectCosts, renderProjectCosts} from './calc.js';
 
 const container3Div = document.getElementById('container3');
 const scrollContentLeft = document.getElementById('scrollContentLeft');
@@ -163,6 +164,9 @@ function confirmUpdate()
     myProject.materialCosts.custom2Depth = document.getElementById('custom2Depth').value;
 
     renderMaterialCosts('values');
+    initCalcArray();
+    updateProjectCosts()
+    renderProjectCosts();
     title.innerHTML = 'Materials';
     return;
   }

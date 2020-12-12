@@ -1,6 +1,7 @@
 import {myProject, selectedMaterials, myCurrentProjectData, currentGrid} from './main.js';
 import {calcGridIndex} from './utilities.js';
 import {GridCoord} from './projects.js';
+import {initCalcArray, updateProjectCosts, renderProjectCosts} from './calc.js';
 
 let topsoilColor = 'brown';
 let lawnColor = 'green';
@@ -208,7 +209,7 @@ export function colorGridDiv(e, materialIndex=null)
      removeFlag = true;
     }
   }
-  else //colorGridDiv() called by openProjectConfirm()
+  else //colorGridDiv() called by openProjectConfirm() rather than event handler
   {
     let gridBoxString = 'g'+e;
     gridBoxID = document.getElementById(gridBoxString);
@@ -229,7 +230,7 @@ export function colorGridDiv(e, materialIndex=null)
       }
     }
   }
-  else  //this is an open project.  Populate selectedMaterialsArray[] from myProject
+  else  //this is an open project request.  Populate selectedMaterialsArray[] from myProject
   {
     //Determine how many colors are in currentGrid box
     let tempString1=myProject.gridCoord[materialIndex].material;
@@ -373,6 +374,8 @@ export function colorGridDiv(e, materialIndex=null)
       }
     }
   }
+  updateProjectCosts();
+  renderProjectCosts();
 }
 
 function renderGridDiv(divID, divClass, row, rows, col, cols)

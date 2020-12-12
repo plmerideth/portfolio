@@ -18,11 +18,11 @@ body{
   border-radius: 5px;
   /* grid-template-rows: 200px 300px; */
   }
-  .sectionControl{
-    /* background: red; */
+  /* .sectionControl{
+    background: red;
     padding: 10px 0 10px 0;
     margin: 0 20px 0 20px;
-    text-align: center; /*text-align:center is centering text in container1 */
+    text-align: center; /*text-align:center is centering text in container1
     font-size: calc(15px + .5vw);
     display: flex;
     flex-direction: row;
@@ -32,7 +32,7 @@ body{
   .sectionControl p
   {
       margin: 0;
-  }
+  } */
 
   .prodTitle{
     /* background: red; */
@@ -645,18 +645,6 @@ body{
   grid-row: 3;
   overflow: auto;
 }
-.section{
-  grid-row: 1;
-  grid-column: 1/3;
-  /* border-left: 1px solid black; */
-}
-.section p{
-  /* font-size: 20px; */
-  font-size: calc(15px + .5vw);
-  margin: 0px;
-  margin-left: 10px;
-  padding: 10px 0 10px 0;
-}
 .newProject{
   padding: 20px;
 }
@@ -712,30 +700,69 @@ body{
   color: white;
   margin: 0 10px 0 10px;
 }
-.coverage{
-  grid-row: 1;
-  grid-column: 3/5;
+.materialWindow{
+  grid-row: 1 / -1;
+  grid-column: 1/3;
   border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  /* grid-row: 1;
+  grid-column: 1/3; */
+  /* border-left: 1px solid black; */
 }
-.coverage p{
+.materialWindow p{
   /* font-size: 20px; */
-  font-size: calc(15px + .5vw);
+  font-size: calc(8px + .5vw);
   margin: 0px;
   margin-left: 10px;
-  padding: 10px 0 10px 0;
+  padding: 6px 0 6px 0;
+}
+.quantity{
+  grid-row: 1 / -1;
+  grid-column: 3/5;
+  border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  /* grid-row: 1;
+  grid-column: 3/5;
+  border-left: 1px solid black; */
+}
+.quantity p{
+  /* font-size: 20px; */
+  font-size: calc(8px + .5vw);
+  margin: 0px;
+  margin-left: 10px;
+  padding: 6px 0 6px 0;
 }
 
 .costs{
-  grid-row: 1;
+  grid-row: 1 / -1;
   grid-column: 5/7;
   border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+
+  /* grid-row: 1;
+  grid-column: 5/7;
+  border-left: 1px solid black; */
 }
 .costs p{
   /* font-size: 20px; */
-  font-size: calc(15px + .5vw);
+  font-size: calc(8px + .5vw);
   margin: 0px;
   margin-left: 10px;
-  padding: 10px 0 10px 0;
+  padding: 6px 0 6px 0;
 }
 .totalCosts{
   grid-row: 1;
@@ -750,15 +777,7 @@ body{
   margin-left: 10px;
   padding: 10px 0 10px 0;
 }
-/* .openCloseProject{
-  grid-row: 1;
-  grid-column: 6/-1;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
-  text-align: center;
-} */
+
 .openCloseProjectLeft{
   max-height: 200px;
   display: grid;
