@@ -69,19 +69,35 @@ export function updateProjectCosts()
   }
 
   //Update Cost
-  calcArray[xTopsoil][yCount]=brown;
-  calcArray[xLawn][yCount]=green*myProject.gridL*myProject.gridW; //Sq Ft
-  calcArray[xWeedBlock][yCount]=black*myProject.gridL*myProject.gridW; //Sq Ft;
-  calcArray[xRock][yCount]=red;
-  calcArray[xCust1][yCount]=blue*myProject.gridL*myProject.gridW; //Sq Ft;;
-  calcArray[xCust2][yCount]=yellow;
-  calcArray[xTopsoil][yCost]=calcArray[xTopsoil][yUnitCost] * calcArray[xTopsoil][yCount];
-  calcArray[xLawn][yCost]=calcArray[xLawn][yUnitCost] * calcArray[xLawn][yCount];
-  calcArray[xWeedBlock][yCost]=calcArray[xWeedBlock][yUnitCost] * calcArray[xWeedBlock][yCount];
-  calcArray[xRock][yCost]=calcArray[xRock][yUnitCost] * calcArray[xRock][yCount];
-  calcArray[xCust1][yCost]=calcArray[xCust1][yUnitCost] * calcArray[xCust1][yCount];
-  calcArray[xCust2][yCost]=calcArray[xCust2][yUnitCost] * calcArray[xCust2][yCount];
+  calcArray[xTopsoil][yCount]=(brown*(myProject.gridL/3)*(myProject.gridW/3)
+    *(myProject.materialCosts.topsoilDepth/36)).toFixed(2); //cu yd
+  calcArray[xLawn][yCount]=parseFloat(green*myProject.gridL*myProject.gridW).toFixed(2); //Sq Ft
+  calcArray[xWeedBlock][yCount]=parseFloat(black*myProject.gridL*myProject.gridW).toFixed(2); //Sq Ft;
+  calcArray[xRock][yCount]=(red*(myProject.gridL/3)*(myProject.gridW/3)*(myProject.materialCosts.topsoilDepth/36)).toFixed(2); //cu yd
+  calcArray[xCust1][yCount]=parseFloat(blue*myProject.gridL*myProject.gridW).toFixed(2); //Sq Ft;;
+  calcArray[xCust2][yCount]=(yellow*(myProject.gridL/3)*(myProject.gridW/3)*(myProject.materialCosts.topsoilDepth/36)).toFixed(2); //cu yd
 
+  calcArray[xTopsoil][yCost]= ((parseFloat(numberCheck(calcArray[xTopsoil][yUnitCost])) * parseFloat(numberCheck(calcArray[xTopsoil][yCount])))
+    + (parseFloat(numberCheck(calcArray[xTopsoil][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.topsoilDelivery)) : 0)).toFixed(2);
+  calcArray[xLawn][yCost]= ((parseFloat(numberCheck(calcArray[xLawn][yUnitCost])) * parseFloat(numberCheck(calcArray[xLawn][yCount])))
+    + (parseFloat(numberCheck(calcArray[xLawn][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.lawnDelivery)) : 0)).toFixed(2);
+  calcArray[xWeedBlock][yCost]= ((parseFloat(numberCheck(calcArray[xWeedBlock][yUnitCost])) * parseFloat(numberCheck(calcArray[xWeedBlock][yCount])))
+    + (parseFloat(numberCheck(calcArray[xWeedBlock][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.weedBlockDelivery)) : 0)).toFixed(2);
+  calcArray[xRock][yCost]= ((parseFloat(numberCheck(calcArray[xRock][yUnitCost])) * parseFloat(numberCheck(calcArray[xRock][yCount])))
+    + (parseFloat(numberCheck(calcArray[xRock][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.rockDelivery)) : 0)).toFixed(2);
+  calcArray[xCust1][yCost]= ((parseFloat(numberCheck(calcArray[xCust1][yUnitCost])) * parseFloat(numberCheck(calcArray[xCust1][yCount])))
+    + (parseFloat(numberCheck(calcArray[xCust1][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.custom1Delivery)) : 0)).toFixed(2);
+  calcArray[xCust2][yCost]= ((parseFloat(numberCheck(calcArray[xCust2][yUnitCost])) * parseFloat(numberCheck(calcArray[xCust2][yCount])))
+    + (parseFloat(numberCheck(calcArray[xCust2][yCount]))>0 ? parseFloat(numberCheck(myProject.materialCosts.custom2Delivery)) : 0)).toFixed(2);
+}
+
+
+function numberCheck(value)
+{
+  if(value==='NaN' || value==='')
+  { return 0;}
+  else
+  {return value}
 }
 
 export function renderProjectCosts()
@@ -89,6 +105,7 @@ export function renderProjectCosts()
   const materialWindowID = document.getElementById('materialWindow');
   const quantityID = document.getElementById('quantity');
   const costsID = document.getElementById('costs');
+  const totalCostsID = document.getElementById('totalCosts');
 
   let materialWindowString = '';
   materialWindowString =
@@ -119,4 +136,18 @@ export function renderProjectCosts()
     <p>$${calcArray[xCust1][yCost]}</p>
     <p>$${calcArray[xCust2][yCost]}</p>`;
     costsID.innerHTML = costsString;
+
+  //Calculate total costs
+  let totalCosts = (parseFloat(calcArray[xTopsoil][yCost])
+    + parseFloat(calcArray[xLawn][yCost])
+    + parseFloat(calcArray[xWeedBlock][yCost])
+    + parseFloat(calcArray[xRock][yCost])
+    + parseFloat(calcArray[xCust1][yCost])
+    + parseFloat(calcArray[xCust2][yCost])).toFixed(2);
+
+  let totalCostString = '';
+  totalCostString =
+  `<h1>Total Cost</h1>
+    <p>$${totalCosts}</p>;`
+  totalCostsID.innerHTML = totalCostString;
 }

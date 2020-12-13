@@ -248,17 +248,26 @@ body{
 .gridTopLeft{
   border-top-left-radius: 15px;
 }
-.gridTopRight{
-  border-top-right-radius: 15px;
+.gridTopLeftShort{
+  border-top-left-radius: 90px;
 }
 .gridTopRight{
   border-top-right-radius: 15px;
+}
+.gridTopRightShort{
+  border-top-right-radius: 90px;
 }
 .gridBottomLeft{
   border-bottom-left-radius: 15px;
 }
+.gridBottomLeftShort{
+  border-bottom-left-radius: 90px;
+}
 .gridBottomRight{
   border-bottom-right-radius: 15px;
+}
+.gridBottomRightShort{
+  border-bottom-right-radius: 90px;
 }
 .horizontalTickMark{
   border-bottom: 1px solid blue;
@@ -765,19 +774,34 @@ body{
   padding: 6px 0 6px 0;
 }
 .totalCosts{
-  grid-row: 1;
+  grid-row: 1 / -1;
   grid-column: 7/-1;
   border-left: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  /* grid-row: 1;
+  grid-column: 7/-1;
+  border-left: 1px solid black; */
 }
 .totalCosts p{
   /* font-size: 20px; */
   font-size: calc(15px + .5vw);
   /* font-size: 1.5vw; */
   margin: 0px;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   padding: 10px 0 10px 0;
 }
-
+.totalCosts h1{
+  /* font-size: 20px; */
+  font-size: calc(20px + .5vw);
+  /* font-size: 1.5vw; */
+  margin: 0px;
+  /* margin-left: 10px; */
+  padding: 10px 0 10px 0;
+}
 .openCloseProjectLeft{
   max-height: 200px;
   display: grid;
