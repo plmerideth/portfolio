@@ -395,6 +395,8 @@ export function saveProject()
   {
     myProjects[myProjects.length] = new Project;
     Object.assign(myProjects[myProjectsIndex], myProject);
+    myCurrentProjectData.newProject = false; //Set to false now that new project has been saved.
+    myCurrentProjectData.projectIndex = myProjects.length-1;
   }
 
   // myProjects[myProjects.length] = myProject;
