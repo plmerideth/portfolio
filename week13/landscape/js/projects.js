@@ -97,7 +97,12 @@ export function openProject()
 {
   renderProjectsArea('empty');
   title.innerHTML = 'Open Project';
+
+
+  // const openCloseProjectLeftID = document.getElementById('openCloseProjectLeft');
   const openCloseProjectLeftID = document.getElementById('openCloseProjectLeft');
+
+
   let dropDownList = null;
   let selectProject = null;
 

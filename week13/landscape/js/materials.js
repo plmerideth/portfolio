@@ -335,5 +335,8 @@ export function renderMaterialsArea(empty = null)
     btn.addEventListener('click', confirmUpdate);
     btn = document.getElementById('cancelUpdateBtn');
     btn.addEventListener('click', cancelUpdate);
+    //Hide update confirm and cancel buttons
+    document.getElementById('confirmUpdateBtn').classList.add('gridHide');
+    document.getElementById('cancelUpdateBtn').classList.add('gridHide');
   }
 }

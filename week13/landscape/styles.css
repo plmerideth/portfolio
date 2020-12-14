@@ -802,12 +802,26 @@ body{
   /* margin-left: 10px; */
   padding: 10px 0 10px 0;
 }
+
+
+.openCloseProjectBoth{
+  max-height: 200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 4fr;
+  grid-column: 6/9;
+  grid-row: 3;
+  overflow: auto;
+}
+
+
+
 .openCloseProjectLeft{
   max-height: 200px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 4fr;
-  grid-column: 6/8;
+  grid-column: 6/-1;
   grid-row: 3;
   overflow: auto;
 }
