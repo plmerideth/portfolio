@@ -21,7 +21,6 @@ function displayPortList()
 		{label: "URL: Week 9 Notes",	url: "week9/index9.html"},
 		{label: "URL: Week 10 Notes",	url: "week10/index10.html"},
 		{label: "URL: Week 11 Report",	url: "week11/index11.html"},
-		{label: "URL: Week 12 Report",	url: "week12/index12.html"},
 		{label: "URL: Week 13 Final",	url: "week13/index13.html"}
 	]
 

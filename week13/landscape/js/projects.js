@@ -343,7 +343,8 @@ function submitProject()
   myCurrentProjectData.currentProjectName = myProject.projectName;
   myCurrentProjectData.newProject = true;
 
-  //Populate currentGrid[] with null values for every grid box
+  //Reset currentGrid and populate with null values for every grid box
+  currentGrid.length = 0;
   const indexCount=myRows*myCols;
   for(let i=0; i<indexCount; i++)
   {
