@@ -366,7 +366,7 @@ function cancelProject()
   renderProjectCosts();
 }
 
-function renderOpenCloseProjectArea(empty=null)
+export function renderOpenCloseProjectArea(empty=null)
 {
   if(empty==='empty')
   {

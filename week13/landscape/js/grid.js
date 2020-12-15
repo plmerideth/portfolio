@@ -1,6 +1,6 @@
 import {myProject, selectedMaterials, myCurrentProjectData, currentGrid} from './main.js';
 import {calcGridIndex} from './utilities.js';
-import {GridCoord} from './projects.js';
+import {GridCoord, renderOpenCloseProjectArea} from './projects.js';
 import {initCalcArray, updateProjectCosts, renderProjectCosts} from './calc.js';
 
 let topsoilColor = 'brown';
@@ -195,6 +195,10 @@ export function hideGrid()
 
 export function colorGridDiv(e, materialIndex=null)
 {
+
+renderOpenCloseProjectArea('empty');
+
+
   //Save grid coordinate.  Remove leading 'g'
   let gridBox = null;
   let gridBoxID = null;
