@@ -1,11 +1,22 @@
 html{
+  /* background-image: linear-gradient(45deg, lightgreen, darkgreen); */
   background-color: lightcyan;
+  /* background-image: url('green-grass-1.jpg'); */
+  background-size: cover;
   padding: 20px;
 }
 
 body{
+  background-image: linear-gradient(45deg, lightgreen, darkgreen, lightgreen);
   min-width: 1200px;
   /* overflow-y: auto; */
+}
+
+@font-face
+{
+  font-family: 'AlexBrush';
+  src: url('AlexBrush-Regular.ttf');
+
 }
 .container1{
   display: grid;
@@ -35,21 +46,23 @@ body{
   } */
 
   .prodTitle{
-    /* background: red; */
-    padding: 10px 0 10px 0;
+    background-image: url('green-grass-2.jpg');
+    background-size: cover;
+    padding: 5px 0 5px 0;
     margin: 0;
-    /*Text centering in the grid is controlled by flex settings in .grid2*/
     text-align: center; /*text-align:center is centering text in container1 */
-    font-size: calc(15px + .5vw);
+    font-size: calc(35px + .5vw);
+    font-weight: bold;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: darkgreen;
-    color: white;
+    /* background: darkgreen; */
+    color: black;
   }
   .prodTitle p
   {
+     font-family: 'AlexBrush';
       margin: 0;
   }
   .projectName{
@@ -83,7 +96,12 @@ body{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: darkgreen;
+    background-image: url('rock-2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+
+    /* background: darkgreen; */
   }
   .projectBtn{
     font-size: calc(10px + .2vw);
@@ -189,13 +207,14 @@ body{
   border-right: 2px solid black;
   border-left: 2px solid black;
   border-radius: 5px;
+  /* background-color: white; */
 }
 .grid2Title{
   grid-row: 1/1;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: calc(25px + .5vw);
+  font-size: calc(15px + .5vw);
   /* text-align: center;
   grid-column: 2;
   grid-row: 1/-1;
@@ -290,7 +309,7 @@ body{
   /* border-left: 2px solid black; */
   /* border-right: 2px solid black; */
   border-radius: 5px;
-  /* overflow-y:scroll; */
+  /* background-color: lightcyan; */
 }
 .materialsTitle{
   display: flex;
@@ -709,6 +728,7 @@ body{
   color: white;
   margin: 0 10px 0 10px;
 }
+
 .materialWindow{
   grid-row: 1 / -1;
   grid-column: 1/3;
@@ -814,12 +834,10 @@ body{
   overflow: auto;
 }
 
-
-
 .openCloseProjectLeft{
   max-height: 200px;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 4fr;
   grid-column: 6/-1;
   grid-row: 3;

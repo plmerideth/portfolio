@@ -226,9 +226,10 @@ export function newProject()
       </form></div>`
 
     openCloseProjectRightID.innerHTML =
-      `<div style="white-space:nowrap" class="newProject"><label for="gridUnitLen" class="newProjectText">Each Grid Square(H) (ft): </label><input type='text' id='gridL' class='lotDim' tabindex=4><br><br>
+      `<div style="white-space:nowrap" class="newProject"><form><label for="gridUnitLen" class="newProjectText">Each Grid Square(H) (ft): </label><input type='text' id='gridL' class='lotDim' tabindex=4><br><br>
       <label for="gridUnitWidth" class="newProjectText">Each Grid Square(V) (ft): &nbsp</label><input type='text' id='gridW' class='lotDim' tabindex=5>
       </div></form>`;
+
 
       let btn = document.getElementById('submitProjectBtn')
       btn.addEventListener('click', submitProject);
